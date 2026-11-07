@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             expires_at = VALUES(expires_at),
             attempts = 0,
             verified_at = NULL,
-            created_at = CURRENT_TIMESTAMP'
+            created_at = NOW()'
                 );
 
                 $stmt->execute([

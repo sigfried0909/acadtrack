@@ -9,6 +9,18 @@ $error = '';
 $message = '';
 $cooldownRemaining = 0;
 
+/*
+|--------------------------------------------------------------------------
+| CSRF TOKEN FOR RESENDING OTP
+|--------------------------------------------------------------------------
+*/
+
+if (empty($_SESSION['password_reset_resend_csrf'])) {
+    $_SESSION['password_reset_resend_csrf'] = bin2hex(random_bytes(32));
+}
+
+$csrfToken = $_SESSION['password_reset_resend_csrf'];
+
 if ($recoveryUserId < 1) {
     header('Location: forgot_password.php');
     exit;
@@ -51,6 +63,7 @@ if (empty($_SESSION['password_reset_resend_csrf'])) {
 $csrfToken = $_SESSION['password_reset_resend_csrf'];
 
 
+
 /*
 |--------------------------------------------------------------------------
 | PHASE 1: VERIFY OTP
@@ -70,87 +83,143 @@ if (
 
     } else {
 
-        $stmt = $pdo->prepare(
-            'SELECT r.id,
+        $transactionStarted = false;
+
+        try {
+
+            $pdo->beginTransaction();
+            $transactionStarted = true;
+
+            // Lock the OTP record and check expiration using MySQL.
+            $stmt = $pdo->prepare(
+                'SELECT
+                    r.id,
                     r.user_id,
                     r.otp_hash,
                     r.attempts,
                     r.expires_at,
-                    r.verified_at
-             FROM password_reset_otps r
-             INNER JOIN users u ON u.id = r.user_id
-             WHERE r.user_id = :user_id
-               AND u.is_active = 1
-             LIMIT 1'
-        );
-
-        $stmt->execute([
-            'user_id' => $recoveryUserId
-        ]);
-
-        $reset = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (
-            !$reset ||
-            $reset['verified_at'] !== null ||
-            strtotime($reset['expires_at']) <= time() ||
-            (int) $reset['attempts'] >= 5
-        ) {
-
-            $error = 'The code is invalid or expired. Request a new code.';
-
-        } else {
-
-            // Count every syntactically valid OTP attempt.
-            $stmt = $pdo->prepare(
-                'UPDATE password_reset_otps
-                 SET attempts = attempts + 1
-                 WHERE id = :id
-                   AND attempts < 5'
+                    r.verified_at,
+                    CASE
+                        WHEN r.expires_at <= NOW() THEN 1
+                        ELSE 0
+                    END AS is_expired
+                 FROM password_reset_otps r
+                 INNER JOIN users u ON u.id = r.user_id
+                 WHERE r.user_id = :user_id
+                   AND u.is_active = 1
+                 LIMIT 1
+                 FOR UPDATE'
             );
 
             $stmt->execute([
-                'id' => $reset['id']
+                'user_id' => $recoveryUserId
             ]);
 
-            if (
-                $stmt->rowCount() === 1 &&
-                password_verify($otp, $reset['otp_hash'])
-            ) {
+            $reset = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                // Atomically claim the valid OTP.
+            if (!$reset) {
+
+                $error = 'Your reset code was not found. Request a new code.';
+
+            } elseif ($reset['verified_at'] !== null) {
+
+                $error = 'This verification code has already been used.';
+
+            } elseif ((int) $reset['is_expired'] === 1) {
+
+                $error = 'Your verification code has expired. Request a new code.';
+
+            } elseif ((int) $reset['attempts'] >= 5) {
+
+                $error = 'Too many incorrect attempts. Request a new code.';
+
+            } else {
+
+                // Count the verification attempt.
                 $stmt = $pdo->prepare(
                     'UPDATE password_reset_otps
-                     SET verified_at = NOW()
+                     SET attempts = attempts + 1
                      WHERE id = :id
+                       AND attempts < 5
                        AND verified_at IS NULL
-                       AND expires_at > NOW()
-                       AND attempts <= 5'
+                       AND expires_at > NOW()'
                 );
 
                 $stmt->execute([
                     'id' => $reset['id']
                 ]);
 
-                if ($stmt->rowCount() === 1) {
+                if ($stmt->rowCount() !== 1) {
 
-                    session_regenerate_id(true);
+                    $error = 'Your verification code is no longer valid. Request a new code.';
 
-                    $_SESSION['password_reset_user_id'] =
-                        (int) $reset['user_id'];
+                } elseif (password_verify($otp, $reset['otp_hash'])) {
 
-                    $_SESSION['password_reset_verified_at'] = time();
+                    // Mark the correct OTP as verified.
+                    $stmt = $pdo->prepare(
+                        'UPDATE password_reset_otps
+                         SET verified_at = NOW()
+                         WHERE id = :id
+                           AND verified_at IS NULL
+                           AND expires_at > NOW()
+                           AND attempts <= 5'
+                    );
 
-                    header('Location: verify_reset.php');
-                    exit;
+                    $stmt->execute([
+                        'id' => $reset['id']
+                    ]);
+
+                    if ($stmt->rowCount() === 1) {
+
+                        $pdo->commit();
+                        $transactionStarted = false;
+
+                        session_regenerate_id(true);
+
+                        $_SESSION['password_reset_user_id'] =
+                            (int) $reset['user_id'];
+
+                        $_SESSION['password_reset_verified_at'] = time();
+
+                        header('Location: verify_reset.php');
+                        exit;
+
+                    } else {
+
+                        $error = 'Your verification code has expired. Request a new code.';
+
+                    }
+
+                } else {
+
+                    $error = 'The code is incorrect. Please try again.';
+
                 }
             }
 
-            $error = 'The code is incorrect or has expired.';
+            // Save the attempt count even when the submitted code is incorrect.
+            if ($transactionStarted && $pdo->inTransaction()) {
+                $pdo->commit();
+                $transactionStarted = false;
+            }
+
+        } catch (Throwable $e) {
+
+            if (
+                $transactionStarted &&
+                $pdo->inTransaction()
+            ) {
+                $pdo->rollBack();
+            }
+
+            error_log(
+                'AcadTrack password OTP verification error: ' . $e->getMessage()
+            );
+
+            $error = 'Verification could not be completed. Please try again.';
         }
     }
 }
-
 
 /*
 |--------------------------------------------------------------------------
