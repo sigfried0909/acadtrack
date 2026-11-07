@@ -1,4 +1,3 @@
-
 (() => {
     "use strict";
 
@@ -478,9 +477,9 @@
 
         const confirmed = window.confirm(
             "Are you sure you want to save your profile changes?\n\n" +
-            "Once your official section assignment is saved, it will be locked. " +
-            "Your course and year level will automatically follow your assigned section. " +
-            "Contact the CITE Department if you need to change your section."
+            "Once saved, your course, year level, and official section assignment " +
+            "will be locked and cannot be changed through your profile. " +
+            "Contact the CITE Department if you need to request changes."
         );
 
         if (!confirmed) {

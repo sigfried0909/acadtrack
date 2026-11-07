@@ -189,18 +189,23 @@ $sectionOptions = array_map(
 */
 
 $academicInfoQuery = $pdo->prepare(
-    "SELECT year_level, section
-     FROM user_information
-     WHERE user_id = ?
-     LIMIT 1"
+    "SELECT course, year_level, section
+        FROM user_information
+        WHERE user_id = ?
+        LIMIT 1"
 );
 
 $academicInfoQuery->execute([$studentId]);
 
 $currentAcademicInfo = $academicInfoQuery->fetch(PDO::FETCH_ASSOC) ?: [
+    'course' => null,
     'year_level' => null,
     'section' => null,
 ];
+
+$currentAcademicCourse = trim(
+    (string) ($currentAcademicInfo['course'] ?? '')
+);
 
 $currentAcademicYear = $currentAcademicInfo['year_level'] !== null
     ? trim((string) $currentAcademicInfo['year_level'])
@@ -216,6 +221,7 @@ $currentAcademicSection = trim(
 |--------------------------------------------------------------------------
 */
 
+$profileCourseLocked = $currentAcademicCourse !== '';
 $profileYearLocked = $currentAcademicYear !== '';
 $profileSectionLocked = $currentAcademicSection !== '';
 
@@ -261,6 +267,7 @@ if (
         'address' => $readProfilePost('address'),
         'gender' => $readProfilePost('gender'),
         'mobile_number' => $readProfilePost('mobile_number'),
+        'course' => $readProfilePost('course'),
         'year_level' => $readProfilePost('year_level'),
         'section' => $readProfilePost('section'),
     ];
@@ -283,6 +290,11 @@ if (
         $address = $profileFormValues['address'];
         $gender = $profileFormValues['gender'];
         $mobileNumber = $profileFormValues['mobile_number'];
+        $course = $profileFormValues['course'];
+
+        $course = $profileCourseLocked
+            ? $currentAcademicCourse
+            : $profileFormValues['course'];
 
         $yearLevelInput = $profileYearLocked
             ? $currentAcademicYear
@@ -311,6 +323,13 @@ if (
         ) {
             $profileErrorMessage =
                 'Names must not exceed 100 characters.';
+
+        } elseif (
+            !$profileCourseLocked
+            && studentProfileTextLength($course) > 100
+        ) {
+            $profileErrorMessage =
+                'Course must not exceed 100 characters.';
 
         } elseif (studentProfileTextLength($address) > 2000) {
             $profileErrorMessage =
@@ -406,9 +425,10 @@ if (
                         address,
                         gender,
                         mobile_number,
+                        course,
                         year_level,
                         section
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 
                     ON DUPLICATE KEY UPDATE
                         firstname = VALUES(firstname),
@@ -418,6 +438,7 @@ if (
                         address = VALUES(address),
                         gender = VALUES(gender),
                         mobile_number = VALUES(mobile_number),
+                        course = VALUES(course),
                         year_level = VALUES(year_level),
                         section = VALUES(section)"
                 );
@@ -431,6 +452,7 @@ if (
                     $address !== '' ? $address : null,
                     $gender !== '' ? $gender : null,
                     $mobileNumber !== '' ? $mobileNumber : null,
+                    $course !== '' ? $course : null,
                     $yearLevel,
                     $section !== '' ? $section : null,
                 ]);
@@ -612,6 +634,10 @@ if ($profileFormValues === null) {
         $profileDefaults,
         $profileFormValues
     );
+}
+
+if ($profileCourseLocked) {
+    $profileFormValues['course'] = $currentAcademicCourse;
 }
 
 if ($profileYearLocked) {
@@ -1830,15 +1856,37 @@ function studentProfileTextLength(string $value): int
 
                     </div>
 
+                    <!-- EDITABLE COURSE -->
+
                     <div class="student-profile-field">
 
                         <label for="profile-course">Course</label>
 
-                        <input id="profile-course" type="text" value="<?= escapeHtml(
-                            $profileDefaults['course'] !== ''
-                            ? $profileDefaults['course']
-                            : 'Not assigned'
-                        ) ?>" readonly>
+                        <input
+                            id="profile-course"
+                            name="course"
+                            type="text"
+                            maxlength="100"
+                            value="<?= escapeHtml($profileFormValues['course'] ?? '') ?>"
+                            placeholder="Enter your course (e.g.BSIT)"
+                            autocomplete="off"
+                            <?= $profileCourseLocked ? 'readonly' : '' ?>
+                            aria-describedby="profile-course-help"
+                        >
+
+                        <small id="profile-course-help">
+
+                            <?php if ($profileCourseLocked): ?>
+
+                                Your course has been saved and is locked.
+
+                            <?php else: ?>
+
+                                Enter your course. Once saved, it cannot be changed through your profile.
+
+                            <?php endif; ?>
+
+                        </small>
 
                     </div>
 
