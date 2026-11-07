@@ -149,7 +149,7 @@ if (
                                 pattern="[0-9]{12}" required data-msg="Enter your 12-digit student number."
                                 data-pattern="Student number must contain exactly 12 digits."
                                 aria-describedby="cl-login10-l-student-number-err"
-                                placeholder="Enter your 12 digit Student Number.">
+                                placeholder="12 digit Student Number. (e.g. 202612345678)">
 
                             <p class="cl-login10__error" id="cl-login10-l-student-number-err" data-error></p>
                         </div>
@@ -207,7 +207,7 @@ if (
                                 required data-msg="Enter your 12-digit student number."
                                 data-pattern="Student number must contain exactly 12 digits."
                                 aria-describedby="cl-login10-s-student-number-err"
-                                placeholder="Enter your 12 digit Student Number.">
+                                placeholder="12 digit Student Number. (e.g. 202612345678)">
 
                             <p class="cl-login10__error" id="cl-login10-s-student-number-err" data-error></p>
                         </div>
