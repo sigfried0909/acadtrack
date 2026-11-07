@@ -1,13 +1,13 @@
 <?php
-$host = 'localhost';
-$dbname = 'acadtrack';
-$username = 'root';
-$password = '';
+// $host = 'localhost';
+// $dbname = 'acadtrack';
+// $username = 'root';
+// $password = '';
 
-// $host = 'sql112.infinityfree.com';
-// $dbname = 'if0_43335329_acadtrack';
-// $username = 'if0_43335329';
-// $password = 'kimmy021598';
+$host = 'sql112.infinityfree.com';
+$dbname = 'if0_43335329_acadtrack';
+$username = 'if0_43335329';
+$password = 'kimmy021598';
 
 try {
     $pdo = new PDO(
