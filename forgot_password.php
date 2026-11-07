@@ -286,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>
                 Enter your 12-digit student number or registered email address.
                 If your active account is found, a six-digit reset code
-                will be sent to your registered email.
+                will be sent to your registered email. Check your inbox or spam folder.
             </p>
 
             <?php if ($message !== ''): ?>
