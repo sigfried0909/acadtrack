@@ -4937,10 +4937,9 @@ if (!$isAdminProfilePost) {
                         </h3>
 
                         <p>
-                            Permanently removes all uploaded permit documents
-                            from <code>storage/permits</code> and deletes
+                            Permanently removes all uploaded permit documents and deletes
                             their corresponding records in
-                            <code>permit_submissions</code>.
+                            <code>database</code>.
                             Every existing permit period will return to
                             <strong>No Permit</strong>.
                         </p>
