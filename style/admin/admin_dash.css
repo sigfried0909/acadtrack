@@ -1,0 +1,3177 @@
+@import url("../student/student_dash.css");
+
+/* =========================================
+   ADMIN DASHBOARD SUMMARY
+========================================= */
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.admin-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    padding: 21px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-stat-icon {
+    display: grid;
+    flex: 0 0 46px;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 11px;
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.admin-stat-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.admin-stat-icon.stat-success {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.admin-stat-icon.stat-warning {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+
+.admin-stat-card>div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.admin-stat-label {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.admin-stat-card strong {
+    color: var(--ink);
+    font-size: 26px;
+    line-height: 1.15;
+}
+
+/* =========================================
+   ADMIN PANELS AND ALERTS
+========================================= */
+
+.admin-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--line);
+}
+
+.admin-panel-heading h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.admin-panel-heading p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.admin-count {
+    flex: 0 0 auto;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    color: var(--muted);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.admin-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.admin-alert svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+    margin-top: 1px;
+}
+
+.admin-alert-success {
+    border-color: #abefc6;
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.admin-alert-error {
+    border-color: #fecdca;
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.admin-inline-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    padding: 13px 18px;
+    border-top: 1px solid var(--line);
+    background: #fffaeb;
+    color: #b54708;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.admin-inline-note svg {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* =========================================
+   SECTION MANAGEMENT TOOLBAR
+========================================= */
+
+.section-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--line);
+    background: #fcfcfd;
+}
+
+.section-search-box {
+    display: flex;
+    flex: 0 1 420px;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+    min-width: 0;
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid #d0d5dd;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--muted);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.section-search-box:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+}
+
+.section-search-box>svg {
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+.section-search-box input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding: 12px 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 13px;
+}
+
+.section-search-box input::placeholder {
+    color: #98a2b3;
+}
+
+.section-toolbar>.button {
+    flex: 0 0 auto;
+    min-height: 46px;
+    margin-left: auto;
+}
+
+.section-search-status {
+    padding: 15px 24px 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* =========================================
+   SECTION SEARCH AND YEAR LEVEL FILTER
+========================================= */
+
+.section-filter-group {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.section-year-filter {
+    display: flex;
+    flex: 0 0 165px;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    min-height: 46px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    border: 1px solid #d0d5dd;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--muted);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.section-year-filter:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+}
+
+.section-year-filter>svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+}
+
+.section-year-filter select {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.section-year-filter select option {
+    color: var(--ink);
+    background: #fff;
+}
+
+/* =========================================
+   SECTION SEARCH RESULTS
+========================================= */
+
+#section-management {
+    width: 100%;
+    min-width: 0;
+}
+
+.managed-sections {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 22px 24px;
+}
+
+.managed-sections:empty {
+    display: none;
+}
+
+.managed-section-card {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.managed-section-card:hover {
+    border-color: #d0d5dd;
+    box-shadow: 0 5px 18px rgba(16, 24, 40, 0.06);
+}
+
+.searchable-section-card[hidden],
+.section-search-empty[hidden] {
+    display: none !important;
+}
+
+.managed-section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 19px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+}
+
+.managed-section-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+}
+
+.managed-section-title>div {
+    min-width: 0;
+}
+
+.managed-section-title h3 {
+    margin: 2px 0 0;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.managed-section-title p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* =========================================
+   SECTION ICON AND STUDENT AVATAR
+========================================= */
+
+.section-row-icon {
+    display: grid;
+    flex: 0 0 34px;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #f2f4f7;
+    color: var(--muted);
+}
+
+.section-row-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.mini-avatar {
+    display: grid;
+    flex: 0 0 34px;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #eff6ff;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* =========================================
+   CURRENT SSP ADVISER
+========================================= */
+
+.section-current-adviser {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.section-current-adviser svg {
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+}
+
+.section-current-adviser strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.section-current-adviser .no-adviser {
+    color: #b54708;
+}
+
+/* =========================================
+   SECTION ACTION BUTTONS
+========================================= */
+
+.section-card-actions {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.section-card-actions .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 9px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.section-card-actions svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* =========================================
+   ENROLLED STUDENTS
+========================================= */
+
+.section-student-list {
+    width: 100%;
+    margin-top: 12px;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+}
+
+.section-student-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 17px;
+    color: var(--text);
+    font-size: 12px;
+}
+
+.section-student-list-heading>span {
+    display: grid;
+    min-width: 24px;
+    height: 24px;
+    place-items: center;
+    padding: 0 6px;
+    border-radius: 20px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.section-student-scroll {
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+.section-student-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px;
+    border-top: 1px solid #f2f4f7;
+}
+
+.section-student-row:first-child {
+    border-top: 0;
+}
+
+.section-student-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.section-student-info strong {
+    color: var(--text);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.section-student-info small {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   REMOVE STUDENT BUTTON
+========================================= */
+
+.remove-student-button {
+    display: grid;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid #fecdca;
+    border-radius: 7px;
+    background: #fff;
+    color: #d92d20;
+    cursor: pointer;
+}
+
+.remove-student-button:hover {
+    background: #fef3f2;
+}
+
+.remove-student-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.section-student-empty {
+    padding: 15px;
+    border: 1px dashed #d0d5dd;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Enrolled student list scrollbar */
+
+.section-student-scroll::-webkit-scrollbar {
+    width: 7px;
+}
+
+.section-student-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #d0d5dd;
+}
+
+.section-student-scroll::-webkit-scrollbar-track {
+    background: #f9fafb;
+}
+
+/* =========================================
+   SECTION SEARCH EMPTY STATE
+========================================= */
+
+.section-search-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.section-search-empty>span {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    margin-bottom: 13px;
+    border-radius: 50%;
+    background: #f2f4f7;
+    color: var(--muted);
+}
+
+.section-search-empty>span svg {
+    width: 22px;
+    height: 22px;
+}
+
+.section-search-empty strong {
+    color: var(--ink);
+    font-size: 14px;
+}
+
+.section-search-empty p {
+    max-width: 400px;
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   SHARED FORM FIELDS AND BUTTONS
+========================================= */
+
+.section-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.section-form-field label {
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.section-form-field input,
+.section-form-field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+}
+
+.section-form-field input:focus,
+.section-form-field select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+}
+
+.button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.button-secondary:hover {
+    border-color: #98a2b3;
+    background: #f9fafb;
+}
+
+.button-secondary svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* =========================================
+   CREATE SECTION MODAL
+========================================= */
+
+.section-modal-overlay {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(16, 24, 40, 0.55);
+    backdrop-filter: blur(3px);
+}
+
+.section-modal-overlay[hidden] {
+    display: none !important;
+}
+
+.section-modal {
+    width: min(100%, 470px);
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(16, 24, 40, 0.22);
+    animation: sectionModalIn 0.18s ease-out;
+}
+
+@keyframes sectionModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.section-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 23px;
+    border-bottom: 1px solid var(--line);
+}
+
+.section-modal-header>div {
+    min-width: 0;
+}
+
+.section-modal-header h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.section-modal-header p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.section-modal-header .icon-btn {
+    flex: 0 0 36px;
+}
+
+.create-section-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 23px;
+}
+
+.create-section-modal-form .section-form-field label {
+    font-size: 12px;
+}
+
+.create-section-modal-form .section-form-field input,
+.create-section-modal-form .section-form-field select {
+    min-height: 45px;
+    font-size: 13px;
+}
+
+.section-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 6px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.section-modal-actions .button {
+    min-height: 42px;
+}
+
+/* =========================================
+   ADD STUDENT AND ADVISER MODALS
+========================================= */
+
+.admin-modal-overlay {
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(16, 24, 40, 0.55);
+    backdrop-filter: blur(3px);
+}
+
+.admin-modal-overlay[hidden] {
+    display: none !important;
+}
+
+.admin-modal {
+    width: min(100%, 520px);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    border: 1px solid #eaecf0;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 24px 60px rgba(16, 24, 40, 0.2);
+}
+
+.admin-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px;
+    border-bottom: 1px solid #eaecf0;
+}
+
+.admin-modal-header h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.admin-modal-header p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.admin-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px 24px 24px;
+}
+
+.admin-modal-form label {
+    margin-top: 5px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-modal-form input[type="search"] {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 9px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.admin-modal-form input[type="search"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+}
+
+.admin-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #eaecf0;
+}
+
+.admin-modal-actions .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 10px 14px;
+    font-size: 12px;
+}
+
+.admin-modal-actions svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* Add Student modal sizing and bottom-aligned actions */
+
+#add-student-modal .admin-modal {
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+    max-height: calc(100dvh - 40px);
+}
+
+#add-student-modal .admin-modal-form {
+    flex: 1;
+    min-height: 0;
+}
+
+#add-student-modal .admin-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: auto;
+}
+
+/* =========================================
+   STUDENT AND FACULTY SEARCH RESULTS
+========================================= */
+
+.student-search-container {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.admin-modal-form .student-search-container>input[type="search"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.student-search-results[hidden],
+.selected-student-card[hidden] {
+    display: none !important;
+}
+
+.student-search-results {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 6px);
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.12);
+}
+
+.student-search-result {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 0;
+    border-bottom: 1px solid #f2f4f7;
+    background: #fff;
+    color: var(--text);
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.student-search-result:last-child {
+    border-bottom: 0;
+}
+
+.student-search-result:hover,
+.student-search-result:focus-visible {
+    outline: none;
+    background: #f5f7ff;
+}
+
+.student-result-avatar {
+    display: grid;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.student-result-avatar svg {
+    width: 18px;
+    height: 18px;
+}
+
+.student-result-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.student-result-text strong {
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.student-result-text small {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.student-result-arrow {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+}
+
+.student-search-hint {
+    margin: 0;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.student-search-hint.is-error {
+    color: var(--danger);
+}
+
+.student-search-hint.is-success {
+    color: var(--success);
+}
+
+/* =========================================
+   SELECTED STUDENT INFORMATION
+========================================= */
+
+.selected-student-card {
+    min-width: 0;
+    padding: 15px;
+    border: 1px solid #dbe2ff;
+    border-radius: 11px;
+    background: #fbfcff;
+}
+
+.selected-student-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    margin-bottom: 15px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid var(--line);
+}
+
+.selected-student-icon {
+    display: grid;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.selected-student-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.selected-student-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.selected-student-title p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.student-change-button {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+    background: #fff;
+    color: var(--primary);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.student-change-button:hover {
+    border-color: #c7d2fe;
+    background: var(--primary-light);
+}
+
+.student-information-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.student-information-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.admin-modal-form .student-information-field label {
+    margin: 0;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.admin-modal-form .student-information-field input[data-student-info] {
+    width: 100%;
+    min-width: 0;
+    min-height: 39px;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    border: 1px solid #eaecf0;
+    border-radius: 8px;
+    outline: none;
+    background: #f9fafb;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: default;
+}
+
+/* =========================================
+   MODAL SCROLL LOCK
+========================================= */
+
+body.section-modal-open {
+    overflow: hidden;
+}
+
+/* =========================================
+   RESPONSIVE LAYOUT
+========================================= */
+
+@media (max-width: 1050px) {
+
+    .admin-stats-grid {
+        gap: 12px;
+    }
+
+    .admin-stat-card {
+        padding: 17px;
+    }
+
+    .managed-sections {
+        padding: 18px;
+    }
+
+    .managed-section-heading {
+        padding: 15px;
+    }
+
+}
+
+@media (max-width: 820px) {
+
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-stats-grid .admin-stat-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .admin-panel-heading {
+        align-items: flex-start;
+        padding: 18px;
+    }
+
+    .managed-sections {
+        padding: 18px;
+    }
+
+    .section-toolbar {
+        padding: 18px;
+    }
+
+    .section-search-status {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .managed-section-heading {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .section-card-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+
+    .section-card-actions .button {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .admin-modal-overlay {
+        align-items: flex-end;
+        padding: 10px;
+    }
+
+    .admin-modal {
+        max-height: calc(100dvh - 20px);
+        border-radius: 16px;
+    }
+
+    .admin-modal-header,
+    .admin-modal-form {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .admin-modal-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .admin-modal-actions .button {
+        width: 100%;
+    }
+
+    #add-student-modal .admin-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #add-student-modal .admin-modal-actions .button {
+        width: auto;
+    }
+
+}
+
+@media (max-width: 520px) {
+
+    .admin-panel-heading {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .section-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .section-filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .section-year-filter {
+        flex: 1 1 auto;
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .section-year-filter select {
+        font-size: 12px;
+    }
+
+    .section-search-box {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 100%;
+        min-height: 44px;
+    }
+
+    .section-search-box input {
+        font-size: 12px;
+    }
+
+    .section-toolbar>.button {
+        width: 100%;
+        margin-left: 0;
+        justify-content: center;
+    }
+
+    .section-search-status {
+        padding: 14px 15px 0;
+        line-height: 1.6;
+    }
+
+    .managed-sections {
+        padding: 14px;
+    }
+
+    .managed-section-heading {
+        gap: 14px;
+        padding: 14px;
+    }
+
+    .managed-section-title h3 {
+        font-size: 14px;
+    }
+
+    .section-student-row {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .section-student-info small {
+        word-break: break-word;
+    }
+
+    .section-modal-overlay {
+        align-items: center;
+        padding: 12px;
+    }
+
+    .section-modal {
+        max-height: calc(100dvh - 24px);
+        border-radius: 12px;
+    }
+
+    .section-modal-header,
+    .create-section-modal-form {
+        padding: 18px;
+    }
+
+    .section-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .section-modal-actions .button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .selected-student-card {
+        padding: 12px;
+    }
+
+    .student-information-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 11px;
+    }
+
+    .selected-student-heading {
+        flex-wrap: wrap;
+    }
+
+    .student-change-button {
+        margin-left: auto;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-stats-grid .admin-stat-card:last-child {
+        grid-column: auto;
+    }
+
+    .admin-stat-card {
+        padding: 15px;
+    }
+
+    .topbar-end {
+        gap: 8px;
+    }
+
+    .search-trigger {
+        width: 42px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .search-trigger span,
+    .search-trigger kbd {
+        display: none;
+    }
+
+    .profile-info,
+    .profile-chevron {
+        display: none;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .section-card-actions {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =========================================
+   ADD STUDENT AND ASSIGN ADVISER MODALS
+   MATCH THE CREATE SECTION MODAL DESIGN
+========================================= */
+
+/* Modal overlay */
+
+.admin-modal-overlay {
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(16, 24, 40, 0.55);
+    backdrop-filter: blur(3px);
+}
+
+.admin-modal-overlay[hidden] {
+    display: none !important;
+}
+
+/* Modal container */
+
+.admin-modal {
+    width: min(100%, 470px);
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(16, 24, 40, 0.22);
+    animation: sectionModalIn 0.18s ease-out;
+}
+
+/* Modal header */
+
+.admin-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 23px;
+    border-bottom: 1px solid var(--line);
+}
+
+.admin-modal-header>div {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-modal-header h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.admin-modal-header p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Modal form spacing */
+
+.admin-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 23px;
+}
+
+.admin-modal-form label {
+    margin: 0;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Search input */
+
+.admin-modal-form input[type="search"] {
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.admin-modal-form input[type="search"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+}
+
+/* Search results */
+
+.student-search-container {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.admin-modal-form .student-search-container>input[type="search"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Student information card */
+
+.selected-student-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Modal action buttons */
+
+.admin-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.admin-modal-actions .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 10px 14px;
+    font-size: 12px;
+}
+
+.admin-modal-actions svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* Remove forced Add Student modal height */
+
+#add-student-modal .admin-modal {
+    display: block;
+    height: auto;
+    height: fit-content;
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+}
+
+#add-student-modal .admin-modal-form {
+    flex: initial;
+    min-height: 0;
+    overflow: visible;
+}
+
+#add-student-modal .admin-modal-actions {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 6px;
+    padding-top: 18px;
+}
+
+/* =========================================
+   TABLET AND MOBILE MODAL RESPONSIVENESS
+========================================= */
+
+@media (max-width: 700px) {
+
+    .admin-modal-overlay {
+        display: grid;
+        place-items: center;
+        padding: 12px;
+    }
+
+    .admin-modal {
+        width: 100%;
+        max-width: 470px;
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
+        border-radius: 12px;
+    }
+
+    .admin-modal-header,
+    .admin-modal-form {
+        padding: 18px;
+    }
+
+    .admin-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .admin-modal-actions .button {
+        width: auto;
+        max-width: 100%;
+    }
+
+}
+
+/* Narrow mobile screens */
+
+@media (max-width: 380px) {
+
+    .admin-modal-overlay {
+        padding: 8px;
+    }
+
+    .admin-modal {
+        max-height: calc(100vh - 16px);
+        max-height: calc(100dvh - 16px);
+    }
+
+    .admin-modal-header,
+    .admin-modal-form {
+        padding: 14px;
+    }
+
+    .admin-modal-header {
+        gap: 10px;
+    }
+
+    .admin-modal-actions {
+        gap: 6px;
+    }
+
+    .admin-modal-actions .button {
+        min-width: 0;
+        padding: 9px 10px;
+        font-size: 11px;
+    }
+
+}
+
+/* Short screens and landscape phones */
+
+@media (max-height: 620px) {
+
+    .admin-modal-overlay {
+        place-items: start center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .admin-modal {
+        max-height: calc(100vh - 20px);
+        max-height: calc(100dvh - 20px);
+    }
+
+}
+
+/* =========================================
+   ENROLLED STUDENT ACTION BUTTONS
+========================================= */
+
+.section-student-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.section-student-actions form {
+    display: flex;
+    margin: 0;
+}
+
+.student-row-action-button {
+    display: grid;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.student-row-action-button:hover {
+    border-color: #c7d2fe;
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.student-row-action-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.section-student-actions .remove-student-button {
+    flex: 0 0 32px;
+}
+
+/* =========================================
+   EDIT STUDENT MODAL
+========================================= */
+
+.edit-student-modal .admin-modal {
+    width: min(100%, 680px);
+}
+
+.edit-student-modal .admin-modal-form {
+    gap: 16px;
+}
+
+.student-modal-section-info {
+    margin-top: 10px !important;
+    padding: 9px 11px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f9fafb;
+    color: var(--muted) !important;
+    font-size: 11px !important;
+}
+
+.student-modal-section-info strong {
+    color: var(--ink);
+}
+
+.student-form-section-title {
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.student-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    min-width: 0;
+}
+
+.student-edit-grid .section-form-field {
+    min-width: 0;
+}
+
+.student-edit-grid .section-form-field label {
+    margin: 0;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.student-edit-grid .section-form-field input {
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+}
+
+.student-edit-grid .section-form-field textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 85px;
+    box-sizing: border-box;
+    resize: vertical;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.student-edit-grid .section-form-field input:focus,
+.student-edit-grid .section-form-field textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+}
+
+.student-edit-full-width {
+    grid-column: 1 / -1;
+}
+
+.student-edit-hint {
+    margin: 0;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f9fafb;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   CHANGE SECTION MODAL
+========================================= */
+
+.change-section-modal .admin-modal {
+    width: min(100%, 470px);
+}
+
+.change-section-modal .admin-modal-form {
+    gap: 18px;
+}
+
+.change-section-form .section-form-field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+}
+
+.change-section-form .section-form-field select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+}
+
+.change-section-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #dbe2ff;
+    border-radius: 9px;
+    background: #fbfcff;
+    color: var(--muted);
+}
+
+.change-section-notice svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+    margin-top: 1px;
+    color: var(--primary);
+}
+
+.change-section-notice p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   RESPONSIVE STUDENT MODALS AND ACTIONS
+========================================= */
+
+@media (max-width: 700px) {
+
+    .section-student-actions {
+        gap: 5px;
+    }
+
+    .student-edit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .edit-student-modal .admin-modal {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .section-student-row {
+        gap: 7px;
+    }
+
+    .section-student-actions {
+        gap: 4px;
+    }
+
+    .student-row-action-button,
+    .section-student-actions .remove-student-button {
+        flex-basis: 30px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .student-edit-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .student-edit-full-width {
+        grid-column: auto;
+    }
+
+}
+
+.managed-section-card+.managed-section-card {
+    margin-top: 14px;
+}
+
+/* =========================================================
+   ADMIN PROFILE MODAL
+========================================================= */
+
+body.admin-profile-modal-open {
+    overflow: hidden;
+}
+
+.admin-profile-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.admin-profile-modal[hidden] {
+    display: none !important;
+}
+
+.admin-profile-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(16, 24, 40, .58);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.admin-profile-dialog {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    width: min(760px, 100%);
+    height: min(860px, calc(100vh - 40px));
+    height: min(860px, calc(100dvh - 40px));
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--surface);
+    box-shadow: 0 24px 70px rgba(16, 24, 40, .25);
+    animation: admin-profile-appear .18s ease-out;
+}
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
+.admin-profile-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 23px 25px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+}
+
+.admin-profile-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    min-width: 0;
+}
+
+.admin-profile-heading-icon {
+    display: grid;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.admin-profile-heading-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.admin-profile-heading h2 {
+    margin: 1px 0 0;
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.admin-profile-heading p {
+    max-width: 520px;
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.admin-profile-close {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+}
+
+.admin-profile-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* =========================================================
+   PROFILE PICTURE EDITOR
+========================================================= */
+
+.admin-profile-picture-form {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    padding: 18px 25px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+}
+
+.admin-picture-editor {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    width: 100%;
+    min-width: 0;
+}
+
+.admin-picture-preview {
+    display: grid;
+    flex: 0 0 76px;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    overflow: hidden;
+    border: 2px solid #dbeafe;
+    border-radius: 50%;
+    background: #eff6ff;
+    color: var(--primary);
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.admin-picture-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+.admin-picture-details {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.admin-picture-details>strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.admin-picture-details>p {
+    margin: 0 0 11px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.admin-picture-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-picture-actions .button {
+    min-height: 36px;
+    padding: 7px 11px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.admin-picture-actions .button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.admin-picture-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.admin-picture-details>small {
+    display: block;
+    margin-top: 9px;
+    color: var(--subtle);
+    font-size: 10px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.admin-picture-error {
+    margin-top: 15px;
+}
+
+/* =========================================================
+   PERSONAL AND ACCOUNT INFORMATION FORM
+========================================================= */
+
+.admin-profile-form {
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 22px 25px 24px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #d0d5dd transparent;
+}
+
+.admin-profile-form>.admin-alert {
+    margin-bottom: 20px;
+}
+
+.admin-profile-section-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 16px;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.admin-profile-section-title>svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+    color: var(--primary);
+}
+
+.admin-profile-account-title {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+}
+
+.admin-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.admin-profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.admin-profile-full {
+    grid-column: 1 / -1;
+}
+
+.admin-profile-field label {
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-profile-field .required-mark {
+    color: var(--danger);
+}
+
+.admin-profile-field input,
+.admin-profile-field select,
+.admin-profile-field textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.5;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.admin-profile-field textarea {
+    min-height: 86px;
+    resize: vertical;
+}
+
+.admin-profile-field input::placeholder,
+.admin-profile-field textarea::placeholder {
+    color: var(--subtle);
+}
+
+.admin-profile-field input:focus,
+.admin-profile-field select:focus,
+.admin-profile-field textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, .12);
+}
+
+.admin-profile-field input[readonly] {
+    border-color: #eaecf0;
+    background: #f8fafc;
+    color: #667085;
+    cursor: default;
+}
+
+.admin-profile-field small {
+    color: var(--subtle);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   PROFILE ACTION BUTTONS
+========================================================= */
+
+.admin-profile-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 27px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+}
+
+.admin-profile-actions .button {
+    min-width: 112px;
+    min-height: 42px;
+}
+
+/* =========================================================
+   ACCOUNT SETTINGS — PASSWORD MODAL
+========================================================= */
+
+.admin-password-dialog {
+    width: min(540px, 100%);
+    height: auto;
+    max-height: min(860px, calc(100vh - 40px));
+    max-height: min(860px, calc(100dvh - 40px));
+}
+
+.admin-password-form {
+    flex: 0 1 auto;
+    width: 100%;
+    min-height: 0;
+    padding: 22px 25px 24px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.admin-password-form .admin-profile-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 19px;
+}
+
+.admin-password-input-wrap {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.admin-password-input-wrap input {
+    width: 100%;
+    padding-right: 46px;
+}
+
+.admin-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    transform: translateY(-50%);
+    place-items: center;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--subtle);
+    transition: background .15s ease, color .15s ease;
+}
+
+.admin-password-toggle:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.admin-password-toggle svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 1.8;
+}
+
+.admin-password-input-wrap input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, .12);
+}
+
+.admin-password-form .admin-profile-actions {
+    margin-top: 25px;
+}
+
+/* =========================================================
+   PROFILE MODAL ANIMATION
+========================================================= */
+
+@keyframes admin-profile-appear {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================================================
+   TABLETS
+========================================================= */
+
+@media (max-width: 820px) {
+
+    .admin-profile-modal {
+        padding: 16px;
+    }
+
+    .admin-profile-dialog {
+        height: calc(100dvh - 32px);
+        max-height: calc(100dvh - 32px);
+    }
+
+    .admin-profile-header {
+        padding: 20px;
+    }
+
+    .admin-profile-picture-form {
+        padding: 15px 20px;
+    }
+
+    .admin-profile-form {
+        padding: 20px;
+    }
+
+    .admin-password-dialog {
+        height: auto;
+        max-height: calc(100dvh - 32px);
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .admin-profile-modal {
+        align-items: center;
+        padding: 10px;
+    }
+
+    .admin-profile-dialog {
+        width: 100%;
+        height: calc(100dvh - 20px);
+        max-height: calc(100dvh - 20px);
+        border-radius: 13px;
+    }
+
+    .admin-profile-header {
+        gap: 9px;
+        padding: 17px;
+    }
+
+    .admin-profile-heading {
+        gap: 10px;
+    }
+
+    .admin-profile-heading-icon {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .admin-profile-heading-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .admin-profile-heading h2 {
+        font-size: 18px;
+    }
+
+    .admin-profile-heading p {
+        font-size: 11px;
+    }
+
+    .admin-profile-picture-form {
+        padding: 14px 17px;
+    }
+
+    .admin-picture-editor {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .admin-picture-preview {
+        flex-basis: 62px;
+        width: 62px;
+        height: 62px;
+        font-size: 18px;
+    }
+
+    .admin-picture-actions {
+        align-items: stretch;
+    }
+
+    .admin-picture-actions .button {
+        justify-content: center;
+        min-height: 36px;
+    }
+
+    .admin-profile-form {
+        padding: 18px 17px;
+    }
+
+    .admin-profile-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+    }
+
+    .admin-profile-full {
+        grid-column: auto;
+    }
+
+    .admin-profile-account-title {
+        margin-top: 23px;
+        padding-top: 20px;
+    }
+
+    .admin-profile-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .admin-profile-actions .button {
+        width: 100%;
+        min-width: 0;
+        padding-inline: 8px;
+    }
+
+    /* PASSWORD MODAL */
+
+    .admin-password-dialog {
+        height: auto;
+        max-height: calc(100dvh - 20px);
+    }
+
+    .admin-password-form {
+        padding: 18px 17px;
+    }
+
+    .admin-password-form .admin-profile-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+}
+
+/* =========================================================
+   NARROW PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .admin-profile-header {
+        padding: 14px;
+    }
+
+    .admin-profile-picture-form {
+        padding: 12px 14px;
+    }
+
+    .admin-profile-form {
+        padding: 16px 14px;
+    }
+
+    .admin-picture-editor {
+        gap: 10px;
+    }
+
+    .admin-picture-preview {
+        flex-basis: 54px;
+        width: 54px;
+        height: 54px;
+    }
+
+    .admin-picture-actions .button {
+        padding-inline: 8px;
+    }
+
+    .admin-password-form {
+        padding: 16px 14px;
+    }
+
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .admin-profile-dialog {
+        animation: none;
+    }
+
+    .admin-profile-dialog,
+    .admin-password-toggle,
+    .admin-picture-actions .button {
+        transition: none;
+    }
+
+}
+
+/* =====================================================
+   LIVE DATE AND TIME
+===================================================== */
+
+.datetime-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    white-space: nowrap;
+}
+
+.datetime-date {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted, #64748b);
+    line-height: 1.3;
+}
+
+.datetime-clock {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary, #1e293b);
+    line-height: 1.3;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 820px) {
+    .datetime-date {
+        font-size: 11px;
+    }
+
+    .datetime-clock {
+        font-size: 16px;
+    }
+}
+
+/* =========================================
+   SECTION EXPORT DROPDOWN
+========================================= */
+
+.section-export-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    z-index: 5;
+}
+
+.section-export-toggle {
+    min-height: 38px;
+    white-space: nowrap;
+}
+
+.section-export-toggle .export-chevron {
+    width: 13px;
+    height: 13px;
+    margin-left: 2px;
+    transition: transform 0.2s ease;
+}
+
+.section-export-toggle[aria-expanded="true"] {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.section-export-toggle[aria-expanded="true"] .export-chevron {
+    transform: rotate(180deg);
+}
+
+/* Dropdown container */
+
+.section-export-menu {
+    position: absolute;
+    top: calc(100% + 7px);
+    right: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 185px;
+    padding: 6px;
+    box-sizing: border-box;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.14);
+    animation: sectionExportDropdownIn 0.15s ease-out;
+}
+
+.section-export-menu[hidden] {
+    display: none !important;
+}
+
+/* Individual export options */
+
+.section-export-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 40px;
+    padding: 9px 11px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.section-export-option:hover,
+.section-export-option:focus-visible {
+    outline: none;
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.section-export-option svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+    color: var(--muted);
+}
+
+.section-export-option:hover svg,
+.section-export-option:focus-visible svg {
+    color: var(--primary);
+}
+
+.section-export-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Keep the active card above neighboring section cards */
+
+.managed-section-card.has-export-menu-open {
+    position: relative;
+    z-index: 30;
+    overflow: visible;
+}
+
+.managed-section-card.has-export-menu-open .managed-section-heading {
+    position: relative;
+    z-index: 31;
+    overflow: visible;
+}
+
+/* Dropdown animation */
+
+@keyframes sectionExportDropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 700px) {
+
+    .section-export-wrap {
+        width: 100%;
+    }
+
+    .section-card-actions .section-export-wrap {
+        grid-column: 1 / -1;
+    }
+
+    .section-export-toggle {
+        width: 100%;
+    }
+
+    .section-export-menu {
+        right: 0;
+        left: 0;
+        width: 100%;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .section-export-menu {
+        animation: none;
+    }
+
+    .section-export-toggle .export-chevron {
+        transition: none;
+    }
+
+}
+
+
+/* =========================================
+   ADMIN RESET DATA MODAL
+========================================= */
+
+.admin-reset-modal {
+    z-index: 3100;
+}
+
+.admin-reset-dialog {
+    width: min(760px, 100%);
+    height: auto;
+    max-height: min(760px, calc(100vh - 40px));
+    max-height: min(760px, calc(100dvh - 40px));
+}
+
+.admin-reset-heading-icon {
+    background: #fff1f0;
+    color: #b42318;
+}
+
+.admin-reset-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 15px;
+    min-height: 0;
+    padding: 22px 25px 24px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* =========================================
+   RESET OPTION CARDS
+========================================= */
+
+.admin-reset-option {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.admin-reset-option-icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 11px;
+    background: #fef3f2;
+    color: #b42318;
+}
+
+.admin-reset-option-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.admin-reset-option-warning .admin-reset-option-icon {
+    background: #fffaeb;
+    color: #b54708;
+}
+
+/* =========================================
+   RESET OPTION DETAILS
+========================================= */
+
+.admin-reset-option-details {
+    min-width: 0;
+}
+
+.admin-reset-option-details h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.admin-reset-option-details p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.admin-reset-option-details p strong {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.admin-reset-option-details code {
+    padding: 2px 5px;
+    border: 1px solid #eaecf0;
+    border-radius: 5px;
+    background: #f9fafb;
+    color: #344054;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.admin-reset-option-details small {
+    display: block;
+    margin-top: 7px;
+    color: var(--subtle);
+    font-size: 10px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   RESET BUTTONS
+========================================= */
+
+.admin-reset-option-action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+.admin-reset-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 10px 13px;
+    border: 1px solid #fecdca;
+    border-radius: 8px;
+    background: #fff;
+    color: #b42318;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        color .15s ease;
+}
+
+.admin-reset-action-button:hover,
+.admin-reset-action-button:focus-visible {
+    outline: none;
+    border-color: #fda29b;
+    background: #fef3f2;
+}
+
+.admin-reset-action-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.admin-reset-academic-button {
+    border-color: #fedf89;
+    color: #b54708;
+}
+
+.admin-reset-academic-button:hover,
+.admin-reset-academic-button:focus-visible {
+    border-color: #fec84b;
+    background: #fffaeb;
+}
+
+.admin-reset-action-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   WARNING MESSAGE
+========================================= */
+
+.admin-reset-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 12px 13px;
+    border: 1px solid #fedf89;
+    border-radius: 9px;
+    background: #fffaeb;
+    color: #b54708;
+}
+
+.admin-reset-note>svg {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    margin-top: 1px;
+}
+
+.admin-reset-note p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   MODAL FOOTER
+========================================= */
+
+.admin-reset-footer {
+    margin-top: 2px;
+    padding-top: 16px;
+}
+
+/* =========================================
+   TABLET AND MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .admin-reset-content {
+        padding: 18px;
+    }
+
+    .admin-reset-option {
+        grid-template-columns: 40px minmax(0, 1fr);
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .admin-reset-option-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .admin-reset-option-action {
+        grid-column: 1 / -1;
+        justify-content: stretch;
+    }
+
+    .admin-reset-action-button {
+        width: 100%;
+    }
+
+    .admin-reset-footer {
+        display: flex;
+    }
+
+    .admin-reset-footer .button {
+        width: auto;
+        min-width: 110px;
+    }
+
+}
+
+@media (max-width: 520px) {
+
+    .admin-reset-dialog {
+        max-height: calc(100dvh - 20px);
+        border-radius: 13px;
+    }
+
+    .admin-reset-content {
+        gap: 12px;
+        padding: 15px 14px 17px;
+    }
+
+    .admin-reset-option {
+        padding: 13px;
+    }
+
+    .admin-reset-option-details h3 {
+        font-size: 13px;
+    }
+
+    .admin-reset-option-details p {
+        font-size: 11px;
+    }
+
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .admin-reset-action-button {
+        transition: none;
+    }
+
+}
+
+/* =========================================
+   RESET DATA PASSWORD VERIFICATION
+========================================= */
+
+.admin-reset-password-modal {
+    z-index: 3200;
+}
+
+.admin-reset-password-dialog {
+    width: min(500px, 100%);
+    height: auto;
+    max-height: calc(100dvh - 40px);
+}
+
+.admin-reset-password-modal .admin-reset-content {
+    gap: 20px;
+}
+
+.admin-reset-password-modal .admin-profile-field input {
+    min-height: 45px;
+}
+
+.admin-reset-password-modal .admin-reset-footer {
+    margin-top: 5px;
+}
+
+@media (max-width: 520px) {
+
+    .admin-reset-password-dialog {
+        max-height: calc(100dvh - 20px);
+    }
+
+}

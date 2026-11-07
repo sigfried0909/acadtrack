@@ -1,0 +1,811 @@
+/* =========================================================
+   ACADTRACK — MANAGE ACCOUNTS
+   Uses the existing Admin / Student dashboard design tokens.
+========================================================= */
+
+.account-management-panel {
+    width: 100%;
+    min-width: 0;
+}
+
+.account-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--line);
+    background: #fcfcfd;
+}
+
+.account-filter-group {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.account-search-box,
+.account-role-filter {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--muted);
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.account-search-box {
+    flex: 1 1 400px;
+    min-width: 0;
+    max-width: 470px;
+}
+
+.account-search-box:focus-within,
+.account-role-filter:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, .12);
+}
+
+.account-search-box>svg,
+.account-role-filter>svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+}
+
+.account-search-box input,
+.account-role-filter select {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 12px;
+}
+
+.account-search-box input::placeholder {
+    color: #98a2b3;
+}
+
+.account-role-filter {
+    flex: 0 0 165px;
+}
+
+.account-role-filter select {
+    cursor: pointer;
+}
+
+.account-toolbar>.button {
+    flex: 0 0 auto;
+    min-height: 44px;
+    white-space: nowrap;
+}
+
+.account-list-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 24px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.accounts-table-wrap {
+    width: 100%;
+    min-width: 0;
+    padding: 0 24px 22px;
+}
+
+.accounts-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #d0d5dd transparent;
+}
+
+/* Show vertical scrollbar when there are 10 or more accounts */
+
+.accounts-table-scroll.has-account-scroll {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.accounts-table-scroll.has-account-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #f9fafb;
+}
+
+.accounts-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.accounts-table thead {
+    background: #f9fafb;
+}
+
+.accounts-table th {
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .035em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.accounts-table td {
+    padding: 13px 14px;
+    border-bottom: 1px solid #f2f4f7;
+    color: var(--text);
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.accounts-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.accounts-table tbody tr:hover {
+    background: #fcfcff;
+}
+
+.account-identity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 205px;
+}
+
+.account-avatar {
+    display: grid;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.account-avatar-faculty {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+.account-identity-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.account-identity-text strong {
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.account-identity-text small {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.account-identity-text .account-section-label {
+    color: var(--primary);
+}
+
+.account-role-badge,
+.account-status-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.account-role-badge.student {
+    background: #eff6ff;
+    color: #175cd3;
+}
+
+.account-role-badge.faculty {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+.account-status-badge.active {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.account-status-badge.inactive {
+    background: #f2f4f7;
+    color: #667085;
+}
+
+.account-email-cell,
+.account-number-cell {
+    overflow-wrap: anywhere;
+}
+
+.account-actions-heading {
+    width: 92px;
+    text-align: right !important;
+}
+
+.account-row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+.account-icon-action {
+    display: grid;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.account-icon-action svg {
+    width: 15px;
+    height: 15px;
+}
+
+.account-edit-action:hover,
+.account-edit-action:focus-visible {
+    outline: 0;
+    border-color: #c7d2fe;
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.account-delete-action {
+    border-color: #fecdca;
+    color: #d92d20;
+}
+
+.account-delete-action:hover,
+.account-delete-action:focus-visible {
+    outline: 0;
+    border-color: #fda29b;
+    background: #fef3f2;
+    color: #b42318;
+}
+
+.account-empty-state,
+.account-filter-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 46px 20px;
+    color: var(--muted);
+    text-align: center;
+}
+
+.account-empty-state>span {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    margin-bottom: 13px;
+    border-radius: 50%;
+    background: #f2f4f7;
+    color: var(--muted);
+}
+
+.account-empty-state>span svg,
+.account-filter-empty>svg {
+    width: 22px;
+    height: 22px;
+}
+
+.account-empty-state strong,
+.account-filter-empty strong {
+    color: var(--ink);
+    font-size: 13px;
+}
+
+.account-empty-state p,
+.account-filter-empty p {
+    margin: 7px 0 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.account-filter-empty[hidden] {
+    display: none !important;
+}
+
+.account-management-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin: 0 24px 20px;
+    padding: 12px 13px;
+    border: 1px solid #dbe2ff;
+    border-radius: 9px;
+    background: #fbfcff;
+    color: var(--muted);
+}
+
+.account-management-note>svg {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    margin-top: 1px;
+    color: var(--primary);
+}
+
+.account-management-note p {
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   CREATE / EDIT ACCOUNT MODAL
+========================================================= */
+
+body.account-modal-open {
+    overflow: hidden;
+}
+
+.account-modal-overlay {
+    position: fixed;
+    z-index: 3600;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    overflow-y: auto;
+    background: rgba(16, 24, 40, .58);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.account-modal-overlay[hidden] {
+    display: none !important;
+}
+
+.account-modal-dialog {
+    display: flex;
+    flex-direction: column;
+    width: min(680px, 100%);
+    max-height: calc(100dvh - 36px);
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(16, 24, 40, .24);
+    animation: accountModalIn .18s ease-out;
+}
+
+@keyframes accountModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.account-modal-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 21px 23px;
+    border-bottom: 1px solid var(--line);
+}
+
+.account-modal-header>div {
+    min-width: 0;
+}
+
+.account-modal-header h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.account-modal-header p {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.account-modal-header .icon-btn {
+    flex: 0 0 34px;
+}
+
+.account-modal-form,
+.account-delete-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    padding: 20px 23px 23px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.account-form-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.account-form-section-heading small {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.account-form-personal-heading {
+    margin-top: 5px;
+}
+
+.account-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    min-width: 0;
+}
+
+.account-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.account-form-full {
+    grid-column: 1 / -1;
+}
+
+.account-form-field label {
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.account-form-field label span {
+    color: var(--danger);
+}
+
+.account-form-field input,
+.account-form-field select,
+.account-form-field textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    box-sizing: border-box;
+    padding: 10px 11px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    outline: 0;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.account-form-field textarea {
+    min-height: 76px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.account-form-field input:focus,
+.account-form-field select:focus,
+.account-form-field textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(70, 95, 255, .12);
+}
+
+.account-form-field input::placeholder,
+.account-form-field textarea::placeholder {
+    color: #98a2b3;
+}
+
+.account-form-field small {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+#account-student-number-field[hidden] {
+    display: none !important;
+}
+
+.account-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 4px;
+    padding-top: 17px;
+    border-top: 1px solid var(--line);
+}
+
+.account-modal-actions .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 9px 13px;
+    font-size: 11px;
+}
+
+.account-modal-actions .button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.account-modal-actions .button-danger {
+    border: 1px solid #d92d20;
+    background: #d92d20;
+    color: #fff;
+}
+
+.account-modal-actions .button-danger:hover {
+    border-color: #b42318;
+    background: #b42318;
+}
+
+/* =========================================================
+   DELETE CONFIRMATION MODAL
+========================================================= */
+
+.account-delete-dialog {
+    width: min(490px, 100%);
+}
+
+.account-delete-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+}
+
+.account-delete-heading-icon {
+    display: grid;
+    flex: 0 0 39px;
+    width: 39px;
+    height: 39px;
+    place-items: center;
+    border-radius: 10px;
+    background: #fef3f2;
+    color: #b42318;
+}
+
+.account-delete-heading-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.account-delete-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: #f9fafb;
+}
+
+.account-delete-summary strong {
+    color: var(--ink);
+    font-size: 13px;
+}
+
+.account-delete-summary span {
+    color: var(--muted);
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.account-delete-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 12px;
+    border: 1px solid #fecdca;
+    border-radius: 9px;
+    background: #fef3f2;
+    color: #b42318;
+}
+
+.account-delete-warning>svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+    margin-top: 1px;
+}
+
+.account-delete-warning p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 820px) {
+    .account-toolbar {
+        padding: 18px;
+    }
+
+    .account-list-summary {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .accounts-table-wrap {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .account-management-note {
+        margin-right: 18px;
+        margin-left: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .account-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .account-filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .account-search-box,
+    .account-role-filter {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    .account-toolbar>.button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .account-list-summary {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+        padding: 12px 15px;
+    }
+
+    .accounts-table-wrap {
+        padding: 0 14px 16px;
+    }
+
+    .account-management-note {
+        margin: 0 14px 15px;
+    }
+
+    .account-modal-overlay {
+        padding: 10px;
+    }
+
+    .account-modal-dialog {
+        max-height: calc(100dvh - 20px);
+        border-radius: 13px;
+    }
+
+    .account-modal-header,
+    .account-modal-form,
+    .account-delete-content {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .account-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .account-form-full {
+        grid-column: auto;
+    }
+
+    .account-modal-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .account-modal-actions .button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .account-modal-header,
+    .account-modal-form,
+    .account-delete-content {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
+
+    .account-modal-actions {
+        gap: 7px;
+    }
+
+    .account-modal-actions .button {
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .account-modal-dialog,
+    .account-icon-action {
+        animation: none;
+        transition: none;
+    }
+}
