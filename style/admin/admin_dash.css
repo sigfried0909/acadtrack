@@ -1,58 +1,543 @@
 @import url("../student/student_dash.css");
 
-/* =========================================
-   ADMIN DASHBOARD SUMMARY
-========================================= */
+/* =========================================================
+   ACADTRACK — ADMIN DASHBOARD
+   Consolidated Main Stylesheet
+   Theme: Modern Violet / Indigo
+   Reference: AcadTrack Authentication Design
+========================================================= */
+
+
+/* =========================================================
+   1. DESIGN TOKENS
+========================================================= */
+
+:root {
+    --primary: #7041d6;
+    --primary-hover: #5b32bd;
+    --primary-light: #f1ebff;
+    --primary-border: #e5dafa;
+    --primary-accent: #8b5cf6;
+
+    --ink: #211b35;
+    --text: #403b54;
+    --muted: #77738b;
+    --subtle: #9b97ad;
+
+    --line: #ebe8f2;
+    --surface: #ffffff;
+    --page-bg: #f8f7fc;
+
+    --success: #16834d;
+    --success-bg: #edfaf2;
+    --success-border: #c7ebd6;
+
+    --warning: #a66b12;
+    --warning-bg: #fff8e9;
+    --warning-border: #f3dfb4;
+
+    --danger: #bd3449;
+    --danger-bg: #fff1f3;
+    --danger-border: #f3cbd2;
+
+    --ease-out: cubic-bezier(.22, 1, .36, 1);
+    --ease-soft: cubic-bezier(.45, 0, .25, 1);
+    --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+
+    --admin-shadow-sm:
+        0 1px 2px rgba(35, 24, 72, .03),
+        0 4px 10px rgba(63, 43, 115, .04);
+
+    --admin-shadow-md:
+        0 2px 6px rgba(35, 24, 72, .035),
+        0 10px 24px rgba(63, 43, 115, .075);
+
+    --admin-shadow-lg:
+        0 4px 12px rgba(35, 24, 72, .04),
+        0 18px 42px rgba(63, 43, 115, .11),
+        0 35px 70px rgba(63, 43, 115, .07);
+}
+
+
+/* =========================================================
+   2. ANIMATED BORDER PROPERTY
+========================================================= */
+
+@property --admin-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+
+/* =========================================================
+   3. GLOBAL ADMIN STYLES
+========================================================= */
+
+.admin-dashboard,
+.admin-dashboard * {
+    box-sizing: border-box;
+}
+
+.admin-dashboard button,
+.admin-dashboard input,
+.admin-dashboard select,
+.admin-dashboard textarea {
+    font-family: inherit;
+}
+
+.admin-dashboard button,
+.admin-dashboard a {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.admin-dashboard :is(button,
+    a,
+    input,
+    select,
+    textarea,
+    summary):focus-visible {
+    outline: 3px solid rgba(112, 65, 214, .25);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   4. SHARED ANIMATION KEYFRAMES
+========================================================= */
+
+@keyframes admin-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes admin-item-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 11px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes admin-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes admin-fade-down {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -8px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes admin-card-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 23px, 0) scale(.975);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes admin-slide-left {
+    from {
+        opacity: 0;
+        transform: translate3d(-18px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes admin-slide-right {
+    from {
+        opacity: 0;
+        transform: translate3d(18px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes admin-alert-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -9px, 0) scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes admin-modal-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 24px, 0) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes admin-orb-a {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(-44px, 52px, 0) scale(1.1);
+    }
+}
+
+@keyframes admin-orb-b {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(50px, -42px, 0) scale(1.12);
+    }
+}
+
+@keyframes admin-halo {
+
+    0%,
+    100% {
+        opacity: .45;
+        transform: scale(.94);
+    }
+
+    50% {
+        opacity: .95;
+        transform: scale(1.09);
+    }
+}
+
+@keyframes admin-border-spin {
+    to {
+        --admin-angle: 360deg;
+    }
+}
+
+@keyframes admin-toast-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 15px, 0) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes admin-logo-in {
+    from {
+        opacity: 0;
+        transform: scale(.6) rotate(-12deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes admin-active-bar {
+    from {
+        opacity: 0;
+        transform: scaleY(.3);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+
+/* =========================================================
+   5. DASHBOARD BACKGROUND
+========================================================= */
+
+body {
+    background:
+        radial-gradient(circle at 12% 10%,
+            rgba(139, 92, 246, .065),
+            transparent 32%),
+        radial-gradient(circle at 90% 85%,
+            rgba(99, 102, 241, .055),
+            transparent 34%),
+        linear-gradient(135deg,
+            #f8f7ff,
+            #f7f7fc 48%,
+            #faf9ff);
+}
+
+.app {
+    position: relative;
+    isolation: isolate;
+    background: transparent;
+}
+
+/* Ambient decorative rings */
+
+.app::before,
+.app::after {
+    position: fixed;
+    z-index: -1;
+
+    display: block;
+
+    border: 1px solid rgba(124, 58, 237, .08);
+    border-radius: 50%;
+
+    content: "";
+    pointer-events: none;
+    will-change: transform;
+}
+
+.app::before {
+    top: -175px;
+    right: -120px;
+
+    width: 390px;
+    height: 390px;
+
+    background: radial-gradient(circle at 35% 35%,
+            rgba(167, 139, 250, .15),
+            rgba(139, 92, 246, .035) 58%,
+            transparent 73%);
+
+    box-shadow:
+        0 0 0 35px rgba(124, 58, 237, .018),
+        0 0 0 75px rgba(124, 58, 237, .012);
+
+    animation: admin-orb-a 22s ease-in-out infinite alternate;
+}
+
+.app::after {
+    bottom: -170px;
+    left: -125px;
+
+    width: 330px;
+    height: 330px;
+
+    border-color: rgba(99, 102, 241, .08);
+
+    background: radial-gradient(circle at 65% 65%,
+            rgba(129, 140, 248, .16),
+            rgba(99, 102, 241, .035) 58%,
+            transparent 73%);
+
+    box-shadow:
+        0 0 0 35px rgba(99, 102, 241, .018),
+        0 0 0 75px rgba(99, 102, 241, .012);
+
+    animation: admin-orb-b 25s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   6. ADMIN PAGE ENTRANCE
+========================================================= */
+
+.admin-dashboard {
+    min-width: 0;
+    animation: admin-fade .55s ease;
+}
+
+.admin-dashboard .page-title-row {
+    animation: admin-rise .75s var(--ease-out) .08s backwards;
+}
+
+.admin-dashboard .page-footer {
+    animation: admin-fade .8s ease .5s backwards;
+}
+
+
+/* =========================================================
+   7. ADMIN STATISTICS
+========================================================= */
 
 .admin-stats-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
+
     margin-bottom: 24px;
 }
 
 .admin-stat-card {
+    position: relative;
+    isolation: isolate;
+
     display: flex;
     align-items: center;
     gap: 15px;
+
     min-width: 0;
     padding: 21px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--surface);
-    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+
+    border: 1px solid rgba(235, 231, 241, .95);
+    border-radius: 15px;
+
+    background:
+        radial-gradient(ellipse 120% 45% at 50% -10%,
+            rgba(196, 181, 253, .13),
+            transparent 75%),
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .98),
+            rgba(255, 255, 255, .94));
+
+    box-shadow:
+        0 1px 2px rgba(35, 24, 66, .025),
+        0 7px 17px rgba(35, 24, 66, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    transition:
+        transform .4s var(--ease-out),
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.admin-stat-card:hover {
+    border-color: #d9c9f3;
+
+    box-shadow:
+        0 5px 14px rgba(63, 42, 104, .055),
+        0 15px 32px rgba(63, 42, 104, .085);
+
+    transform: translateY(-5px);
+}
+
+.admin-stat-card:nth-child(1) {
+    animation: admin-card-in .75s var(--ease-out) .08s backwards;
+}
+
+.admin-stat-card:nth-child(2) {
+    animation: admin-card-in .75s var(--ease-out) .17s backwards;
+}
+
+.admin-stat-card:nth-child(3) {
+    animation: admin-card-in .75s var(--ease-out) .26s backwards;
 }
 
 .admin-stat-icon {
+    position: relative;
+
     display: grid;
     flex: 0 0 46px;
+
     place-items: center;
+
     width: 46px;
     height: 46px;
-    border-radius: 11px;
-    background: var(--primary-light);
+
+    border: 1px solid #e8dcff;
+    border-radius: 13px;
+
+    background: linear-gradient(145deg, #f4efff, #eee5ff);
     color: var(--primary);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .9),
+        0 3px 9px rgba(112, 65, 214, .055);
+
+    transition:
+        transform .4s var(--ease-spring),
+        box-shadow .3s ease,
+        background .3s ease;
 }
 
 .admin-stat-icon svg {
     width: 22px;
     height: 22px;
+
+    transition: transform .35s var(--ease-spring);
 }
 
+.admin-stat-card:hover .admin-stat-icon {
+    background: linear-gradient(145deg, #eee5ff, #e4d8ff);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .95),
+        0 6px 14px rgba(112, 65, 214, .12);
+
+    transform: rotate(-5deg) scale(1.06);
+}
+
+.admin-stat-card:hover .admin-stat-icon svg {
+    transform: scale(1.08);
+}
+
+/* Success icon */
+
 .admin-stat-icon.stat-success {
-    background: var(--success-bg);
+    border-color: #bbebd0;
+    background: linear-gradient(145deg, #f0fdf5, #dcfce7);
     color: var(--success);
 }
 
+.admin-stat-card:hover .admin-stat-icon.stat-success {
+    border-color: #a3e6bd;
+    background: linear-gradient(145deg, #dcfce7, #c7f9d8);
+}
+
+/* Warning icon */
+
 .admin-stat-icon.stat-warning {
-    background: var(--warning-bg);
+    border-color: #f3dfb4;
+    background: linear-gradient(145deg, #fff9ec, #fff1cc);
     color: var(--warning);
+}
+
+.admin-stat-card:hover .admin-stat-icon.stat-warning {
+    border-color: #eecf91;
+    background: linear-gradient(145deg, #fff3d6, #ffeab5);
 }
 
 .admin-stat-card>div {
     display: flex;
     flex-direction: column;
     gap: 5px;
+
     min-width: 0;
 }
 
@@ -65,116 +550,209 @@
     color: var(--ink);
     font-size: 26px;
     line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -.5px;
+    font-variant-numeric: tabular-nums;
 }
 
-/* =========================================
-   ADMIN PANELS AND ALERTS
-========================================= */
+
+/* =========================================================
+   8. ADMIN PANELS AND ALERTS
+========================================================= */
 
 .admin-panel {
+    position: relative;
+    isolation: isolate;
+
     min-width: 0;
     overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--surface);
-    box-shadow: var(--shadow-sm);
+
+    border: 1px solid rgba(235, 231, 241, .95);
+    border-radius: 16px;
+
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .98),
+            rgba(255, 255, 255, .94));
+
+    box-shadow:
+        0 2px 7px rgba(35, 24, 66, .025),
+        0 9px 22px rgba(35, 24, 66, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease;
 }
 
 .admin-panel-heading {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+
     padding: 22px 24px;
-    border-bottom: 1px solid var(--line);
+
+    border-bottom: 1px solid #f0edf5;
+
+    background:
+        radial-gradient(ellipse 120% 100% at 0% 0%,
+            rgba(196, 181, 253, .10),
+            transparent 75%),
+        #fff;
 }
 
 .admin-panel-heading h2 {
     margin: 0;
-    color: var(--ink);
+
+    color: #29223d;
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -.35px;
 }
 
 .admin-panel-heading p {
     margin: 7px 0 0;
-    color: var(--muted);
+
+    color: #8c879a;
     font-size: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .admin-count {
     flex: 0 0 auto;
+
     padding: 6px 10px;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    color: var(--muted);
+
+    border: 1px solid #e5dafa;
+    border-radius: 30px;
+
+    background: #f5f0ff;
+    color: #6935ca;
+
     font-size: 11px;
+    font-weight: 700;
+
     white-space: nowrap;
+
+    transition:
+        background .25s ease,
+        box-shadow .25s ease;
 }
+
+.admin-count:hover {
+    background: #eee7ff;
+    box-shadow: 0 3px 8px rgba(112, 65, 214, .08);
+}
+
+/* Alerts */
 
 .admin-alert {
     display: flex;
     align-items: flex-start;
     gap: 10px;
+
     margin: 0 0 18px;
     padding: 12px 14px;
+
     border: 1px solid transparent;
-    border-radius: 9px;
+    border-radius: 11px;
+
     font-size: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
+
+    animation: admin-alert-in .45s var(--ease-out);
 }
 
 .admin-alert svg {
     flex: 0 0 17px;
+
     width: 17px;
     height: 17px;
+
     margin-top: 1px;
 }
 
 .admin-alert-success {
-    border-color: #abefc6;
-    background: var(--success-bg);
+    border-color: var(--success-border);
+
+    background: linear-gradient(180deg,
+            #f3fdf6,
+            #edfaf2);
+
     color: var(--success);
+
+    box-shadow:
+        inset 3px 0 0 #2fb872,
+        0 3px 9px rgba(22, 131, 75, .045);
 }
 
 .admin-alert-error {
-    border-color: #fecdca;
-    background: var(--danger-bg);
+    border-color: var(--danger-border);
+
+    background: linear-gradient(180deg,
+            #fff7f8,
+            #fff1f3);
+
     color: var(--danger);
+
+    box-shadow:
+        inset 3px 0 0 #e0495f,
+        0 3px 9px rgba(180, 35, 60, .045);
 }
+
+/* Inline note */
 
 .admin-inline-note {
     display: flex;
     align-items: flex-start;
     gap: 8px;
+
     margin: 0;
     padding: 13px 18px;
-    border-top: 1px solid var(--line);
-    background: #fffaeb;
-    color: #b54708;
+
+    border-top: 1px solid #f3dfb4;
+
+    background:
+        linear-gradient(120deg,
+            #fff9ec,
+            #fffdf8);
+
+    color: #a46c12;
+
     font-size: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .admin-inline-note svg {
     flex: 0 0 16px;
+
     width: 16px;
     height: 16px;
 }
 
-/* =========================================
-   SECTION MANAGEMENT TOOLBAR
-========================================= */
+
+/* =========================================================
+   9. SECTION MANAGEMENT TOOLBAR
+========================================================= */
 
 .section-toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
+
     padding: 22px 24px;
-    border-bottom: 1px solid var(--line);
-    background: #fcfcfd;
+
+    border-bottom: 1px solid #f0edf5;
+
+    background:
+        radial-gradient(ellipse 120% 100% at 0% 0%,
+            rgba(196, 181, 253, .07),
+            transparent 75%),
+        #fcfbff;
 }
 
 .section-search-box {
@@ -182,44 +760,77 @@
     flex: 0 1 420px;
     align-items: center;
     gap: 10px;
+
     width: 100%;
     max-width: 420px;
     min-width: 0;
     min-height: 46px;
+
     padding: 0 13px;
-    border: 1px solid #d0d5dd;
-    border-radius: 9px;
+
+    border: 1px solid #e6e1ee;
+    border-radius: 11px;
+
     background: #fff;
     color: var(--muted);
-    transition: border-color 0.2s, box-shadow 0.2s;
+
+    box-shadow:
+        0 1px 2px rgba(28, 25, 48, .025),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        background .3s ease;
+}
+
+.section-search-box:hover {
+    border-color: #cbb9ed;
 }
 
 .section-search-box:focus-within {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+    border-color: #8b5cf6;
+
+    background: #fff;
+
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, .10),
+        0 5px 13px rgba(112, 65, 214, .055);
 }
 
 .section-search-box>svg {
     flex: 0 0 19px;
+
     width: 19px;
     height: 19px;
+
+    transition: color .25s ease;
+}
+
+.section-search-box:focus-within>svg {
+    color: var(--primary);
 }
 
 .section-search-box input {
     flex: 1;
+
     width: 100%;
     min-width: 0;
+
     padding: 12px 0;
+
     border: 0;
     outline: none;
+
     background: transparent;
     color: var(--ink);
+
     font: inherit;
     font-size: 13px;
 }
 
 .section-search-box input::placeholder {
-    color: #98a2b3;
+    color: #aaa7b9;
 }
 
 .section-toolbar>.button {
@@ -230,19 +841,25 @@
 
 .section-search-status {
     padding: 15px 24px 0;
-    color: var(--muted);
+
+    color: #8f899e;
     font-size: 12px;
+    line-height: 1.6;
+
+    animation: admin-fade .4s ease;
 }
 
-/* =========================================
-   SECTION SEARCH AND YEAR LEVEL FILTER
-========================================= */
+
+/* =========================================================
+   10. SECTION SEARCH AND YEAR LEVEL FILTER
+========================================================= */
 
 .section-filter-group {
     display: flex;
     flex: 1 1 auto;
     align-items: center;
     gap: 12px;
+
     min-width: 0;
 }
 
@@ -251,39 +868,72 @@
     flex: 0 0 165px;
     align-items: center;
     gap: 9px;
+
     min-width: 0;
     min-height: 46px;
+
     padding: 0 12px;
+
     box-sizing: border-box;
-    border: 1px solid #d0d5dd;
-    border-radius: 9px;
+
+    border: 1px solid #e6e1ee;
+    border-radius: 11px;
+
     background: #fff;
     color: var(--muted);
-    transition: border-color 0.2s, box-shadow 0.2s;
+
+    box-shadow:
+        0 1px 2px rgba(28, 25, 48, .025),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        background .3s ease;
+}
+
+.section-year-filter:hover {
+    border-color: #cbb9ed;
 }
 
 .section-year-filter:focus-within {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, .10),
+        0 5px 13px rgba(112, 65, 214, .055);
 }
 
 .section-year-filter>svg {
     flex: 0 0 17px;
+
     width: 17px;
     height: 17px;
+
+    transition: color .25s ease;
+}
+
+.section-year-filter:focus-within>svg {
+    color: var(--primary);
 }
 
 .section-year-filter select {
     flex: 1;
+
     width: 100%;
     min-width: 0;
+
     padding: 10px 0;
+
     border: 0;
     outline: none;
+
     background: transparent;
     color: var(--ink);
+
     font-family: inherit;
     font-size: 13px;
+
     cursor: pointer;
 }
 
@@ -292,9 +942,10 @@
     background: #fff;
 }
 
-/* =========================================
-   SECTION SEARCH RESULTS
-========================================= */
+
+/* =========================================================
+   11. SECTION SEARCH RESULTS
+========================================================= */
 
 #section-management {
     width: 100%;
@@ -303,8 +954,10 @@
 
 .managed-sections {
     display: block;
+
     width: 100%;
     min-width: 0;
+
     padding: 22px 24px;
 }
 
@@ -313,22 +966,45 @@
 }
 
 .managed-section-card {
+    position: relative;
+    isolation: isolate;
+
     width: 100%;
     max-width: none;
     min-width: 0;
+
     margin: 0;
+
     overflow: hidden;
+
     box-sizing: border-box;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--surface);
-    box-shadow: var(--shadow-sm);
-    transition: border-color 0.2s, box-shadow 0.2s;
+
+    border: 1px solid rgba(235, 231, 241, .95);
+    border-radius: 15px;
+
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .98),
+            rgba(255, 255, 255, .94));
+
+    box-shadow:
+        0 1px 2px rgba(35, 24, 66, .025),
+        0 5px 15px rgba(35, 24, 66, .035);
+
+    transition:
+        border-color .35s ease,
+        box-shadow .35s ease,
+        transform .35s var(--ease-out);
 }
 
 .managed-section-card:hover {
-    border-color: #d0d5dd;
-    box-shadow: 0 5px 18px rgba(16, 24, 40, 0.06);
+    border-color: #d9c9f3;
+
+    box-shadow:
+        0 5px 15px rgba(63, 42, 104, .05),
+        0 14px 28px rgba(63, 42, 104, .07);
+
+    transform: translateY(-2px);
 }
 
 .searchable-section-card[hidden],
@@ -341,15 +1017,23 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 18px;
+
     padding: 19px;
-    border-bottom: 1px solid var(--line);
-    background: #fff;
+
+    border-bottom: 1px solid #f0edf5;
+
+    background:
+        radial-gradient(ellipse 120% 100% at 0% 0%,
+            rgba(196, 181, 253, .10),
+            transparent 75%),
+        #fff;
 }
 
 .managed-section-title {
     display: flex;
     align-items: flex-start;
     gap: 12px;
+
     min-width: 0;
 }
 
@@ -359,70 +1043,133 @@
 
 .managed-section-title h3 {
     margin: 2px 0 0;
+
     color: var(--ink);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.5;
+
     overflow-wrap: anywhere;
+
+    transition: color .25s ease;
+}
+
+.managed-section-card:hover .managed-section-title h3 {
+    color: var(--primary-hover);
 }
 
 .managed-section-title p {
     margin: 5px 0 0;
+
     color: var(--muted);
     font-size: 11px;
+    line-height: 1.6;
 }
 
-/* =========================================
-   SECTION ICON AND STUDENT AVATAR
-========================================= */
+
+/* =========================================================
+   12. SECTION ICON AND STUDENT AVATAR
+========================================================= */
 
 .section-row-icon {
     display: grid;
-    flex: 0 0 34px;
+    flex: 0 0 38px;
+
     place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    background: #f2f4f7;
-    color: var(--muted);
+
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid #e8dcff;
+    border-radius: 11px;
+
+    background: linear-gradient(145deg, #f4efff, #eee5ff);
+    color: var(--primary);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .9),
+        0 3px 9px rgba(112, 65, 214, .055);
+
+    transition:
+        transform .35s var(--ease-spring),
+        box-shadow .3s ease;
 }
 
 .section-row-icon svg {
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
+}
+
+.managed-section-card:hover .section-row-icon {
+    box-shadow: 0 5px 13px rgba(112, 65, 214, .11);
+    transform: rotate(-4deg) scale(1.05);
 }
 
 .mini-avatar {
     display: grid;
     flex: 0 0 34px;
+
     place-items: center;
+
     width: 34px;
     height: 34px;
+
+    overflow: hidden;
+
+    border: 2px solid #e8ddff;
     border-radius: 50%;
-    background: #eff6ff;
+
+    background: linear-gradient(145deg, #f5efff, #ece3ff);
     color: var(--primary);
+
     font-size: 12px;
     font-weight: 700;
+
+    box-shadow: 0 2px 7px rgba(112, 65, 214, .07);
+
+    transition:
+        border-color .3s ease,
+        transform .35s var(--ease-spring);
 }
 
-/* =========================================
-   CURRENT SSP ADVISER
-========================================= */
+.mini-avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+.section-student-row:hover .mini-avatar {
+    border-color: #c8b3f5;
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   13. CURRENT SSP ADVISER
+========================================================= */
 
 .section-current-adviser {
     display: flex;
     align-items: center;
     gap: 7px;
+
     margin-top: 9px;
+
     color: var(--muted);
     font-size: 12px;
+
     overflow-wrap: anywhere;
 }
 
 .section-current-adviser svg {
     flex-shrink: 0;
+
     width: 15px;
     height: 15px;
+
+    color: var(--primary);
 }
 
 .section-current-adviser strong {
@@ -431,12 +1178,13 @@
 }
 
 .section-current-adviser .no-adviser {
-    color: #b54708;
+    color: var(--warning);
 }
 
-/* =========================================
-   SECTION ACTION BUTTONS
-========================================= */
+
+/* =========================================================
+   14. SECTION ACTION BUTTONS
+========================================================= */
 
 .section-card-actions {
     display: flex;
@@ -452,10 +1200,23 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
+
     min-height: 38px;
     padding: 9px 12px;
+
+    border-radius: 10px;
+
     font-size: 12px;
     white-space: nowrap;
+
+    transition:
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        background .25s ease;
+}
+
+.section-card-actions .button:hover:not(:disabled) {
+    transform: translateY(-2px);
 }
 
 .section-card-actions svg {
@@ -463,45 +1224,70 @@
     height: 15px;
 }
 
-/* =========================================
-   ENROLLED STUDENTS
-========================================= */
+
+/* =========================================================
+   15. ENROLLED STUDENTS
+========================================================= */
 
 .section-student-list {
     width: 100%;
     margin-top: 12px;
+
     overflow: hidden;
+
     box-sizing: border-box;
-    border: 1px solid var(--line);
-    border-radius: 9px;
+
+    border: 1px solid #ebe7f1;
+    border-radius: 11px;
+
+    background: #fff;
+
+    box-shadow: 0 2px 5px rgba(35, 24, 66, .02);
 }
 
 .section-student-list-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 14px 17px;
+
+    background:
+        radial-gradient(ellipse 120% 100% at 0% 0%,
+            rgba(196, 181, 253, .09),
+            transparent 75%),
+        #fff;
+
     color: var(--text);
     font-size: 12px;
 }
 
 .section-student-list-heading>span {
     display: grid;
-    min-width: 24px;
-    height: 24px;
+
+    min-width: 26px;
+    height: 26px;
+
     place-items: center;
-    padding: 0 6px;
-    border-radius: 20px;
-    background: var(--primary-light);
+
+    padding: 0 7px;
+
+    border: 1px solid #e5dafa;
+    border-radius: 30px;
+
+    background: #f5f0ff;
     color: var(--primary);
+
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .section-student-scroll {
     max-height: 300px;
+
     overflow-x: hidden;
     overflow-y: auto;
+
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
 }
@@ -510,13 +1296,24 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
     min-width: 0;
+
     padding: 12px;
-    border-top: 1px solid #f2f4f7;
+
+    border-top: 1px solid #f0edf5;
+
+    transition: background .25s ease;
 }
 
 .section-student-row:first-child {
     border-top: 0;
+}
+
+.section-student-row:hover {
+    background: linear-gradient(90deg,
+            #fcfaff,
+            #f9f6ff);
 }
 
 .section-student-info {
@@ -524,41 +1321,72 @@
     flex: 1;
     flex-direction: column;
     gap: 4px;
+
     min-width: 0;
 }
 
 .section-student-info strong {
     color: var(--text);
     font-size: 12px;
+
     overflow-wrap: anywhere;
+
+    transition: color .2s ease;
+}
+
+.section-student-row:hover .section-student-info strong {
+    color: var(--primary-hover);
 }
 
 .section-student-info small {
     color: var(--muted);
     font-size: 10px;
     line-height: 1.5;
+
     overflow-wrap: anywhere;
 }
 
-/* =========================================
-   REMOVE STUDENT BUTTON
-========================================= */
+
+/* =========================================================
+   16. REMOVE STUDENT BUTTON
+========================================================= */
 
 .remove-student-button {
     display: grid;
     flex: 0 0 32px;
+
     width: 32px;
     height: 32px;
+
     place-items: center;
-    border: 1px solid #fecdca;
-    border-radius: 7px;
-    background: #fff;
-    color: #d92d20;
+
+    border: 1px solid #f3cbd2;
+    border-radius: 9px;
+
+    background: #fff5f6;
+    color: var(--danger);
+
     cursor: pointer;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        transform .3s var(--ease-spring),
+        box-shadow .25s ease;
 }
 
 .remove-student-button:hover {
-    background: #fef3f2;
+    border-color: #f0a8b4;
+    background: #ffe4e8;
+
+    box-shadow: 0 4px 10px rgba(189, 52, 73, .09);
+
+    transform: translateY(-2px) scale(1.04);
+}
+
+.remove-student-button:active {
+    transform: scale(.92);
 }
 
 .remove-student-button svg {
@@ -568,11 +1396,15 @@
 
 .section-student-empty {
     padding: 15px;
-    border: 1px dashed #d0d5dd;
-    border-radius: 8px;
+
+    border: 1px dashed #d9cee9;
+    border-radius: 9px;
+
+    background: #fcfbff;
     color: var(--muted);
+
     font-size: 11px;
-    line-height: 1.6;
+    line-height: 1.7;
     text-align: center;
 }
 
@@ -584,36 +1416,58 @@
 
 .section-student-scroll::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #d0d5dd;
+    background: #d8c9f5;
+}
+
+.section-student-scroll::-webkit-scrollbar-thumb:hover {
+    background: #b9a3e9;
 }
 
 .section-student-scroll::-webkit-scrollbar-track {
-    background: #f9fafb;
+    background: #faf9fd;
 }
 
-/* =========================================
-   SECTION SEARCH EMPTY STATE
-========================================= */
+
+/* =========================================================
+   17. SECTION SEARCH EMPTY STATE
+========================================================= */
 
 .section-search-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     width: 100%;
     padding: 40px 20px;
+
     box-sizing: border-box;
+
     text-align: center;
+
+    animation: admin-rise .6s var(--ease-out);
 }
 
 .section-search-empty>span {
     display: grid;
-    width: 48px;
-    height: 48px;
+
+    width: 52px;
+    height: 52px;
+
     place-items: center;
-    margin-bottom: 13px;
-    border-radius: 50%;
-    background: #f2f4f7;
-    color: var(--muted);
+
+    margin-bottom: 14px;
+
+    border: 1px solid #e9defd;
+    border-radius: 16px;
+
+    background: linear-gradient(145deg, #f5f0ff, #ece3ff);
+    color: var(--primary);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .9),
+        0 4px 12px rgba(112, 65, 214, .07);
+
+    animation: admin-logo-in .65s var(--ease-spring) .12s backwards;
 }
 
 .section-search-empty>span svg {
@@ -624,24 +1478,29 @@
 .section-search-empty strong {
     color: var(--ink);
     font-size: 14px;
+    font-weight: 700;
 }
 
 .section-search-empty p {
     max-width: 400px;
+
     margin: 8px 0 0;
+
     color: var(--muted);
     font-size: 12px;
-    line-height: 1.6;
+    line-height: 1.8;
 }
 
-/* =========================================
-   SHARED FORM FIELDS AND BUTTONS
-========================================= */
+
+/* =========================================================
+   18. SHARED FORM FIELDS AND BUTTONS
+========================================================= */
 
 .section-form-field {
     display: flex;
     flex-direction: column;
     gap: 7px;
+
     min-width: 0;
 }
 
@@ -649,27 +1508,55 @@
     color: var(--text);
     font-size: 11px;
     font-weight: 600;
+
+    transition: color .25s ease;
+}
+
+.section-form-field:focus-within label {
+    color: var(--primary);
 }
 
 .section-form-field input,
 .section-form-field select {
     width: 100%;
     min-width: 0;
-    min-height: 42px;
-    padding: 10px 12px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
+    min-height: 44px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #e5e0ed;
+    border-radius: 10px;
+
     outline: none;
-    background: #fff;
+
+    background: #fdfcff;
     color: var(--text);
+
     font: inherit;
     font-size: 12px;
+
+    box-shadow: 0 1px 2px rgba(28, 25, 48, .025);
+
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.section-form-field input:hover,
+.section-form-field select:hover {
+    border-color: #cbb9ed;
+    background: #fff;
 }
 
 .section-form-field input:focus,
 .section-form-field select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+    border-color: #8b5cf6;
+    background: #fff;
+
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, .10),
+        0 5px 13px rgba(112, 65, 214, .055);
 }
 
 .button-secondary {
@@ -677,21 +1564,43 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+
     padding: 10px 14px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
+
+    border: 1px solid #e6e1ee;
+    border-radius: 10px;
+
     background: #fff;
     color: var(--text);
+
     font: inherit;
     font-size: 12px;
     font-weight: 600;
+
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
+
+    box-shadow: 0 1px 2px rgba(35, 24, 66, .025);
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease,
+        transform .3s var(--ease-out);
 }
 
 .button-secondary:hover {
-    border-color: #98a2b3;
-    background: #f9fafb;
+    border-color: #d3c4ed;
+    background: #f7f3ff;
+    color: var(--primary);
+
+    box-shadow: 0 3px 9px rgba(112, 65, 214, .07);
+
+    transform: translateY(-2px);
+}
+
+.button-secondary:active {
+    transform: scale(.98);
 }
 
 .button-secondary svg {
@@ -699,20 +1608,29 @@
     height: 16px;
 }
 
-/* =========================================
-   CREATE SECTION MODAL
-========================================= */
+
+/* =========================================================
+   19. CREATE SECTION MODAL
+========================================================= */
 
 .section-modal-overlay {
     position: fixed;
     z-index: 1000;
     inset: 0;
+
     display: grid;
     place-items: center;
+
     padding: 20px;
+
     overflow-y: auto;
-    background: rgba(16, 24, 40, 0.55);
-    backdrop-filter: blur(3px);
+
+    background: rgba(27, 19, 47, .58);
+
+    backdrop-filter: blur(9px) saturate(1.1);
+    -webkit-backdrop-filter: blur(9px) saturate(1.1);
+
+    animation: admin-fade .3s ease;
 }
 
 .section-modal-overlay[hidden] {
@@ -722,24 +1640,23 @@
 .section-modal {
     width: min(100%, 470px);
     max-height: calc(100dvh - 40px);
+
     overflow-y: auto;
-    border: 1px solid var(--line);
-    border-radius: 15px;
-    background: #fff;
-    box-shadow: 0 24px 70px rgba(16, 24, 40, 0.22);
-    animation: sectionModalIn 0.18s ease-out;
-}
 
-@keyframes sectionModalIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px) scale(0.99);
-    }
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 19px;
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    background:
+        radial-gradient(ellipse 120% 50% at 50% -10%,
+            rgba(196, 181, 253, .18),
+            transparent 75%),
+        #fff;
+
+    box-shadow:
+        0 10px 30px rgba(29, 20, 50, .09),
+        0 30px 75px rgba(29, 20, 50, .20);
+
+    animation: admin-modal-in .45s var(--ease-spring);
 }
 
 .section-modal-header {
@@ -747,8 +1664,15 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
+
     padding: 23px;
-    border-bottom: 1px solid var(--line);
+
+    border-bottom: 1px solid #f0edf5;
+
+    background:
+        linear-gradient(180deg,
+            rgba(249, 246, 255, .85),
+            rgba(255, 255, 255, .98));
 }
 
 .section-modal-header>div {
@@ -757,16 +1681,19 @@
 
 .section-modal-header h2 {
     margin: 0;
+
     color: var(--ink);
     font-size: 19px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -.35px;
 }
 
 .section-modal-header p {
     margin: 7px 0 0;
+
     color: var(--muted);
     font-size: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .section-modal-header .icon-btn {
@@ -777,6 +1704,7 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
+
     padding: 23px;
 }
 
@@ -794,30 +1722,41 @@
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+
     margin-top: 6px;
     padding-top: 18px;
-    border-top: 1px solid var(--line);
+
+    border-top: 1px solid #eeeaf4;
 }
 
 .section-modal-actions .button {
     min-height: 42px;
 }
 
-/* =========================================
-   ADD STUDENT AND ADVISER MODALS
-========================================= */
+
+/* =========================================================
+   20. ADD STUDENT AND ADVISER MODALS
+========================================================= */
 
 .admin-modal-overlay {
     position: fixed;
     z-index: 2000;
     inset: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 20px;
+
     overflow-y: auto;
-    background: rgba(16, 24, 40, 0.55);
-    backdrop-filter: blur(3px);
+
+    background: rgba(27, 19, 47, .58);
+
+    backdrop-filter: blur(9px) saturate(1.1);
+    -webkit-backdrop-filter: blur(9px) saturate(1.1);
+
+    animation: admin-fade .3s ease;
 }
 
 .admin-modal-overlay[hidden] {
@@ -825,13 +1764,30 @@
 }
 
 .admin-modal {
-    width: min(100%, 520px);
+    width: min(100%, 470px);
+
     max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+
+    overflow-x: hidden;
     overflow-y: auto;
-    border: 1px solid #eaecf0;
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: 0 24px 60px rgba(16, 24, 40, 0.2);
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 19px;
+
+    background:
+        radial-gradient(ellipse 120% 50% at 50% -10%,
+            rgba(196, 181, 253, .18),
+            transparent 75%),
+        #fff;
+
+    box-shadow:
+        0 10px 30px rgba(29, 20, 50, .09),
+        0 30px 75px rgba(29, 20, 50, .20);
+
+    animation: admin-modal-in .45s var(--ease-spring);
 }
 
 .admin-modal-header {
@@ -839,33 +1795,51 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
-    padding: 22px 24px;
-    border-bottom: 1px solid #eaecf0;
+
+    padding: 23px;
+
+    border-bottom: 1px solid #f0edf5;
+
+    background:
+        linear-gradient(180deg,
+            rgba(249, 246, 255, .85),
+            rgba(255, 255, 255, .98));
+}
+
+.admin-modal-header>div {
+    flex: 1;
+    min-width: 0;
 }
 
 .admin-modal-header h2 {
     margin: 0;
+
     color: var(--ink);
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -.35px;
+    line-height: 1.4;
 }
 
 .admin-modal-header p {
     margin: 7px 0 0;
+
     color: var(--muted);
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.7;
 }
 
 .admin-modal-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 22px 24px 24px;
+    gap: 18px;
+
+    padding: 23px;
 }
 
 .admin-modal-form label {
-    margin-top: 5px;
+    margin: 0;
+
     color: var(--text);
     font-size: 12px;
     font-weight: 600;
@@ -873,29 +1847,54 @@
 
 .admin-modal-form input[type="search"] {
     width: 100%;
-    min-height: 43px;
+    min-height: 45px;
+
     padding: 10px 12px;
-    border: 1px solid #d0d5dd;
-    border-radius: 9px;
+
+    border: 1px solid #e6e1ee;
+    border-radius: 10px;
+
     outline: none;
-    background: #fff;
+
+    background: #fdfcff;
     color: var(--text);
+
     font-family: inherit;
     font-size: 13px;
+
+    box-shadow: 0 1px 2px rgba(28, 25, 48, .025);
+
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.admin-modal-form input[type="search"]:hover {
+    border-color: #cbb9ed;
+    background: #fff;
 }
 
 .admin-modal-form input[type="search"]:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
+    border-color: #8b5cf6;
+    background: #fff;
+
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, .10),
+        0 5px 13px rgba(112, 65, 214, .055);
 }
 
 .admin-modal-actions {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-top: 12px;
-    padding-top: 16px;
-    border-top: 1px solid #eaecf0;
+
+    margin-top: 6px;
+    padding-top: 18px;
+
+    border-top: 1px solid #eeeaf4;
 }
 
 .admin-modal-actions .button {
@@ -903,8 +1902,10 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
-    min-height: 40px;
+
+    min-height: 42px;
     padding: 10px 14px;
+
     font-size: 12px;
 }
 
@@ -913,34 +1914,44 @@
     height: 15px;
 }
 
-/* Add Student modal sizing and bottom-aligned actions */
+/* Add Student modal */
 
 #add-student-modal .admin-modal {
-    display: flex;
-    flex-direction: column;
-    height: 75vh;
+    display: block;
+
+    height: auto;
+    height: fit-content;
+
+    max-height: calc(100vh - 40px);
     max-height: calc(100dvh - 40px);
 }
 
 #add-student-modal .admin-modal-form {
-    flex: 1;
+    flex: initial;
     min-height: 0;
+    overflow: visible;
 }
 
 #add-student-modal .admin-modal-actions {
+    position: static;
+
     display: flex;
-    align-items: center;
     justify-content: flex-end;
-    gap: 10px;
-    margin-top: auto;
+    align-items: center;
+    flex-wrap: wrap;
+
+    margin-top: 6px;
+    padding-top: 18px;
 }
 
-/* =========================================
-   STUDENT AND FACULTY SEARCH RESULTS
-========================================= */
+
+/* =========================================================
+   21. STUDENT AND FACULTY SEARCH RESULTS
+========================================================= */
 
 .student-search-container {
     position: relative;
+
     width: 100%;
     min-width: 0;
 }
@@ -957,35 +1968,59 @@
 
 .student-search-results {
     position: absolute;
-    z-index: 20;
     top: calc(100% + 6px);
     right: 0;
     left: 0;
+    z-index: 20;
+
     display: flex;
     flex-direction: column;
+
     max-height: 250px;
+
     overflow-y: auto;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.12);
+
+    border: 1px solid #e9e2f3;
+    border-radius: 11px;
+
+    background:
+        radial-gradient(ellipse 120% 45% at 50% 0%,
+            rgba(196, 181, 253, .10),
+            transparent 80%),
+        #fff;
+
+    box-shadow:
+        0 5px 15px rgba(35, 24, 66, .05),
+        0 14px 32px rgba(35, 24, 66, .10);
+
+    scrollbar-width: thin;
+    scrollbar-color: #d8c9f5 transparent;
 }
 
 .student-search-result {
     display: flex;
     align-items: center;
     gap: 11px;
+
     width: 100%;
     min-width: 0;
+
     padding: 12px;
+
     border: 0;
-    border-bottom: 1px solid #f2f4f7;
+    border-bottom: 1px solid #f0edf5;
+
     background: #fff;
     color: var(--text);
+
     text-align: left;
     font: inherit;
+
     cursor: pointer;
-    transition: background 0.15s ease;
+
+    transition:
+        background .25s ease,
+        padding-left .3s var(--ease-out);
 }
 
 .student-search-result:last-child {
@@ -995,18 +2030,32 @@
 .student-search-result:hover,
 .student-search-result:focus-visible {
     outline: none;
-    background: #f5f7ff;
+
+    padding-left: 15px;
+
+    background: #f8f5ff;
 }
 
 .student-result-avatar {
     display: grid;
-    flex: 0 0 36px;
-    width: 36px;
-    height: 36px;
+    flex: 0 0 38px;
+
+    width: 38px;
+    height: 38px;
+
     place-items: center;
-    border-radius: 9px;
-    background: var(--primary-light);
+
+    border: 1px solid #e8dcff;
+    border-radius: 11px;
+
+    background: linear-gradient(145deg, #f4efff, #eee5ff);
     color: var(--primary);
+
+    transition: transform .35s var(--ease-spring);
+}
+
+.student-search-result:hover .student-result-avatar {
+    transform: rotate(-4deg) scale(1.05);
 }
 
 .student-result-avatar svg {
@@ -1019,6 +2068,7 @@
     flex: 1;
     flex-direction: column;
     gap: 4px;
+
     min-width: 0;
 }
 
@@ -1026,6 +2076,7 @@
     color: var(--ink);
     font-size: 12px;
     font-weight: 600;
+
     overflow-wrap: anywhere;
 }
 
@@ -1033,21 +2084,34 @@
     color: var(--muted);
     font-size: 10px;
     line-height: 1.5;
+
     overflow-wrap: anywhere;
 }
 
 .student-result-arrow {
     flex: 0 0 16px;
+
     width: 16px;
     height: 16px;
+
     color: var(--muted);
+
+    transition:
+        color .2s ease,
+        transform .3s var(--ease-spring);
+}
+
+.student-search-result:hover .student-result-arrow {
+    color: var(--primary);
+    transform: translateX(3px);
 }
 
 .student-search-hint {
     margin: 0;
+
     color: var(--muted);
     font-size: 11px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .student-search-hint.is-error {
@@ -1058,36 +2122,56 @@
     color: var(--success);
 }
 
-/* =========================================
-   SELECTED STUDENT INFORMATION
-========================================= */
+
+/* =========================================================
+   22. SELECTED STUDENT INFORMATION
+========================================================= */
 
 .selected-student-card {
     min-width: 0;
+
     padding: 15px;
-    border: 1px solid #dbe2ff;
-    border-radius: 11px;
-    background: #fbfcff;
+
+    border: 1px solid #e5dafa;
+    border-radius: 12px;
+
+    background:
+        radial-gradient(ellipse 120% 60% at 0% 0%,
+            rgba(196, 181, 253, .12),
+            transparent 75%),
+        #fcfaff;
+
+    box-shadow: 0 3px 9px rgba(112, 65, 214, .035);
+
+    animation: admin-rise .4s var(--ease-out);
 }
 
 .selected-student-heading {
     display: flex;
     align-items: center;
     gap: 10px;
+
     min-width: 0;
+
     margin-bottom: 15px;
     padding-bottom: 13px;
-    border-bottom: 1px solid var(--line);
+
+    border-bottom: 1px solid #eeeaf4;
 }
 
 .selected-student-icon {
     display: grid;
     flex: 0 0 38px;
+
     width: 38px;
     height: 38px;
+
     place-items: center;
-    border-radius: 10px;
-    background: var(--primary-light);
+
+    border: 1px solid #e8dcff;
+    border-radius: 11px;
+
+    background: linear-gradient(145deg, #f4efff, #eee5ff);
     color: var(--primary);
 }
 
@@ -1103,28 +2187,41 @@
 
 .selected-student-title p {
     margin: 4px 0 0;
+
     color: var(--muted);
     font-size: 11px;
     line-height: 1.5;
+
     overflow-wrap: anywhere;
 }
 
 .student-change-button {
     flex: 0 0 auto;
+
     padding: 7px 10px;
-    border: 1px solid #d0d5dd;
-    border-radius: 7px;
+
+    border: 1px solid #e5dafa;
+    border-radius: 8px;
+
     background: #fff;
     color: var(--primary);
+
     font: inherit;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
+
     cursor: pointer;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .3s var(--ease-out);
 }
 
 .student-change-button:hover {
-    border-color: #c7d2fe;
-    background: var(--primary-light);
+    border-color: #c8b3f5;
+    background: #f5f0ff;
+    transform: translateY(-1px);
 }
 
 .student-information-grid {
@@ -1137,43 +2234,1681 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+
     min-width: 0;
 }
 
 .admin-modal-form .student-information-field label {
     margin: 0;
+
     color: var(--muted);
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .admin-modal-form .student-information-field input[data-student-info] {
     width: 100%;
     min-width: 0;
     min-height: 39px;
+
     box-sizing: border-box;
+
     padding: 9px 10px;
-    border: 1px solid #eaecf0;
-    border-radius: 8px;
+
+    border: 1px solid #edeaf2;
+    border-radius: 9px;
+
     outline: none;
-    background: #f9fafb;
+
+    background: #f8f7fb;
     color: var(--text);
+
     font-family: inherit;
     font-size: 12px;
+
     cursor: default;
 }
 
-/* =========================================
-   MODAL SCROLL LOCK
-========================================= */
+
+/* =========================================================
+   23. MODAL SCROLL LOCK
+========================================================= */
 
 body.section-modal-open {
     overflow: hidden;
 }
 
-/* =========================================
-   RESPONSIVE LAYOUT
-========================================= */
+
+/* =========================================================
+   24. EDIT STUDENT MODAL
+========================================================= */
+
+.edit-student-modal .admin-modal {
+    width: min(100%, 680px);
+}
+
+.edit-student-modal .admin-modal-form {
+    gap: 16px;
+}
+
+.student-modal-section-info {
+    margin-top: 10px !important;
+    padding: 10px 12px;
+
+    border: 1px solid #e9e2f3;
+    border-radius: 9px;
+
+    background: #faf8ff;
+    color: var(--muted) !important;
+
+    font-size: 11px !important;
+    line-height: 1.7;
+}
+
+.student-modal-section-info strong {
+    color: var(--ink);
+}
+
+.student-form-section-title {
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #eeeaf4;
+
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.student-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+
+    min-width: 0;
+}
+
+.student-edit-grid .section-form-field {
+    min-width: 0;
+}
+
+.student-edit-grid .section-form-field label {
+    margin: 0;
+
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.student-edit-grid .section-form-field input {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    box-sizing: border-box;
+
+    padding: 11px 13px;
+
+    border: 1px solid #e5e0ed;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #fdfcff;
+    color: var(--text);
+
+    font: inherit;
+    font-size: 12px;
+
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.student-edit-grid .section-form-field textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 85px;
+
+    box-sizing: border-box;
+
+    resize: vertical;
+
+    padding: 11px 13px;
+
+    border: 1px solid #e5e0ed;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #fdfcff;
+    color: var(--text);
+
+    font: inherit;
+    font-size: 12px;
+    line-height: 1.6;
+
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.student-edit-grid .section-form-field input:hover,
+.student-edit-grid .section-form-field textarea:hover {
+    border-color: #cbb9ed;
+    background: #fff;
+}
+
+.student-edit-grid .section-form-field input:focus,
+.student-edit-grid .section-form-field textarea:focus {
+    border-color: #8b5cf6;
+    background: #fff;
+
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, .10);
+}
+
+.student-edit-full-width {
+    grid-column: 1 / -1;
+}
+
+.student-edit-hint {
+    margin: 0;
+    padding: 11px 12px;
+
+    border: 1px solid #e9e2f3;
+    border-radius: 9px;
+
+    background: #faf8ff;
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   25. CHANGE SECTION MODAL
+========================================================= */
+
+.change-section-modal .admin-modal {
+    width: min(100%, 470px);
+}
+
+.change-section-modal .admin-modal-form {
+    gap: 18px;
+}
+
+.change-section-form .section-form-field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #e5e0ed;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #fdfcff;
+    color: var(--text);
+
+    font: inherit;
+    font-size: 12px;
+
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.change-section-form .section-form-field select:focus {
+    border-color: #8b5cf6;
+    background: #fff;
+
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, .10);
+}
+
+.change-section-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    padding: 12px;
+
+    border: 1px solid #e5dafa;
+    border-radius: 10px;
+
+    background: #faf8ff;
+    color: var(--muted);
+}
+
+.change-section-notice svg {
+    flex: 0 0 17px;
+
+    width: 17px;
+    height: 17px;
+
+    margin-top: 1px;
+
+    color: var(--primary);
+}
+
+.change-section-notice p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   26. ENROLLED STUDENT ACTION BUTTONS
+========================================================= */
+
+.section-student-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+
+    margin-left: auto;
+}
+
+.section-student-actions form {
+    display: flex;
+    margin: 0;
+}
+
+.student-row-action-button {
+    display: grid;
+    flex: 0 0 32px;
+
+    width: 32px;
+    height: 32px;
+
+    place-items: center;
+
+    border: 1px solid #e6e1ee;
+    border-radius: 9px;
+
+    background: #fff;
+    color: #77738b;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 2px rgba(35, 24, 66, .025);
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease,
+        transform .3s var(--ease-spring);
+}
+
+.student-row-action-button:hover {
+    border-color: #d8c8f3;
+    background: #f5f0ff;
+    color: var(--primary);
+
+    box-shadow: 0 3px 8px rgba(112, 65, 214, .075);
+
+    transform: translateY(-2px);
+}
+
+.student-row-action-button:active {
+    transform: scale(.92);
+}
+
+.student-row-action-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.section-student-actions .remove-student-button {
+    flex: 0 0 32px;
+}
+
+
+/* =========================================================
+   27. SECTION EXPORT DROPDOWN
+========================================================= */
+
+.section-export-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    z-index: 5;
+}
+
+.section-export-toggle {
+    min-height: 38px;
+    white-space: nowrap;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease,
+        transform .3s var(--ease-out);
+}
+
+.section-export-toggle:hover {
+    transform: translateY(-2px);
+}
+
+.section-export-toggle .export-chevron {
+    width: 13px;
+    height: 13px;
+
+    margin-left: 2px;
+
+    transition: transform .35s var(--ease-spring);
+}
+
+.section-export-toggle[aria-expanded="true"] {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.section-export-toggle[aria-expanded="true"] .export-chevron {
+    transform: rotate(180deg);
+}
+
+/* Dropdown container */
+
+.section-export-menu {
+    position: absolute;
+    top: calc(100% + 7px);
+    right: 0;
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    width: 185px;
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #e9e2f3;
+    border-radius: 12px;
+
+    background:
+        radial-gradient(ellipse 120% 45% at 50% 0%,
+            rgba(196, 181, 253, .12),
+            transparent 80%),
+        #fff;
+
+    box-shadow:
+        0 2px 6px rgba(35, 24, 66, .035),
+        0 10px 25px rgba(35, 24, 66, .07),
+        0 24px 50px rgba(35, 24, 66, .10);
+
+    animation: admin-fade-down .35s var(--ease-out);
+}
+
+.section-export-menu[hidden] {
+    display: none !important;
+}
+
+/* Individual export options */
+
+.section-export-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+    min-height: 40px;
+
+    padding: 9px 11px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        padding-left .3s var(--ease-out);
+}
+
+.section-export-option:hover,
+.section-export-option:focus-visible {
+    outline: none;
+
+    padding-left: 14px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.section-export-option svg {
+    flex: 0 0 17px;
+
+    width: 17px;
+    height: 17px;
+
+    color: var(--muted);
+
+    transition:
+        transform .3s var(--ease-spring),
+        color .2s ease;
+}
+
+.section-export-option:hover svg,
+.section-export-option:focus-visible svg {
+    color: var(--primary);
+    transform: scale(1.08);
+}
+
+.section-export-option:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* Active section card */
+
+.managed-section-card.has-export-menu-open {
+    position: relative;
+    z-index: 30;
+    overflow: visible;
+}
+
+.managed-section-card.has-export-menu-open .managed-section-heading {
+    position: relative;
+    z-index: 31;
+    overflow: visible;
+}
+
+
+/* =========================================================
+   28. EDIT STUDENT AND CHANGE SECTION RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .section-student-actions {
+        gap: 5px;
+    }
+
+    .student-edit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .edit-student-modal .admin-modal {
+        width: 100%;
+    }
+
+    .section-export-wrap {
+        width: 100%;
+    }
+
+    .section-card-actions .section-export-wrap {
+        grid-column: 1 / -1;
+    }
+
+    .section-export-toggle {
+        width: 100%;
+    }
+
+    .section-export-menu {
+        right: 0;
+        left: 0;
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   29. ADMIN PROFILE MODAL
+========================================================= */
+
+body.admin-profile-modal-open {
+    overflow: hidden;
+}
+
+.admin-profile-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.admin-profile-modal[hidden] {
+    display: none !important;
+}
+
+.admin-profile-backdrop {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+
+    border: 0;
+
+    background: rgba(27, 19, 47, .58);
+
+    backdrop-filter: blur(9px) saturate(1.1);
+    -webkit-backdrop-filter: blur(9px) saturate(1.1);
+
+    animation: admin-fade .3s ease-out;
+}
+
+.admin-profile-dialog {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    width: min(760px, 100%);
+
+    height: min(860px, calc(100vh - 40px));
+    height: min(860px, calc(100dvh - 40px));
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 21px;
+
+    background:
+        radial-gradient(ellipse 120% 40% at 50% -10%,
+            rgba(196, 181, 253, .16),
+            transparent 75%),
+        linear-gradient(180deg,
+            #fff,
+            #fefeff);
+
+    box-shadow:
+        0 10px 30px rgba(29, 20, 50, .09),
+        0 30px 75px rgba(29, 20, 50, .20),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    animation: admin-modal-in .5s var(--ease-spring);
+}
+
+
+/* =========================================================
+   30. ADMIN PROFILE HEADER
+========================================================= */
+
+.admin-profile-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    width: 100%;
+    padding: 23px 25px;
+
+    border-bottom: 1px solid #f0edf5;
+
+    background: linear-gradient(180deg,
+            rgba(249, 246, 255, .9),
+            rgba(255, 255, 255, .98));
+}
+
+.admin-profile-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    min-width: 0;
+}
+
+.admin-profile-heading-icon {
+    display: grid;
+    flex: 0 0 43px;
+
+    width: 43px;
+    height: 43px;
+
+    place-items: center;
+
+    border: 1px solid #e8ddff;
+    border-radius: 12px;
+
+    background: linear-gradient(145deg, #f4efff, #ece3ff);
+    color: var(--primary);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .95),
+        0 4px 10px rgba(112, 65, 214, .07);
+
+    transition: transform .4s var(--ease-spring);
+}
+
+.admin-profile-dialog:hover .admin-profile-heading-icon {
+    transform: rotate(-4deg);
+}
+
+.admin-profile-heading-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.admin-profile-heading h2 {
+    margin: 1px 0 0;
+
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -.45px;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-profile-heading p {
+    max-width: 520px;
+    margin: 5px 0 0;
+
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-profile-close {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+
+    transition:
+        color .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        transform .35s var(--ease-spring);
+}
+
+.admin-profile-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+.admin-profile-close:hover {
+    border-color: #e7dbfa;
+    background: #f3edff;
+    color: var(--primary);
+    transform: rotate(90deg) scale(1.06);
+}
+
+.admin-profile-close:active {
+    transform: rotate(90deg) scale(.9);
+}
+
+
+/* =========================================================
+   31. ADMIN PROFILE PICTURE
+========================================================= */
+
+.admin-profile-picture-form {
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 18px 25px;
+
+    border-bottom: 1px solid #f0edf5;
+    background: #fff;
+}
+
+.admin-picture-editor {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.admin-picture-preview {
+    display: grid;
+    flex: 0 0 76px;
+
+    place-items: center;
+
+    width: 76px;
+    height: 76px;
+
+    overflow: hidden;
+
+    border: 3px solid #e9dfff;
+    border-radius: 50%;
+
+    background: #f2ecff;
+    color: var(--primary);
+
+    font-size: 21px;
+    font-weight: 700;
+
+    box-shadow:
+        0 3px 10px rgba(112, 65, 214, .08),
+        0 0 0 5px rgba(139, 92, 246, .045);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .4s var(--ease-spring);
+}
+
+.admin-picture-preview:hover {
+    border-color: #c7b0f3;
+
+    box-shadow:
+        0 5px 15px rgba(112, 65, 214, .13),
+        0 0 0 6px rgba(139, 92, 246, .07);
+
+    transform: scale(1.045);
+}
+
+.admin-picture-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+.admin-picture-details {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.admin-picture-details>strong {
+    display: block;
+    margin-bottom: 5px;
+
+    color: #383047;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-picture-details>p {
+    margin: 0 0 11px;
+
+    color: #8b859a;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.admin-picture-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-picture-actions .button {
+    min-height: 36px;
+    padding: 7px 11px;
+
+    font-size: 11px;
+    cursor: pointer;
+
+    transition:
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        background .25s ease;
+}
+
+.admin-picture-actions .button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.admin-picture-actions .button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.admin-picture-file-input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+    border: 0;
+}
+
+.admin-picture-details>small {
+    display: block;
+    margin-top: 9px;
+
+    color: #a09aac;
+    font-size: 10px;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-picture-error {
+    margin-top: 15px;
+    animation: admin-alert-in .4s var(--ease-out);
+}
+
+
+/* =========================================================
+   32. ADMIN PROFILE FORM
+========================================================= */
+
+.admin-profile-form {
+    display: block;
+    flex: 1 1 auto;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 22px 25px 24px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d8c9f5 transparent;
+}
+
+.admin-profile-form>.admin-alert {
+    margin-bottom: 20px;
+}
+
+.admin-profile-section-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0 0 16px;
+
+    color: #363047;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.admin-profile-section-title>svg {
+    flex: 0 0 17px;
+
+    width: 17px;
+    height: 17px;
+
+    color: var(--primary);
+}
+
+.admin-profile-account-title {
+    margin-top: 26px;
+    padding-top: 22px;
+
+    border-top: 1px solid #eeeaf4;
+}
+
+.admin-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.admin-profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    min-width: 0;
+}
+
+.admin-profile-full {
+    grid-column: 1 / -1;
+}
+
+.admin-profile-field label {
+    color: #575168;
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: color .25s ease;
+}
+
+.admin-profile-field:focus-within label {
+    color: var(--primary);
+}
+
+.admin-profile-field .required-mark {
+    color: var(--danger);
+}
+
+.admin-profile-field input,
+.admin-profile-field select,
+.admin-profile-field textarea {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #e5e0ed;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #fdfcff;
+    color: #373149;
+
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.5;
+
+    box-shadow: 0 1px 2px rgba(28, 25, 48, .025);
+
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.admin-profile-field textarea {
+    min-height: 86px;
+    resize: vertical;
+}
+
+.admin-profile-field input::placeholder,
+.admin-profile-field textarea::placeholder {
+    color: #aaa7b9;
+}
+
+.admin-profile-field input:hover,
+.admin-profile-field select:hover,
+.admin-profile-field textarea:hover {
+    border-color: #cbb9ed;
+    background: #fff;
+}
+
+.admin-profile-field input:focus,
+.admin-profile-field select:focus,
+.admin-profile-field textarea:focus {
+    border-color: #8b5cf6;
+    background: #fff;
+
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, .10),
+        0 5px 13px rgba(112, 65, 214, .055);
+}
+
+.admin-profile-field input[readonly] {
+    border-color: #edeaf2;
+    background: #f7f6fa;
+    color: #837d91;
+    cursor: default;
+}
+
+.admin-profile-field input[readonly]:focus {
+    box-shadow: none;
+}
+
+.admin-profile-field small {
+    color: #9993a7;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   33. ADMIN PROFILE ACTIONS
+========================================================= */
+
+.admin-profile-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-top: 27px;
+    padding-top: 20px;
+
+    border-top: 1px solid #eeeaf4;
+
+    animation: admin-fade .5s ease;
+}
+
+.admin-profile-actions .button {
+    min-width: 112px;
+    min-height: 42px;
+
+    transition:
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        filter .25s ease;
+}
+
+.admin-profile-actions .button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   34. ADMIN PASSWORD MODAL
+========================================================= */
+
+.admin-password-dialog {
+    width: min(540px, 100%);
+    height: auto;
+
+    max-height: min(860px, calc(100vh - 40px));
+    max-height: min(860px, calc(100dvh - 40px));
+}
+
+.admin-password-form {
+    flex: 0 1 auto;
+
+    width: 100%;
+    min-height: 0;
+
+    padding: 22px 25px 24px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+}
+
+.admin-password-form .admin-profile-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 19px;
+}
+
+.admin-password-input-wrap {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.admin-password-input-wrap input {
+    width: 100%;
+    padding-right: 48px;
+}
+
+.admin-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+
+    display: grid;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    place-items: center;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: transparent;
+    color: #938ba5;
+
+    transition:
+        color .25s ease,
+        background .25s ease,
+        transform .25s var(--ease-spring);
+}
+
+.admin-password-toggle:hover {
+    background: #f0eaff;
+    color: var(--primary);
+
+    transform: translateY(-50%) scale(1.08);
+}
+
+.admin-password-toggle:active {
+    transform: translateY(-50%) scale(.92);
+}
+
+.admin-password-toggle svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 1.8;
+}
+
+.admin-password-input-wrap input:focus {
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, .10),
+        0 5px 13px rgba(112, 65, 214, .055);
+}
+
+.admin-password-form .admin-profile-actions {
+    margin-top: 25px;
+}
+
+
+/* =========================================================
+   35. PROFILE MODAL ANIMATION
+========================================================= */
+
+@keyframes admin-profile-appear {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   36. SECTION EXPORT DROPDOWN
+========================================================= */
+
+.section-export-menu {
+    border: 1px solid #e9e2f3;
+    border-radius: 12px;
+
+    background:
+        radial-gradient(ellipse 120% 45% at 50% 0%,
+            rgba(196, 181, 253, .12),
+            transparent 80%),
+        #fff;
+
+    box-shadow:
+        0 2px 6px rgba(35, 24, 66, .035),
+        0 10px 25px rgba(35, 24, 66, .07),
+        0 24px 50px rgba(35, 24, 66, .10);
+
+    animation: admin-fade-down .35s var(--ease-out);
+}
+
+.section-export-option {
+    transition:
+        background .25s ease,
+        color .25s ease,
+        padding-left .3s var(--ease-out);
+}
+
+.section-export-option:hover {
+    padding-left: 14px;
+}
+
+.section-export-toggle {
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease,
+        transform .3s var(--ease-out);
+}
+
+
+/* =========================================================
+   37. ADMIN RESET DATA MODAL
+========================================================= */
+
+.admin-reset-modal {
+    z-index: 3100;
+}
+
+.admin-reset-dialog {
+    width: min(760px, 100%);
+
+    height: auto;
+
+    max-height: min(760px, calc(100vh - 40px));
+    max-height: min(760px, calc(100dvh - 40px));
+}
+
+.admin-reset-heading-icon {
+    border: 1px solid #f3cbd2;
+
+    background: linear-gradient(145deg,
+            #fff4f5,
+            #ffe4e8);
+
+    color: #b42318;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .95),
+        0 4px 10px rgba(180, 35, 60, .06);
+}
+
+.admin-reset-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 15px;
+
+    min-height: 0;
+
+    padding: 22px 25px 24px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .98),
+            rgba(255, 255, 255, .94));
+
+    scrollbar-width: thin;
+    scrollbar-color: #d8c9f5 transparent;
+}
+
+
+/* =========================================================
+   38. RESET OPTION CARDS
+========================================================= */
+
+.admin-reset-option {
+    position: relative;
+    isolation: isolate;
+
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 15px;
+
+    min-width: 0;
+
+    padding: 18px;
+
+    border: 1px solid #ebe7f1;
+    border-radius: 14px;
+
+    background:
+        radial-gradient(ellipse 120% 45% at 50% -10%,
+            rgba(196, 181, 253, .10),
+            transparent 75%),
+        linear-gradient(180deg,
+            #fff,
+            #fefeff);
+
+    box-shadow: 0 2px 6px rgba(35, 24, 66, .025);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .35s var(--ease-out);
+}
+
+.admin-reset-option:hover {
+    border-color: #e2c8cc;
+
+    box-shadow:
+        0 5px 14px rgba(63, 42, 104, .045),
+        0 12px 25px rgba(63, 42, 104, .055);
+
+    transform: translateY(-2px);
+}
+
+.admin-reset-option-icon {
+    display: grid;
+
+    width: 44px;
+    height: 44px;
+
+    place-items: center;
+
+    border: 1px solid #f3cbd2;
+    border-radius: 12px;
+
+    background: linear-gradient(145deg, #fff4f5, #ffe4e8);
+    color: #b42318;
+
+    box-shadow: 0 3px 9px rgba(180, 35, 60, .045);
+
+    transition: transform .35s var(--ease-spring);
+}
+
+.admin-reset-option-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.admin-reset-option:hover .admin-reset-option-icon {
+    transform: rotate(-5deg) scale(1.06);
+}
+
+.admin-reset-option-warning .admin-reset-option-icon {
+    border-color: #f3dfb4;
+
+    background: linear-gradient(145deg,
+            #fff9ec,
+            #fff1cc);
+
+    color: #b54708;
+}
+
+
+/* =========================================================
+   39. RESET OPTION DETAILS
+========================================================= */
+
+.admin-reset-option-details {
+    min-width: 0;
+}
+
+.admin-reset-option-details h3 {
+    margin: 0;
+
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.admin-reset-option-details p {
+    margin: 7px 0 0;
+
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-reset-option-details p strong {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.admin-reset-option-details code {
+    padding: 2px 5px;
+
+    border: 1px solid #e9e2f3;
+    border-radius: 5px;
+
+    background: #f7f3ff;
+    color: #6038b1;
+
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 11px;
+
+    overflow-wrap: anywhere;
+}
+
+.admin-reset-option-details small {
+    display: block;
+    margin-top: 7px;
+
+    color: var(--subtle);
+    font-size: 10px;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   40. RESET BUTTONS
+========================================================= */
+
+.admin-reset-option-action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    margin: 0;
+}
+
+.admin-reset-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 40px;
+    padding: 10px 13px;
+
+    border: 1px solid #f3cbd2;
+    border-radius: 10px;
+
+    background: #fff;
+    color: #b42318;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease,
+        transform .3s var(--ease-out);
+}
+
+.admin-reset-action-button:hover,
+.admin-reset-action-button:focus-visible {
+    outline: none;
+
+    border-color: #f0a8b4;
+    background: #fff1f3;
+
+    box-shadow: 0 4px 10px rgba(189, 52, 73, .075);
+
+    transform: translateY(-2px);
+}
+
+.admin-reset-action-button:active {
+    transform: scale(.97);
+}
+
+.admin-reset-action-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.admin-reset-academic-button {
+    border-color: #f3dfb4;
+    background: #fff;
+    color: #b54708;
+}
+
+.admin-reset-academic-button:hover,
+.admin-reset-academic-button:focus-visible {
+    border-color: #eecf91;
+    background: #fff8e7;
+
+    box-shadow: 0 4px 10px rgba(166, 107, 18, .075);
+}
+
+.admin-reset-action-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   41. RESET WARNING MESSAGE
+========================================================= */
+
+.admin-reset-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    padding: 12px 13px;
+
+    border: 1px solid #f3dfb4;
+    border-radius: 11px;
+
+    background: linear-gradient(120deg,
+            #fff9ec,
+            #fffdf8);
+
+    color: #a46c12;
+
+    box-shadow:
+        inset 3px 0 0 #dfa638,
+        0 3px 9px rgba(166, 107, 18, .045);
+
+    animation: admin-alert-in .4s var(--ease-out);
+}
+
+.admin-reset-note>svg {
+    flex: 0 0 16px;
+
+    width: 16px;
+    height: 16px;
+
+    margin-top: 1px;
+}
+
+.admin-reset-note p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   42. RESET MODAL FOOTER
+========================================================= */
+
+.admin-reset-footer {
+    margin-top: 2px;
+    padding-top: 16px;
+}
+
+
+/* =========================================================
+   43. RESET DATA PASSWORD VERIFICATION
+========================================================= */
+
+.admin-reset-password-modal {
+    z-index: 3200;
+}
+
+.admin-reset-password-dialog {
+    width: min(500px, 100%);
+    height: auto;
+
+    max-height: calc(100dvh - 40px);
+}
+
+.admin-reset-password-modal .admin-reset-content {
+    gap: 20px;
+}
+
+.admin-reset-password-modal .admin-profile-field input {
+    min-height: 45px;
+}
+
+.admin-reset-password-modal .admin-reset-footer {
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   44. DATE AND TIME
+========================================================= */
+
+.datetime-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+
+    padding-inline: 5px;
+
+    white-space: nowrap;
+
+    transition: transform .3s var(--ease-out);
+}
+
+.datetime-date {
+    color: #918ba0;
+
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .15px;
+    line-height: 1.3;
+}
+
+.datetime-clock {
+    color: #302642;
+
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 1.3;
+
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .35px;
+
+    transition:
+        color .25s ease,
+        text-shadow .25s ease;
+}
+
+.datetime-wrap:hover {
+    transform: translateY(-1px);
+}
+
+.datetime-wrap:hover .datetime-clock {
+    color: var(--primary);
+    text-shadow: 0 2px 12px rgba(112, 65, 214, .13);
+}
+
+
+/* =========================================================
+   45. RESPONSIVE — TABLETS
+========================================================= */
 
 @media (max-width: 1050px) {
 
@@ -1196,6 +3931,22 @@ body.section-modal-open {
 }
 
 @media (max-width: 820px) {
+
+    .app::before {
+        top: -130px;
+        right: -155px;
+
+        width: 300px;
+        height: 300px;
+    }
+
+    .app::after {
+        bottom: -140px;
+        left: -145px;
+
+        width: 250px;
+        height: 250px;
+    }
 
     .admin-stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1225,7 +3976,14 @@ body.section-modal-open {
 
 }
 
+
+/* =========================================================
+   46. RESPONSIVE — SMALL TABLETS
+========================================================= */
+
 @media (max-width: 700px) {
+
+    /* Section cards */
 
     .managed-section-heading {
         flex-direction: column;
@@ -1235,17 +3993,41 @@ body.section-modal-open {
     .section-card-actions {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
+
         width: 100%;
     }
 
     .section-card-actions .button {
         width: 100%;
+
         white-space: normal;
         text-align: center;
     }
 
+    /* Section export */
+
+    .section-export-wrap {
+        width: 100%;
+    }
+
+    .section-card-actions .section-export-wrap {
+        grid-column: 1 / -1;
+    }
+
+    .section-export-toggle {
+        width: 100%;
+    }
+
+    .section-export-menu {
+        right: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    /* Admin modal */
+
     .admin-modal-overlay {
-        align-items: flex-end;
+        align-items: center;
         padding: 10px;
     }
 
@@ -1278,1169 +4060,6 @@ body.section-modal-open {
         width: auto;
     }
 
-}
-
-@media (max-width: 520px) {
-
-    .admin-panel-heading {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .section-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-        padding: 15px;
-    }
-
-    .section-filter-group {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-    }
-
-    .section-year-filter {
-        flex: 1 1 auto;
-        width: 100%;
-        min-height: 44px;
-    }
-
-    .section-year-filter select {
-        font-size: 12px;
-    }
-
-    .section-search-box {
-        flex: 1 1 auto;
-        width: 100%;
-        max-width: 100%;
-        min-height: 44px;
-    }
-
-    .section-search-box input {
-        font-size: 12px;
-    }
-
-    .section-toolbar>.button {
-        width: 100%;
-        margin-left: 0;
-        justify-content: center;
-    }
-
-    .section-search-status {
-        padding: 14px 15px 0;
-        line-height: 1.6;
-    }
-
-    .managed-sections {
-        padding: 14px;
-    }
-
-    .managed-section-heading {
-        gap: 14px;
-        padding: 14px;
-    }
-
-    .managed-section-title h3 {
-        font-size: 14px;
-    }
-
-    .section-student-row {
-        gap: 8px;
-        padding: 10px;
-    }
-
-    .section-student-info small {
-        word-break: break-word;
-    }
-
-    .section-modal-overlay {
-        align-items: center;
-        padding: 12px;
-    }
-
-    .section-modal {
-        max-height: calc(100dvh - 24px);
-        border-radius: 12px;
-    }
-
-    .section-modal-header,
-    .create-section-modal-form {
-        padding: 18px;
-    }
-
-    .section-modal-actions {
-        flex-direction: column-reverse;
-    }
-
-    .section-modal-actions .button {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .selected-student-card {
-        padding: 12px;
-    }
-
-    .student-information-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 11px;
-    }
-
-    .selected-student-heading {
-        flex-wrap: wrap;
-    }
-
-    .student-change-button {
-        margin-left: auto;
-    }
-
-}
-
-@media (max-width: 480px) {
-
-    .admin-stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .admin-stats-grid .admin-stat-card:last-child {
-        grid-column: auto;
-    }
-
-    .admin-stat-card {
-        padding: 15px;
-    }
-
-    .topbar-end {
-        gap: 8px;
-    }
-
-    .search-trigger {
-        width: 42px;
-        padding: 0;
-        justify-content: center;
-    }
-
-    .search-trigger span,
-    .search-trigger kbd {
-        display: none;
-    }
-
-    .profile-info,
-    .profile-chevron {
-        display: none;
-    }
-
-}
-
-@media (max-width: 380px) {
-
-    .section-card-actions {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-/* =========================================
-   ADD STUDENT AND ASSIGN ADVISER MODALS
-   MATCH THE CREATE SECTION MODAL DESIGN
-========================================= */
-
-/* Modal overlay */
-
-.admin-modal-overlay {
-    position: fixed;
-    z-index: 2000;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    padding: 20px;
-    overflow-y: auto;
-    background: rgba(16, 24, 40, 0.55);
-    backdrop-filter: blur(3px);
-}
-
-.admin-modal-overlay[hidden] {
-    display: none !important;
-}
-
-/* Modal container */
-
-.admin-modal {
-    width: min(100%, 470px);
-    max-height: calc(100vh - 40px);
-    max-height: calc(100dvh - 40px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    box-sizing: border-box;
-    border: 1px solid var(--line);
-    border-radius: 15px;
-    background: #fff;
-    box-shadow: 0 24px 70px rgba(16, 24, 40, 0.22);
-    animation: sectionModalIn 0.18s ease-out;
-}
-
-/* Modal header */
-
-.admin-modal-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 23px;
-    border-bottom: 1px solid var(--line);
-}
-
-.admin-modal-header>div {
-    flex: 1;
-    min-width: 0;
-}
-
-.admin-modal-header h2 {
-    margin: 0;
-    color: var(--ink);
-    font-size: 19px;
-    font-weight: 600;
-    line-height: 1.4;
-    overflow-wrap: anywhere;
-}
-
-.admin-modal-header p {
-    margin: 7px 0 0;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-}
-
-/* Modal form spacing */
-
-.admin-modal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    padding: 23px;
-}
-
-.admin-modal-form label {
-    margin: 0;
-    color: var(--text);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-/* Search input */
-
-.admin-modal-form input[type="search"] {
-    width: 100%;
-    min-width: 0;
-    min-height: 45px;
-    box-sizing: border-box;
-    padding: 10px 12px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
-    outline: none;
-    background: #fff;
-    color: var(--text);
-    font-family: inherit;
-    font-size: 13px;
-}
-
-.admin-modal-form input[type="search"]:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
-}
-
-/* Search results */
-
-.student-search-container {
-    position: relative;
-    width: 100%;
-    min-width: 0;
-}
-
-.admin-modal-form .student-search-container>input[type="search"] {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Student information card */
-
-.selected-student-card {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-/* Modal action buttons */
-
-.admin-modal-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 6px;
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-}
-
-.admin-modal-actions .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    min-height: 42px;
-    padding: 10px 14px;
-    font-size: 12px;
-}
-
-.admin-modal-actions svg {
-    width: 15px;
-    height: 15px;
-}
-
-/* Remove forced Add Student modal height */
-
-#add-student-modal .admin-modal {
-    display: block;
-    height: auto;
-    height: fit-content;
-    max-height: calc(100vh - 40px);
-    max-height: calc(100dvh - 40px);
-}
-
-#add-student-modal .admin-modal-form {
-    flex: initial;
-    min-height: 0;
-    overflow: visible;
-}
-
-#add-student-modal .admin-modal-actions {
-    position: static;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 6px;
-    padding-top: 18px;
-}
-
-/* =========================================
-   TABLET AND MOBILE MODAL RESPONSIVENESS
-========================================= */
-
-@media (max-width: 700px) {
-
-    .admin-modal-overlay {
-        display: grid;
-        place-items: center;
-        padding: 12px;
-    }
-
-    .admin-modal {
-        width: 100%;
-        max-width: 470px;
-        max-height: calc(100vh - 24px);
-        max-height: calc(100dvh - 24px);
-        border-radius: 12px;
-    }
-
-    .admin-modal-header,
-    .admin-modal-form {
-        padding: 18px;
-    }
-
-    .admin-modal-actions {
-        display: flex;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .admin-modal-actions .button {
-        width: auto;
-        max-width: 100%;
-    }
-
-}
-
-/* Narrow mobile screens */
-
-@media (max-width: 380px) {
-
-    .admin-modal-overlay {
-        padding: 8px;
-    }
-
-    .admin-modal {
-        max-height: calc(100vh - 16px);
-        max-height: calc(100dvh - 16px);
-    }
-
-    .admin-modal-header,
-    .admin-modal-form {
-        padding: 14px;
-    }
-
-    .admin-modal-header {
-        gap: 10px;
-    }
-
-    .admin-modal-actions {
-        gap: 6px;
-    }
-
-    .admin-modal-actions .button {
-        min-width: 0;
-        padding: 9px 10px;
-        font-size: 11px;
-    }
-
-}
-
-/* Short screens and landscape phones */
-
-@media (max-height: 620px) {
-
-    .admin-modal-overlay {
-        place-items: start center;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    .admin-modal {
-        max-height: calc(100vh - 20px);
-        max-height: calc(100dvh - 20px);
-    }
-
-}
-
-/* =========================================
-   ENROLLED STUDENT ACTION BUTTONS
-========================================= */
-
-.section-student-actions {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: 6px;
-    margin-left: auto;
-}
-
-.section-student-actions form {
-    display: flex;
-    margin: 0;
-}
-
-.student-row-action-button {
-    display: grid;
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
-    place-items: center;
-    border: 1px solid #d0d5dd;
-    border-radius: 7px;
-    background: #fff;
-    color: var(--muted);
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
-}
-
-.student-row-action-button:hover {
-    border-color: #c7d2fe;
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.student-row-action-button svg {
-    width: 15px;
-    height: 15px;
-}
-
-.section-student-actions .remove-student-button {
-    flex: 0 0 32px;
-}
-
-/* =========================================
-   EDIT STUDENT MODAL
-========================================= */
-
-.edit-student-modal .admin-modal {
-    width: min(100%, 680px);
-}
-
-.edit-student-modal .admin-modal-form {
-    gap: 16px;
-}
-
-.student-modal-section-info {
-    margin-top: 10px !important;
-    padding: 9px 11px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: #f9fafb;
-    color: var(--muted) !important;
-    font-size: 11px !important;
-}
-
-.student-modal-section-info strong {
-    color: var(--ink);
-}
-
-.student-form-section-title {
-    padding-bottom: 9px;
-    border-bottom: 1px solid var(--line);
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.student-edit-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 15px;
-    min-width: 0;
-}
-
-.student-edit-grid .section-form-field {
-    min-width: 0;
-}
-
-.student-edit-grid .section-form-field label {
-    margin: 0;
-    color: var(--text);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.student-edit-grid .section-form-field input {
-    width: 100%;
-    min-width: 0;
-    min-height: 43px;
-    box-sizing: border-box;
-    padding: 10px 12px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
-    outline: none;
-    background: #fff;
-    color: var(--text);
-    font: inherit;
-    font-size: 12px;
-}
-
-.student-edit-grid .section-form-field textarea {
-    width: 100%;
-    min-width: 0;
-    min-height: 85px;
-    box-sizing: border-box;
-    resize: vertical;
-    padding: 10px 12px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
-    outline: none;
-    background: #fff;
-    color: var(--text);
-    font: inherit;
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-.student-edit-grid .section-form-field input:focus,
-.student-edit-grid .section-form-field textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
-}
-
-.student-edit-full-width {
-    grid-column: 1 / -1;
-}
-
-.student-edit-hint {
-    margin: 0;
-    padding: 11px 12px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: #f9fafb;
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 1.6;
-}
-
-/* =========================================
-   CHANGE SECTION MODAL
-========================================= */
-
-.change-section-modal .admin-modal {
-    width: min(100%, 470px);
-}
-
-.change-section-modal .admin-modal-form {
-    gap: 18px;
-}
-
-.change-section-form .section-form-field select {
-    width: 100%;
-    min-width: 0;
-    min-height: 45px;
-    box-sizing: border-box;
-    padding: 10px 12px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
-    outline: none;
-    background: #fff;
-    color: var(--text);
-    font: inherit;
-    font-size: 12px;
-}
-
-.change-section-form .section-form-field select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, 0.12);
-}
-
-.change-section-notice {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px;
-    border: 1px solid #dbe2ff;
-    border-radius: 9px;
-    background: #fbfcff;
-    color: var(--muted);
-}
-
-.change-section-notice svg {
-    flex: 0 0 17px;
-    width: 17px;
-    height: 17px;
-    margin-top: 1px;
-    color: var(--primary);
-}
-
-.change-section-notice p {
-    margin: 0;
-    font-size: 11px;
-    line-height: 1.6;
-}
-
-/* =========================================
-   RESPONSIVE STUDENT MODALS AND ACTIONS
-========================================= */
-
-@media (max-width: 700px) {
-
-    .section-student-actions {
-        gap: 5px;
-    }
-
-    .student-edit-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-    }
-
-    .edit-student-modal .admin-modal {
-        width: 100%;
-    }
-
-}
-
-@media (max-width: 480px) {
-
-    .section-student-row {
-        gap: 7px;
-    }
-
-    .section-student-actions {
-        gap: 4px;
-    }
-
-    .student-row-action-button,
-    .section-student-actions .remove-student-button {
-        flex-basis: 30px;
-        width: 30px;
-        height: 30px;
-    }
-
-    .student-edit-grid {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .student-edit-full-width {
-        grid-column: auto;
-    }
-
-}
-
-.managed-section-card+.managed-section-card {
-    margin-top: 14px;
-}
-
-/* =========================================================
-   ADMIN PROFILE MODAL
-========================================================= */
-
-body.admin-profile-modal-open {
-    overflow: hidden;
-}
-
-.admin-profile-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 3000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.admin-profile-modal[hidden] {
-    display: none !important;
-}
-
-.admin-profile-backdrop {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    border: 0;
-    background: rgba(16, 24, 40, .58);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
-.admin-profile-dialog {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    width: min(760px, 100%);
-    height: min(860px, calc(100vh - 40px));
-    height: min(860px, calc(100dvh - 40px));
-    min-width: 0;
-    min-height: 0;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--surface);
-    box-shadow: 0 24px 70px rgba(16, 24, 40, .25);
-    animation: admin-profile-appear .18s ease-out;
-}
-
-/* =========================================================
-   PROFILE HEADER
-========================================================= */
-
-.admin-profile-header {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    width: 100%;
-    padding: 23px 25px;
-    border-bottom: 1px solid var(--line);
-    background: #fff;
-}
-
-.admin-profile-heading {
-    display: flex;
-    align-items: flex-start;
-    gap: 13px;
-    min-width: 0;
-}
-
-.admin-profile-heading-icon {
-    display: grid;
-    flex: 0 0 43px;
-    width: 43px;
-    height: 43px;
-    place-items: center;
-    border-radius: 11px;
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.admin-profile-heading-icon svg {
-    width: 22px;
-    height: 22px;
-}
-
-.admin-profile-heading h2 {
-    margin: 1px 0 0;
-    color: var(--ink);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.4;
-    overflow-wrap: anywhere;
-}
-
-.admin-profile-heading p {
-    max-width: 520px;
-    margin: 5px 0 0;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.7;
-    overflow-wrap: anywhere;
-}
-
-.admin-profile-close {
-    flex: 0 0 34px;
-    width: 34px;
-    height: 34px;
-}
-
-.admin-profile-close svg {
-    width: 18px;
-    height: 18px;
-}
-
-/* =========================================================
-   PROFILE PICTURE EDITOR
-========================================================= */
-
-.admin-profile-picture-form {
-    flex: 0 0 auto;
-    width: 100%;
-    min-width: 0;
-    padding: 18px 25px;
-    border-bottom: 1px solid var(--line);
-    background: #fff;
-}
-
-.admin-picture-editor {
-    display: flex;
-    align-items: center;
-    gap: 17px;
-    width: 100%;
-    min-width: 0;
-}
-
-.admin-picture-preview {
-    display: grid;
-    flex: 0 0 76px;
-    place-items: center;
-    width: 76px;
-    height: 76px;
-    overflow: hidden;
-    border: 2px solid #dbeafe;
-    border-radius: 50%;
-    background: #eff6ff;
-    color: var(--primary);
-    font-size: 21px;
-    font-weight: 700;
-}
-
-.admin-picture-preview img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    object-fit: cover;
-}
-
-.admin-picture-details {
-    flex: 1 1 auto;
-    min-width: 0;
-}
-
-.admin-picture-details>strong {
-    display: block;
-    margin-bottom: 5px;
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.admin-picture-details>p {
-    margin: 0 0 11px;
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 1.6;
-}
-
-.admin-picture-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.admin-picture-actions .button {
-    min-height: 36px;
-    padding: 7px 11px;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.admin-picture-actions .button svg {
-    width: 15px;
-    height: 15px;
-}
-
-.admin-picture-file-input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-.admin-picture-details>small {
-    display: block;
-    margin-top: 9px;
-    color: var(--subtle);
-    font-size: 10px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-.admin-picture-error {
-    margin-top: 15px;
-}
-
-/* =========================================================
-   PERSONAL AND ACCOUNT INFORMATION FORM
-========================================================= */
-
-.admin-profile-form {
-    display: block;
-    flex: 1 1 auto;
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-    padding: 22px 25px 24px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #d0d5dd transparent;
-}
-
-.admin-profile-form>.admin-alert {
-    margin-bottom: 20px;
-}
-
-.admin-profile-section-title {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    margin: 0 0 16px;
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.admin-profile-section-title>svg {
-    flex: 0 0 17px;
-    width: 17px;
-    height: 17px;
-    color: var(--primary);
-}
-
-.admin-profile-account-title {
-    margin-top: 26px;
-    padding-top: 22px;
-    border-top: 1px solid var(--line);
-}
-
-.admin-profile-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 17px;
-}
-
-.admin-profile-field {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    min-width: 0;
-}
-
-.admin-profile-full {
-    grid-column: 1 / -1;
-}
-
-.admin-profile-field label {
-    color: var(--text);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.admin-profile-field .required-mark {
-    color: var(--danger);
-}
-
-.admin-profile-field input,
-.admin-profile-field select,
-.admin-profile-field textarea {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    min-height: 42px;
-    padding: 10px 12px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
-    outline: none;
-    background: #fff;
-    color: var(--text);
-    font-family: inherit;
-    font-size: 12px;
-    line-height: 1.5;
-    transition: border-color .15s ease, box-shadow .15s ease;
-}
-
-.admin-profile-field textarea {
-    min-height: 86px;
-    resize: vertical;
-}
-
-.admin-profile-field input::placeholder,
-.admin-profile-field textarea::placeholder {
-    color: var(--subtle);
-}
-
-.admin-profile-field input:focus,
-.admin-profile-field select:focus,
-.admin-profile-field textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, .12);
-}
-
-.admin-profile-field input[readonly] {
-    border-color: #eaecf0;
-    background: #f8fafc;
-    color: #667085;
-    cursor: default;
-}
-
-.admin-profile-field small {
-    color: var(--subtle);
-    font-size: 11px;
-    line-height: 1.6;
-}
-
-/* =========================================================
-   PROFILE ACTION BUTTONS
-========================================================= */
-
-.admin-profile-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 27px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-}
-
-.admin-profile-actions .button {
-    min-width: 112px;
-    min-height: 42px;
-}
-
-/* =========================================================
-   ACCOUNT SETTINGS — PASSWORD MODAL
-========================================================= */
-
-.admin-password-dialog {
-    width: min(540px, 100%);
-    height: auto;
-    max-height: min(860px, calc(100vh - 40px));
-    max-height: min(860px, calc(100dvh - 40px));
-}
-
-.admin-password-form {
-    flex: 0 1 auto;
-    width: 100%;
-    min-height: 0;
-    padding: 22px 25px 24px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-}
-
-.admin-password-form .admin-profile-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 19px;
-}
-
-.admin-password-input-wrap {
-    position: relative;
-    width: 100%;
-    min-width: 0;
-}
-
-.admin-password-input-wrap input {
-    width: 100%;
-    padding-right: 46px;
-}
-
-.admin-password-toggle {
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    display: grid;
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    transform: translateY(-50%);
-    place-items: center;
-    border: 0;
-    border-radius: 7px;
-    background: transparent;
-    color: var(--subtle);
-    transition: background .15s ease, color .15s ease;
-}
-
-.admin-password-toggle:hover {
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.admin-password-toggle svg {
-    width: 17px;
-    height: 17px;
-    stroke-width: 1.8;
-}
-
-.admin-password-input-wrap input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(70, 95, 255, .12);
-}
-
-.admin-password-form .admin-profile-actions {
-    margin-top: 25px;
-}
-
-/* =========================================================
-   PROFILE MODAL ANIMATION
-========================================================= */
-
-@keyframes admin-profile-appear {
-    from {
-        opacity: 0;
-        transform: translateY(8px) scale(.99);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* =========================================================
-   TABLETS
-========================================================= */
-
-@media (max-width: 820px) {
-
     .admin-profile-modal {
         padding: 16px;
     }
@@ -2467,13 +4086,200 @@ body.admin-profile-modal-open {
         max-height: calc(100dvh - 32px);
     }
 
+    .admin-password-form {
+        padding: 20px;
+    }
+
 }
 
+
 /* =========================================================
-   MOBILE
+   47. RESPONSIVE — MOBILE
 ========================================================= */
 
 @media (max-width: 520px) {
+
+    /* Statistics */
+
+    .admin-panel-heading {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-stats-grid .admin-stat-card:last-child {
+        grid-column: auto;
+    }
+
+    .admin-stat-card {
+        padding: 15px;
+    }
+
+    /* Section toolbar */
+
+    .section-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+
+        padding: 15px;
+    }
+
+    .section-filter-group {
+        flex-direction: column;
+        align-items: stretch;
+
+        width: 100%;
+    }
+
+    .section-year-filter {
+        flex: 1 1 auto;
+
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .section-year-filter select {
+        font-size: 12px;
+    }
+
+    .section-search-box {
+        flex: 1 1 auto;
+
+        width: 100%;
+        max-width: 100%;
+        min-height: 44px;
+    }
+
+    .section-search-box input {
+        font-size: 12px;
+    }
+
+    .section-toolbar>.button {
+        width: 100%;
+
+        margin-left: 0;
+
+        justify-content: center;
+    }
+
+    .section-search-status {
+        padding: 14px 15px 0;
+        line-height: 1.7;
+    }
+
+    /* Section cards */
+
+    .managed-sections {
+        padding: 14px;
+    }
+
+    .managed-section-heading {
+        gap: 14px;
+        padding: 14px;
+    }
+
+    .managed-section-title h3 {
+        font-size: 14px;
+    }
+
+    .section-student-row {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .section-student-info small {
+        word-break: break-word;
+    }
+
+    /* Section modal */
+
+    .section-modal-overlay {
+        align-items: center;
+        padding: 12px;
+    }
+
+    .section-modal {
+        max-height: calc(100dvh - 24px);
+        border-radius: 15px;
+    }
+
+    .section-modal-header,
+    .create-section-modal-form {
+        padding: 18px;
+    }
+
+    .section-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .section-modal-actions .button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Admin modal */
+
+    .admin-modal-overlay {
+        align-items: center;
+        padding: 12px;
+    }
+
+    .admin-modal {
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
+
+        border-radius: 15px;
+    }
+
+    .admin-modal-header,
+    .admin-modal-form {
+        padding: 18px;
+    }
+
+    .admin-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .admin-modal-actions .button {
+        width: auto;
+    }
+
+    #add-student-modal .admin-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #add-student-modal .admin-modal-actions .button {
+        width: auto;
+    }
+
+    /* Selected student */
+
+    .selected-student-card {
+        padding: 12px;
+    }
+
+    .student-information-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 11px;
+    }
+
+    .selected-student-heading {
+        flex-wrap: wrap;
+    }
+
+    .student-change-button {
+        margin-left: auto;
+    }
+
+    /* Admin profile */
 
     .admin-profile-modal {
         align-items: center;
@@ -2482,9 +4288,11 @@ body.admin-profile-modal-open {
 
     .admin-profile-dialog {
         width: 100%;
+
         height: calc(100dvh - 20px);
         max-height: calc(100dvh - 20px);
-        border-radius: 13px;
+
+        border-radius: 15px;
     }
 
     .admin-profile-header {
@@ -2570,7 +4378,7 @@ body.admin-profile-modal-open {
         padding-inline: 8px;
     }
 
-    /* PASSWORD MODAL */
+    /* Password modal */
 
     .admin-password-dialog {
         height: auto;
@@ -2585,13 +4393,149 @@ body.admin-profile-modal-open {
         grid-template-columns: minmax(0, 1fr);
     }
 
+    /* Reset data */
+
+    .admin-reset-dialog {
+        max-height: calc(100dvh - 20px);
+        border-radius: 15px;
+    }
+
+    .admin-reset-content {
+        gap: 12px;
+        padding: 15px 14px 17px;
+    }
+
+    .admin-reset-option {
+        padding: 13px;
+    }
+
+    .admin-reset-option-details h3 {
+        font-size: 13px;
+    }
+
+    .admin-reset-option-details p {
+        font-size: 11px;
+    }
+
+    .admin-reset-password-dialog {
+        max-height: calc(100dvh - 20px);
+    }
+
+    /* Date and time */
+
+    .datetime-date {
+        font-size: 9px;
+    }
+
+    .datetime-clock {
+        font-size: 13px;
+    }
+
 }
 
+
 /* =========================================================
-   NARROW PHONES
+   48. RESPONSIVE — NARROW PHONES
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .topbar-end {
+        gap: 8px;
+    }
+
+    .search-trigger {
+        width: 42px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .search-trigger span,
+    .search-trigger kbd {
+        display: none;
+    }
+
+    .profile-info,
+    .profile-chevron {
+        display: none;
+    }
+
+    .section-student-row {
+        gap: 7px;
+    }
+
+    .section-student-actions {
+        gap: 4px;
+    }
+
+    .student-row-action-button,
+    .section-student-actions .remove-student-button {
+        flex-basis: 30px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .student-edit-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .student-edit-full-width {
+        grid-column: auto;
+    }
+
+}
+
+
+/* =========================================================
+   49. RESPONSIVE — VERY NARROW PHONES
 ========================================================= */
 
 @media (max-width: 380px) {
+
+    .section-card-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .section-student-actions {
+        gap: 4px;
+    }
+
+    .student-edit-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .section-modal-header,
+    .create-section-modal-form {
+        padding: 14px;
+    }
+
+    .admin-modal-overlay {
+        padding: 8px;
+    }
+
+    .admin-modal {
+        max-height: calc(100vh - 16px);
+        max-height: calc(100dvh - 16px);
+    }
+
+    .admin-modal-header,
+    .admin-modal-form {
+        padding: 14px;
+    }
+
+    .admin-modal-header {
+        gap: 10px;
+    }
+
+    .admin-modal-actions {
+        gap: 6px;
+    }
+
+    .admin-modal-actions .button {
+        min-width: 0;
+        padding: 9px 10px;
+        font-size: 11px;
+    }
 
     .admin-profile-header {
         padding: 14px;
@@ -2623,555 +4567,112 @@ body.admin-profile-modal-open {
         padding: 16px 14px;
     }
 
+    .admin-reset-content {
+        padding: 15px 12px;
+    }
+
 }
 
+
 /* =========================================================
-   REDUCED MOTION
+   50. SHORT SCREENS AND LANDSCAPE PHONES
+========================================================= */
+
+@media (max-height: 620px) {
+
+    .admin-modal-overlay,
+    .section-modal-overlay {
+        place-items: start center;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .admin-modal,
+    .section-modal {
+        max-height: calc(100vh - 20px);
+        max-height: calc(100dvh - 20px);
+    }
+
+    .admin-profile-dialog {
+        height: auto;
+        max-height: calc(100dvh - 20px);
+        margin-block: 8px;
+    }
+
+    .admin-password-dialog {
+        height: auto;
+        max-height: calc(100dvh - 20px);
+    }
+
+    .admin-reset-dialog {
+        max-height: calc(100dvh - 20px);
+    }
+
+}
+
+
+/* =========================================================
+   51. FINAL ACCESSIBILITY — REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-    .admin-profile-dialog {
-        animation: none;
+    html {
+        scroll-behavior: auto;
     }
 
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+    }
+
+    .app::before,
+    .app::after,
+    .admin-stat-card,
+    .admin-panel,
+    .managed-section-card,
+    .managed-section-card::before,
+    .faculty-section-card,
+    .admin-modal,
+    .section-modal,
     .admin-profile-dialog,
+    .admin-password-dialog,
+    .section-export-menu,
+    .section-search-empty>span,
+    .admin-reset-option,
+    .student-search-results {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .admin-stat-card:hover,
+    .managed-section-card:hover,
+    .faculty-section-card:hover,
+    .admin-reset-option:hover,
+    .admin-stat-icon:hover,
+    .admin-picture-preview:hover {
+        transform: none !important;
+    }
+
     .admin-password-toggle,
-    .admin-picture-actions .button {
-        transition: none;
-    }
-
-}
-
-/* =====================================================
-   LIVE DATE AND TIME
-===================================================== */
-
-.datetime-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 2px;
-    white-space: nowrap;
-}
-
-.datetime-date {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted, #64748b);
-    line-height: 1.3;
-}
-
-.datetime-clock {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary, #1e293b);
-    line-height: 1.3;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.5px;
-}
-
-@media (max-width: 820px) {
-    .datetime-date {
-        font-size: 11px;
-    }
-
-    .datetime-clock {
-        font-size: 16px;
-    }
-}
-
-/* =========================================
-   SECTION EXPORT DROPDOWN
-========================================= */
-
-.section-export-wrap {
-    position: relative;
-    flex: 0 0 auto;
-    z-index: 5;
-}
-
-.section-export-toggle {
-    min-height: 38px;
-    white-space: nowrap;
-}
-
-.section-export-toggle .export-chevron {
-    width: 13px;
-    height: 13px;
-    margin-left: 2px;
-    transition: transform 0.2s ease;
-}
-
-.section-export-toggle[aria-expanded="true"] {
-    border-color: var(--primary);
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.section-export-toggle[aria-expanded="true"] .export-chevron {
-    transform: rotate(180deg);
-}
-
-/* Dropdown container */
-
-.section-export-menu {
-    position: absolute;
-    top: calc(100% + 7px);
-    right: 0;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    width: 185px;
-    padding: 6px;
-    box-sizing: border-box;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.14);
-    animation: sectionExportDropdownIn 0.15s ease-out;
-}
-
-.section-export-menu[hidden] {
-    display: none !important;
-}
-
-/* Individual export options */
-
-.section-export-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    min-height: 40px;
-    padding: 9px 11px;
-    border: 0;
-    border-radius: 7px;
-    background: transparent;
-    color: var(--text);
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 500;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
-}
-
-.section-export-option:hover,
-.section-export-option:focus-visible {
-    outline: none;
-    background: var(--primary-light);
-    color: var(--primary);
-}
-
-.section-export-option svg {
-    flex: 0 0 17px;
-    width: 17px;
-    height: 17px;
-    color: var(--muted);
-}
-
-.section-export-option:hover svg,
-.section-export-option:focus-visible svg {
-    color: var(--primary);
-}
-
-.section-export-option:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Keep the active card above neighboring section cards */
-
-.managed-section-card.has-export-menu-open {
-    position: relative;
-    z-index: 30;
-    overflow: visible;
-}
-
-.managed-section-card.has-export-menu-open .managed-section-heading {
-    position: relative;
-    z-index: 31;
-    overflow: visible;
-}
-
-/* Dropdown animation */
-
-@keyframes sectionExportDropdownIn {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Mobile responsiveness */
-
-@media (max-width: 700px) {
-
-    .section-export-wrap {
-        width: 100%;
-    }
-
-    .section-card-actions .section-export-wrap {
-        grid-column: 1 / -1;
-    }
-
-    .section-export-toggle {
-        width: 100%;
-    }
-
-    .section-export-menu {
-        right: 0;
-        left: 0;
-        width: 100%;
-    }
-
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .section-export-menu {
-        animation: none;
-    }
-
-    .section-export-toggle .export-chevron {
-        transition: none;
+    .admin-reset-action-button,
+    .section-export-toggle,
+    .section-export-option,
+    .section-export-menu,
+    .button-secondary {
+        transition: none !important;
     }
 
 }
 
 
-/* =========================================
-   ADMIN RESET DATA MODAL
-========================================= */
-
-.admin-reset-modal {
-    z-index: 3100;
-}
-
-.admin-reset-dialog {
-    width: min(760px, 100%);
-    height: auto;
-    max-height: min(760px, calc(100vh - 40px));
-    max-height: min(760px, calc(100dvh - 40px));
-}
-
-.admin-reset-heading-icon {
-    background: #fff1f0;
-    color: #b42318;
-}
-
-.admin-reset-content {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    gap: 15px;
-    min-height: 0;
-    padding: 22px 25px 24px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-}
-
-/* =========================================
-   RESET OPTION CARDS
-========================================= */
-
-.admin-reset-option {
-    display: grid;
-    grid-template-columns: 46px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 15px;
-    min-width: 0;
-    padding: 18px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: #fff;
-}
-
-.admin-reset-option-icon {
-    display: grid;
-    width: 44px;
-    height: 44px;
-    place-items: center;
-    border-radius: 11px;
-    background: #fef3f2;
-    color: #b42318;
-}
-
-.admin-reset-option-icon svg {
-    width: 21px;
-    height: 21px;
-}
-
-.admin-reset-option-warning .admin-reset-option-icon {
-    background: #fffaeb;
-    color: #b54708;
-}
-
-/* =========================================
-   RESET OPTION DETAILS
-========================================= */
-
-.admin-reset-option-details {
-    min-width: 0;
-}
-
-.admin-reset-option-details h3 {
-    margin: 0;
-    color: var(--ink);
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.45;
-}
-
-.admin-reset-option-details p {
-    margin: 7px 0 0;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.7;
-    overflow-wrap: anywhere;
-}
-
-.admin-reset-option-details p strong {
-    color: var(--ink);
-    font-weight: 700;
-}
-
-.admin-reset-option-details code {
-    padding: 2px 5px;
-    border: 1px solid #eaecf0;
-    border-radius: 5px;
-    background: #f9fafb;
-    color: #344054;
-    font-family: Consolas, "Courier New", monospace;
-    font-size: 11px;
-    overflow-wrap: anywhere;
-}
-
-.admin-reset-option-details small {
-    display: block;
-    margin-top: 7px;
-    color: var(--subtle);
-    font-size: 10px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-}
-
-/* =========================================
-   RESET BUTTONS
-========================================= */
-
-.admin-reset-option-action {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin: 0;
-}
-
-.admin-reset-action-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 40px;
-    padding: 10px 13px;
-    border: 1px solid #fecdca;
-    border-radius: 8px;
-    background: #fff;
-    color: #b42318;
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: 700;
-    white-space: nowrap;
-    cursor: pointer;
-    transition:
-        background .15s ease,
-        border-color .15s ease,
-        color .15s ease;
-}
-
-.admin-reset-action-button:hover,
-.admin-reset-action-button:focus-visible {
-    outline: none;
-    border-color: #fda29b;
-    background: #fef3f2;
-}
-
-.admin-reset-action-button svg {
-    width: 15px;
-    height: 15px;
-}
-
-.admin-reset-academic-button {
-    border-color: #fedf89;
-    color: #b54708;
-}
-
-.admin-reset-academic-button:hover,
-.admin-reset-academic-button:focus-visible {
-    border-color: #fec84b;
-    background: #fffaeb;
-}
-
-.admin-reset-action-button:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-}
-
-/* =========================================
-   WARNING MESSAGE
-========================================= */
-
-.admin-reset-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 9px;
-    padding: 12px 13px;
-    border: 1px solid #fedf89;
-    border-radius: 9px;
-    background: #fffaeb;
-    color: #b54708;
-}
-
-.admin-reset-note>svg {
-    flex: 0 0 16px;
-    width: 16px;
-    height: 16px;
-    margin-top: 1px;
-}
-
-.admin-reset-note p {
-    margin: 0;
-    font-size: 11px;
-    line-height: 1.6;
-}
-
-/* =========================================
-   MODAL FOOTER
-========================================= */
-
-.admin-reset-footer {
-    margin-top: 2px;
-    padding-top: 16px;
-}
-
-/* =========================================
-   TABLET AND MOBILE
-========================================= */
-
-@media (max-width: 700px) {
-
-    .admin-reset-content {
-        padding: 18px;
-    }
-
-    .admin-reset-option {
-        grid-template-columns: 40px minmax(0, 1fr);
-        gap: 12px;
-        padding: 15px;
-    }
-
-    .admin-reset-option-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .admin-reset-option-action {
-        grid-column: 1 / -1;
-        justify-content: stretch;
-    }
-
-    .admin-reset-action-button {
-        width: 100%;
-    }
-
-    .admin-reset-footer {
-        display: flex;
-    }
-
-    .admin-reset-footer .button {
-        width: auto;
-        min-width: 110px;
-    }
-
-}
-
-@media (max-width: 520px) {
-
-    .admin-reset-dialog {
-        max-height: calc(100dvh - 20px);
-        border-radius: 13px;
-    }
-
-    .admin-reset-content {
-        gap: 12px;
-        padding: 15px 14px 17px;
-    }
-
-    .admin-reset-option {
-        padding: 13px;
-    }
-
-    .admin-reset-option-details h3 {
-        font-size: 13px;
-    }
-
-    .admin-reset-option-details p {
-        font-size: 11px;
-    }
-
-}
-
-/* =========================================
-   REDUCED MOTION
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .admin-reset-action-button {
-        transition: none;
-    }
-
-}
-
-/* =========================================
-   RESET DATA PASSWORD VERIFICATION
-========================================= */
-
-.admin-reset-password-modal {
-    z-index: 3200;
-}
-
-.admin-reset-password-dialog {
-    width: min(500px, 100%);
-    height: auto;
-    max-height: calc(100dvh - 40px);
-}
-
-.admin-reset-password-modal .admin-reset-content {
-    gap: 20px;
-}
-
-.admin-reset-password-modal .admin-profile-field input {
-    min-height: 45px;
-}
-
-.admin-reset-password-modal .admin-reset-footer {
-    margin-top: 5px;
-}
-
-@media (max-width: 520px) {
-
-    .admin-reset-password-dialog {
-        max-height: calc(100dvh - 20px);
-    }
-
-}
+/* =========================================================
+   END OF ACADTRACK ADMIN DASHBOARD STYLESHEET
+========================================================= */

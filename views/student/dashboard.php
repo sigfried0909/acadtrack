@@ -2107,8 +2107,7 @@ function studentProfileTextLength(string $value): int
                         </div>
 
                         <small>
-                            Your new password must contain at least 8 characters
-                            and must not exceed 72 bytes.
+                            Your new password must contain at least 8 characters.
                         </small>
 
                     </div>

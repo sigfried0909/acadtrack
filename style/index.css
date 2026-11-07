@@ -184,27 +184,49 @@
    3. DESIGN TOKENS AND GLOBAL STYLES
 ========================================================= */
 
+/* Lets the card's light-edge highlight rotate smoothly.
+   Browsers without @property simply show it static. */
+@property --auth-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
 :root {
+    /* Brand */
     --auth-primary: #7041d6;
     --auth-primary-hover: #5b32bd;
     --auth-primary-light: #f1ebff;
     --auth-primary-border: #e5dafa;
+    --auth-accent: #8b5cf6;
 
+    /* Text */
     --auth-ink: #211b35;
     --auth-text: #403b54;
     --auth-muted: #77738b;
 
+    /* Surfaces and states */
     --auth-line: #ebe8f2;
     --auth-surface: #ffffff;
     --auth-error: #bd3449;
+    --auth-success: #16834b;
 
+    /* Shape */
     --auth-radius: 13px;
     --auth-card-radius: 26px;
 
+    /* Motion */
+    --auth-ease-out: cubic-bezier(.22, 1, .36, 1);
+    --auth-ease-soft: cubic-bezier(.45, 0, .25, 1);
+    --auth-ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+    --auth-ease-tab: cubic-bezier(.3, 1.25, .5, 1);
+
+    /* Depth */
     --auth-shadow:
-        0 2px 5px rgba(35, 24, 72, .025),
-        0 12px 32px rgba(63, 43, 115, .075),
-        0 30px 75px rgba(63, 43, 115, .105);
+        0 1px 2px rgba(35, 24, 72, .03),
+        0 8px 18px rgba(63, 43, 115, .05),
+        0 22px 48px rgba(63, 43, 115, .09),
+        0 44px 90px rgba(63, 43, 115, .10);
 }
 
 .cl-icon {
@@ -242,6 +264,101 @@ select:focus-visible {
     outline-offset: 3px;
 }
 
+::selection {
+    background: rgba(139, 92, 246, .22);
+    color: var(--auth-ink);
+}
+
+.cl-login10 button,
+.policy-modal button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* ---------- Shared keyframes ---------- */
+
+@keyframes auth-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes auth-item-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 12px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes auth-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes auth-fade-down {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -6px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes auth-alert-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -8px, 0) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes auth-shake {
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    18% {
+        transform: translate3d(-6px, 0, 0);
+    }
+
+    36% {
+        transform: translate3d(5px, 0, 0);
+    }
+
+    54% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    72% {
+        transform: translate3d(2px, 0, 0);
+    }
+}
+
 
 /* =========================================================
    4. LOGIN PAGE BACKGROUND
@@ -264,14 +381,16 @@ select:focus-visible {
     overflow: hidden;
 
     background:
+        radial-gradient(rgba(112, 65, 214, .075) 1px,
+            transparent 1.5px) 0 0 / 28px 28px,
         radial-gradient(circle at 12% 18%,
-            rgba(139, 92, 246, .17),
+            rgba(139, 92, 246, .19),
             transparent 34%),
         radial-gradient(circle at 88% 15%,
-            rgba(99, 102, 241, .13),
+            rgba(99, 102, 241, .14),
             transparent 32%),
         radial-gradient(circle at 78% 90%,
-            rgba(196, 181, 253, .24),
+            rgba(196, 181, 253, .26),
             transparent 36%),
         linear-gradient(135deg,
             #f8f7ff,
@@ -279,7 +398,7 @@ select:focus-visible {
             #faf8ff);
 }
 
-/* Decorative background elements */
+/* Slowly drifting decorative rings */
 
 .cl-login10-demo::before,
 .cl-login10-demo::after {
@@ -293,6 +412,7 @@ select:focus-visible {
 
     content: "";
     pointer-events: none;
+    will-change: transform;
 }
 
 .cl-login10-demo::before {
@@ -302,9 +422,16 @@ select:focus-visible {
     width: 340px;
     height: 340px;
 
+    background: radial-gradient(circle at 35% 35%,
+            rgba(167, 139, 250, .20),
+            rgba(139, 92, 246, .05) 55%,
+            transparent 72%);
+
     box-shadow:
         0 0 0 35px rgba(124, 58, 237, .025),
         0 0 0 75px rgba(124, 58, 237, .018);
+
+    animation: auth-orb-a 20s ease-in-out infinite alternate;
 }
 
 .cl-login10-demo::after {
@@ -316,9 +443,36 @@ select:focus-visible {
 
     border-color: rgba(99, 102, 241, .10);
 
+    background: radial-gradient(circle at 65% 65%,
+            rgba(129, 140, 248, .22),
+            rgba(99, 102, 241, .05) 55%,
+            transparent 72%);
+
     box-shadow:
         0 0 0 35px rgba(99, 102, 241, .025),
         0 0 0 75px rgba(99, 102, 241, .018);
+
+    animation: auth-orb-b 24s ease-in-out infinite alternate;
+}
+
+@keyframes auth-orb-a {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(-46px, 58px, 0) scale(1.1);
+    }
+}
+
+@keyframes auth-orb-b {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(58px, -46px, 0) scale(1.12);
+    }
 }
 
 
@@ -345,17 +499,67 @@ select:focus-visible {
     border: 1px solid rgba(255, 255, 255, .95);
     border-radius: var(--auth-card-radius);
 
-    background: rgba(255, 255, 255, .93);
+    background:
+        radial-gradient(ellipse 120% 55% at 50% -12%,
+            rgba(196, 181, 253, .22),
+            transparent 70%),
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .96),
+            rgba(255, 255, 255, .90));
     color: var(--cl-login10-ink);
 
-    box-shadow: var(--auth-shadow);
+    box-shadow:
+        var(--auth-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
 
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px) saturate(1.2);
+    -webkit-backdrop-filter: blur(22px) saturate(1.2);
 
     line-height: 1.55;
 
-    animation: auth-card-in .65s cubic-bezier(.2, .75, .25, 1) both;
+    animation: auth-card-in .85s var(--auth-ease-out) backwards;
+}
+
+/* Light-edge border. Rotates while the card is hovered or focused. */
+.cl-login10::before {
+    position: absolute;
+    inset: -1px;
+
+    padding: 1.5px;
+
+    border-radius: inherit;
+
+    background: conic-gradient(from var(--auth-angle),
+            rgba(139, 92, 246, 0) 0deg,
+            rgba(139, 92, 246, 0) 14deg,
+            rgba(139, 92, 246, .60) 52deg,
+            rgba(99, 102, 241, 0) 104deg,
+            rgba(99, 102, 241, 0) 190deg,
+            rgba(167, 139, 250, .42) 232deg,
+            rgba(167, 139, 250, 0) 280deg,
+            rgba(167, 139, 250, 0) 360deg);
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+
+    content: "";
+    opacity: .8;
+    pointer-events: none;
+
+    transition: opacity .5s ease;
+    animation: auth-border-spin 7s linear infinite paused;
+}
+
+.cl-login10:hover::before,
+.cl-login10:focus-within::before {
+    opacity: 1;
+    animation-play-state: running;
 }
 
 .cl-login10 *,
@@ -389,12 +593,18 @@ select:focus-visible {
 @keyframes auth-card-in {
     from {
         opacity: 0;
-        transform: translateY(18px) scale(.985);
+        transform: translate3d(0, 28px, 0) scale(.97);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes auth-border-spin {
+    to {
+        --auth-angle: 360deg;
     }
 }
 
@@ -404,6 +614,8 @@ select:focus-visible {
 ========================================================= */
 
 .cl-login10__head {
+    position: relative;
+
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
@@ -411,9 +623,36 @@ select:focus-visible {
     row-gap: 4px;
 
     margin-bottom: 30px;
+
+    animation: auth-rise .75s var(--auth-ease-out) .12s backwards;
+}
+
+/* Soft breathing glow behind the logo */
+.cl-login10__head::before {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: -9px;
+
+    width: 76px;
+    height: 76px;
+    margin-top: -38px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(closest-side,
+            rgba(139, 92, 246, .30),
+            rgba(139, 92, 246, 0));
+
+    content: "";
+    pointer-events: none;
+
+    animation: auth-halo 4.8s ease-in-out infinite;
 }
 
 .cl-login10__logo {
+    position: relative;
+
     display: grid;
     grid-row: span 2;
     place-items: center;
@@ -425,11 +664,34 @@ select:focus-visible {
 
     border-radius: 17px;
 
-    background: linear-gradient(145deg, #f2ebff, #e6dcff);
+    background:
+        linear-gradient(115deg,
+            transparent 42%,
+            rgba(255, 255, 255, .78) 50%,
+            transparent 58%) 100% 0 / 250% 100% no-repeat,
+        linear-gradient(145deg, #f5efff, #e3d8ff);
 
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, .95),
-        0 5px 14px rgba(109, 54, 217, .09);
+        inset 0 -1px 0 rgba(112, 65, 214, .08),
+        0 6px 16px rgba(109, 54, 217, .14);
+
+    transition:
+        transform .45s var(--auth-ease-spring),
+        box-shadow .3s ease;
+
+    animation:
+        auth-logo-pop .9s var(--auth-ease-spring) .2s backwards,
+        auth-logo-sheen 6.5s var(--auth-ease-soft) 1.8s infinite;
+}
+
+.cl-login10__logo:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .95),
+        inset 0 -1px 0 rgba(112, 65, 214, .08),
+        0 10px 22px rgba(109, 54, 217, .22);
+
+    transform: rotate(-4deg) scale(1.05);
 }
 
 .cl-login10__logo img,
@@ -453,12 +715,59 @@ select:focus-visible {
     line-height: 1.25;
 }
 
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .cl-login10__brand {
+        background: linear-gradient(100deg, #21183d 25%, #5b2fc4 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
 .cl-login10__tagline {
     margin: 3px 0 0;
 
     color: #77758d;
     font-size: 13px;
     line-height: 1.5;
+}
+
+@keyframes auth-halo {
+
+    0%,
+    100% {
+        opacity: .55;
+        transform: scale(.94);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+@keyframes auth-logo-pop {
+    from {
+        opacity: 0;
+        transform: scale(.55) rotate(-14deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes auth-logo-sheen {
+
+    0%,
+    62% {
+        background-position: 100% 0, 0 0;
+    }
+
+    100% {
+        background-position: 0% 0, 0 0;
+    }
 }
 
 
@@ -477,9 +786,11 @@ select:focus-visible {
     border: 1px solid #eeebf6;
     border-radius: 15px;
 
-    background: #f5f3fa;
+    background: linear-gradient(180deg, #f2eff9, #f6f4fb);
 
-    box-shadow: inset 0 1px 2px rgba(25, 23, 46, .025);
+    box-shadow: inset 0 1px 2px rgba(25, 23, 46, .045);
+
+    animation: auth-rise .75s var(--auth-ease-out) .2s backwards;
 }
 
 .cl-login10__thumb {
@@ -493,13 +804,15 @@ select:focus-visible {
     border: 1px solid rgba(255, 255, 255, .95);
     border-radius: 11px;
 
-    background: #fff;
+    background: linear-gradient(180deg, #ffffff, #fcfbff);
 
     box-shadow:
-        0 2px 5px rgba(36, 26, 66, .07),
-        0 4px 12px rgba(36, 26, 66, .045);
+        0 1px 2px rgba(36, 26, 66, .06),
+        0 4px 10px rgba(36, 26, 66, .06),
+        0 8px 20px rgba(112, 65, 214, .08);
 
-    transition: transform .3s cubic-bezier(.3, .7, .2, 1);
+    transition: transform .5s var(--auth-ease-tab);
+    will-change: transform;
 }
 
 .cl-login10__tabs.is-second .cl-login10__thumb {
@@ -524,7 +837,10 @@ select:focus-visible {
 
     cursor: pointer;
 
-    transition: color .2s ease, background .2s ease;
+    transition:
+        color .25s ease,
+        background-color .25s ease,
+        transform .2s var(--auth-ease-out);
 }
 
 .cl-login10__tab[aria-selected="true"] {
@@ -535,13 +851,29 @@ select:focus-visible {
     color: #5425b6;
 }
 
+.cl-login10__tab[aria-selected="false"]:hover {
+    background-color: rgba(112, 65, 214, .06);
+}
+
+.cl-login10__tab:active {
+    transform: scale(.97);
+}
+
 
 /* =========================================================
    8. FORM PANELS AND ANIMATIONS
 ========================================================= */
 
+/* The padding / negative-margin pair cancels out in the layout,
+   but stops focus rings, shadows and the error shake from being
+   clipped by overflow: hidden. */
 .cl-login10__panels {
+    margin: 0 -14px -14px;
+    padding: 0 14px 14px;
+
     overflow: hidden;
+
+    animation: auth-rise .75s var(--auth-ease-out) .28s backwards;
 }
 
 .cl-login10__panel {
@@ -550,35 +882,88 @@ select:focus-visible {
 }
 
 .cl-login10__panel.is-from-right {
-    animation: auth-slide-right .32s cubic-bezier(.3, .7, .2, 1);
+    animation: auth-slide-right .55s var(--auth-ease-out);
 }
 
 .cl-login10__panel.is-from-left {
-    animation: auth-slide-left .32s cubic-bezier(.3, .7, .2, 1);
+    animation: auth-slide-left .55s var(--auth-ease-out);
 }
 
 @keyframes auth-slide-right {
     from {
         opacity: 0;
-        transform: translateX(40px);
+        transform: translate3d(34px, 0, 0);
     }
 
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
 @keyframes auth-slide-left {
     from {
         opacity: 0;
-        transform: translateX(-40px);
+        transform: translate3d(-34px, 0, 0);
     }
 
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
+}
+
+/* Staggered reveal of the panel's contents when switching tabs */
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__title, .cl-login10__field, .cl-login10__check,
+    .cl-login10__submit, .cl-login10__swap, .login-error,
+    .otp-description) {
+    animation: auth-item-in .55s var(--auth-ease-out) backwards;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left) .cl-login10__title {
+    animation-delay: .04s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left) .login-error,
+.cl-login10__panel:is(.is-from-right, .is-from-left) .otp-description {
+    animation-delay: .1s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(1) {
+    animation-delay: .08s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(2) {
+    animation-delay: .13s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(3) {
+    animation-delay: .18s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(4) {
+    animation-delay: .23s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(5) {
+    animation-delay: .28s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(6) {
+    animation-delay: .33s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(7) {
+    animation-delay: .38s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left):is(.cl-login10__field, .cl-login10__check, .cl-login10__submit):nth-child(n+8) {
+    animation-delay: .43s;
+}
+
+.cl-login10__panel:is(.is-from-right, .is-from-left) .cl-login10__swap {
+    animation-delay: .5s;
 }
 
 .cl-login10__title {
@@ -618,6 +1003,16 @@ select:focus-visible {
     font-size: 13px;
     font-weight: 600;
     letter-spacing: .05px;
+
+    transition: color .25s ease;
+}
+
+.cl-login10__field:focus-within .cl-login10__label {
+    color: var(--auth-primary);
+}
+
+.cl-login10__field.is-error .cl-login10__label {
+    color: var(--auth-error);
 }
 
 
@@ -636,40 +1031,101 @@ select:focus-visible {
     border: 1px solid #e6e3ef;
     border-radius: 13px;
 
-    background: #fdfcff;
+    background-color: #fdfcff;
     color: var(--auth-ink);
+    caret-color: var(--auth-primary);
 
     font: inherit;
     font-size: 14px;
     font-weight: 500;
 
-    box-shadow: 0 1px 2px rgba(28, 25, 48, .02);
+    box-shadow:
+        0 1px 2px rgba(28, 25, 48, .03),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
 
     transition:
-        border-color .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
+        border-color .25s ease,
+        background-color .25s ease,
+        box-shadow .3s ease;
 }
 
 .cl-login10__input::placeholder {
     color: #aaa7b9;
     font-weight: 400;
+
+    transition: color .25s ease;
 }
 
 .cl-login10__input:hover {
     border-color: #c9b9ef;
-    background: #fff;
+    background-color: #fff;
 }
 
 .cl-login10__input:focus {
     outline: none;
 
     border-color: #8b5cf6;
-    background: #fff;
+    background-color: #fff;
 
     box-shadow:
-        0 0 0 3px rgba(124, 58, 237, .10),
-        0 2px 6px rgba(124, 58, 237, .04);
+        0 0 0 4px rgba(124, 58, 237, .11),
+        0 8px 18px rgba(124, 58, 237, .09);
+}
+
+.cl-login10__input:focus::placeholder {
+    color: #cdcad9;
+}
+
+.cl-login10__input:disabled {
+    border-color: #ece9f3;
+    background-color: #f6f5fa;
+    color: #a09cb2;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* Autofill keeps the same look instead of the browser's yellow/blue */
+.cl-login10__input:-webkit-autofill,
+.cl-login10__input:-webkit-autofill:hover {
+    -webkit-text-fill-color: var(--auth-ink);
+    caret-color: var(--auth-ink);
+
+    box-shadow: 0 0 0 1000px #faf7ff inset;
+    transition: background-color 9999s ease-out 0s;
+}
+
+.cl-login10__input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--auth-ink);
+
+    box-shadow:
+        0 0 0 1000px #ffffff inset,
+        0 0 0 4px rgba(124, 58, 237, .11);
+    transition: background-color 9999s ease-out 0s;
+}
+
+/* Custom select arrow */
+select.cl-login10__input {
+    padding-right: 42px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, #8a85a0 50%),
+        linear-gradient(135deg, #8a85a0 50%, transparent 50%);
+    background-position:
+        calc(100% - 21px) 50%,
+        calc(100% - 15px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+
+    cursor: pointer;
+}
+
+select.cl-login10__input:focus {
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--auth-primary) 50%),
+        linear-gradient(135deg, var(--auth-primary) 50%, transparent 50%);
 }
 
 
@@ -704,7 +1160,14 @@ select:focus-visible {
 
     cursor: pointer;
 
-    transition: color .2s ease, background .2s ease;
+    transition:
+        color .2s ease,
+        background-color .2s ease,
+        transform .2s var(--auth-ease-out);
+}
+
+.cl-login10__pw:focus-within .cl-login10__eye {
+    color: #8b5cf6;
 }
 
 .cl-login10__eye:hover {
@@ -712,18 +1175,38 @@ select:focus-visible {
     color: var(--auth-primary);
 }
 
+.cl-login10__eye:active {
+    transform: scale(.92);
+}
+
 .cl-login10__eye svg {
     width: 19px;
     height: 19px;
 }
 
-.cl-login10__eye-off,
+/* Both icons are stacked and cross-fade instead of popping */
+.cl-login10__eye-on,
+.cl-login10__eye-off {
+    grid-area: 1 / 1;
+
+    transition:
+        opacity .2s ease,
+        transform .35s var(--auth-ease-spring);
+}
+
+.cl-login10__eye-off {
+    opacity: 0;
+    transform: scale(.55) rotate(-25deg);
+}
+
 .cl-login10__eye[aria-pressed="true"] .cl-login10__eye-on {
-    display: none;
+    opacity: 0;
+    transform: scale(.55) rotate(25deg);
 }
 
 .cl-login10__eye[aria-pressed="true"] .cl-login10__eye-off {
-    display: block;
+    opacity: 1;
+    transform: none;
 }
 
 
@@ -750,18 +1233,74 @@ select:focus-visible {
     line-height: 1.5;
 
     cursor: pointer;
+
+    transition: color .2s ease;
 }
 
-.cl-login10__check input {
+.cl-login10__check:hover {
+    color: #4a4660;
+}
+
+.cl-login10__check input[type="checkbox"] {
     flex: 0 0 auto;
 
-    width: 17px;
-    height: 17px;
+    display: grid;
+    place-content: center;
 
-    margin: 2px 0 0;
+    width: 18px;
+    height: 18px;
 
-    accent-color: var(--auth-primary);
+    margin: 1px 0 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: 1.5px solid #cfc8e2;
+    border-radius: 6px;
+
+    background: #fff;
+
     cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .25s ease,
+        transform .2s var(--auth-ease-spring);
+}
+
+.cl-login10__check input[type="checkbox"]::after {
+    width: 9px;
+    height: 5px;
+    margin-top: -2px;
+
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #fff;
+
+    content: "";
+    transform: rotate(-45deg) scale(0);
+
+    transition: transform .25s var(--auth-ease-spring);
+}
+
+.cl-login10__check input[type="checkbox"]:hover {
+    border-color: #a98bf0;
+}
+
+.cl-login10__check input[type="checkbox"]:checked {
+    border-color: #6233c2;
+
+    background: linear-gradient(135deg, #8350e8, #5f31c0);
+
+    box-shadow: 0 3px 8px rgba(92, 46, 177, .25);
+}
+
+.cl-login10__check input[type="checkbox"]:checked::after {
+    transform: rotate(-45deg) scale(1);
+}
+
+.cl-login10__check input[type="checkbox"]:active {
+    transform: scale(.88);
 }
 
 
@@ -777,12 +1316,17 @@ select:focus-visible {
 
     text-decoration: none;
 
-    transition: color .2s ease;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+
+    transition:
+        color .2s ease,
+        background-size .35s var(--auth-ease-out);
 }
 
-.cl-login10__link:hover {
+.cl-login10__link:hover,
+.cl-login10__link:focus-visible {
     color: #4c1d95;
-    text-decoration: underline;
+    background-size: 100% 1.5px;
 }
 
 
@@ -799,11 +1343,11 @@ select:focus-visible {
 
     margin-top: 10px;
 
-    border: 1px solid rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .14);
     border-radius: 14px;
 
     background: linear-gradient(120deg,
-            #7542db,
+            #7845de,
             #6233c2 52%,
             #5127a9);
 
@@ -815,33 +1359,134 @@ select:focus-visible {
     letter-spacing: .15px;
 
     box-shadow:
-        0 5px 12px rgba(92, 46, 177, .18),
-        0 10px 22px rgba(92, 46, 177, .12);
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        0 4px 10px rgba(92, 46, 177, .20),
+        0 12px 26px rgba(92, 46, 177, .15);
 
     cursor: pointer;
 
     transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
+        transform .3s var(--auth-ease-out),
+        box-shadow .3s ease,
+        filter .25s ease;
 }
 
-.cl-login10__submit:hover {
-    background: linear-gradient(120deg,
-            #8250e6,
-            #6d3bd0 52%,
-            #5b2ab8);
+/* Light sweep */
+.cl-login10__submit::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+
+    width: 45%;
+
+    background: linear-gradient(100deg,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, .34),
+            rgba(255, 255, 255, 0));
+
+    content: "";
+    pointer-events: none;
+
+    transform: translateX(0) skewX(-18deg);
+}
+
+.cl-login10__submit:hover:not(:disabled) {
+    filter: brightness(1.07) saturate(1.05);
 
     box-shadow:
-        0 7px 16px rgba(92, 46, 177, .24),
-        0 14px 28px rgba(92, 46, 177, .14);
+        inset 0 1px 0 rgba(255, 255, 255, .26),
+        0 8px 16px rgba(92, 46, 177, .26),
+        0 18px 36px rgba(92, 46, 177, .18);
 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
-.cl-login10__submit:active {
-    transform: translateY(0) scale(.99);
-    box-shadow: 0 3px 8px rgba(92, 46, 177, .15);
+.cl-login10__submit:hover:not(:disabled)::before {
+    transform: translateX(400%) skewX(-18deg);
+    transition: transform .9s var(--auth-ease-out);
+}
+
+.cl-login10__submit:active:not(:disabled) {
+    filter: brightness(.97);
+
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, .12),
+        0 3px 8px rgba(92, 46, 177, .18);
+
+    transform: translateY(0) scale(.985);
+}
+
+.cl-login10__submit:disabled {
+    cursor: wait;
+    opacity: .9;
+}
+
+/* Loading state (verify / submit) */
+.cl-login10__submit.is-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background: linear-gradient(110deg,
+            #7542db 0%,
+            #8d5ff0 25%,
+            #6233c2 50%,
+            #8d5ff0 75%,
+            #7542db 100%) 0 0 / 200% 100%;
+
+    cursor: wait;
+    pointer-events: none;
+
+    animation: auth-btn-loading 1.6s linear infinite;
+}
+
+.cl-login10__submit.is-loading::before {
+    display: none;
+}
+
+@keyframes auth-btn-loading {
+    to {
+        background-position: 200% 0;
+    }
+}
+
+/* Spinners (submit, verify and resend buttons) */
+.cl-login10__spinner,
+.otp-button-spinner,
+.otp-resend-spinner {
+    display: none;
+
+    width: 17px;
+    height: 17px;
+
+    flex: 0 0 17px;
+
+    border: 2px solid rgba(255, 255, 255, .32);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+}
+
+.cl-login10__submit.is-loading .cl-login10__spinner,
+.cl-login10__submit.is-loading .otp-button-spinner,
+.otp-resend-button.is-loading .otp-resend-spinner,
+.cl-login10__resend.is-loading .otp-resend-spinner {
+    display: inline-block;
+    animation: otp-loading-spin .7s linear infinite;
+}
+
+@keyframes otp-loading-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Kept for backwards compatibility */
+@keyframes registration-otp-spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -863,7 +1508,7 @@ select:focus-visible {
     border: 0;
     border-radius: 6px;
 
-    background: none;
+    background: linear-gradient(currentColor, currentColor) 4px calc(100% - 1px) / 0 1.5px no-repeat;
     color: #6935ca;
 
     font: inherit;
@@ -871,11 +1516,16 @@ select:focus-visible {
     font-weight: 700;
 
     cursor: pointer;
+
+    transition:
+        color .2s ease,
+        background-size .35s var(--auth-ease-out);
 }
 
-.cl-login10__swap-btn:hover {
+.cl-login10__swap-btn:hover,
+.cl-login10__swap-btn:focus-visible {
     color: #4c1d95;
-    text-decoration: underline;
+    background-size: calc(100% - 8px) 1.5px;
 }
 
 
@@ -889,6 +1539,8 @@ select:focus-visible {
     color: var(--auth-error);
     font-size: 12px;
     font-weight: 500;
+
+    animation: auth-fade-down .3s var(--auth-ease-out);
 }
 
 .cl-login10__error:empty {
@@ -897,9 +1549,11 @@ select:focus-visible {
 
 .cl-login10__field.is-error .cl-login10__input {
     border-color: #e36b7e;
-    background: #fffafb;
+    background-color: #fffafb;
 
-    box-shadow: 0 0 0 3px rgba(220, 53, 69, .075);
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, .08);
+
+    animation: auth-shake .45s var(--auth-ease-soft);
 }
 
 .login-error {
@@ -909,13 +1563,17 @@ select:focus-visible {
     border: 1px solid #f4c6cd;
     border-radius: 12px;
 
-    background: #fff4f5;
+    background: linear-gradient(180deg, #fff6f7, #fff2f4);
     color: #b4233c;
 
     font-size: 13px;
     line-height: 1.6;
 
-    box-shadow: 0 2px 5px rgba(180, 35, 60, .035);
+    box-shadow:
+        inset 3px 0 0 #e0495f,
+        0 2px 8px rgba(180, 35, 60, .06);
+
+    animation: auth-alert-in .4s var(--auth-ease-out);
 }
 
 .login-error[hidden] {
@@ -946,7 +1604,11 @@ select:focus-visible {
     font-size: 13px;
     line-height: 1.6;
 
-    box-shadow: 0 2px 5px rgba(22, 131, 75, .035);
+    box-shadow:
+        inset 3px 0 0 #2fb872,
+        0 2px 8px rgba(22, 131, 75, .07);
+
+    animation: auth-alert-in .4s var(--auth-ease-out);
 }
 
 
@@ -959,7 +1621,7 @@ select:focus-visible {
 
     text-align: center;
 
-    animation: auth-slide-right .32s ease;
+    animation: auth-slide-right .5s var(--auth-ease-out);
 }
 
 .cl-login10__done:focus {
@@ -980,25 +1642,73 @@ select:focus-visible {
 }
 
 .cl-login10__streak span {
+    position: relative;
+
     width: 23px;
     height: 23px;
 
     border-radius: 8px;
     background: #e9e2fa;
+
+    animation: auth-streak-pop .6s var(--auth-ease-spring) backwards;
 }
 
 .cl-login10__streak span:nth-child(-n+5) {
-    background: #bba1f4;
+    background: linear-gradient(135deg, #c7b0f8, #b095f1);
 }
 
 .cl-login10__streak span:nth-child(5) {
-    background: var(--auth-primary);
+    background: linear-gradient(135deg, #8350e8, #6233c2);
+}
+
+/* Pulsing ring on the current step */
+.cl-login10__streak span:nth-child(5)::after {
+    position: absolute;
+    inset: 0;
+
+    border: 2px solid rgba(112, 65, 214, .55);
+    border-radius: inherit;
+
+    content: "";
+    pointer-events: none;
+
+    animation: auth-streak-ring 2.2s ease-out 1.2s infinite;
+}
+
+.cl-login10__streak span:nth-child(1) {
+    animation-delay: .12s;
+}
+
+.cl-login10__streak span:nth-child(2) {
+    animation-delay: .18s;
+}
+
+.cl-login10__streak span:nth-child(3) {
+    animation-delay: .24s;
+}
+
+.cl-login10__streak span:nth-child(4) {
+    animation-delay: .30s;
+}
+
+.cl-login10__streak span:nth-child(5) {
+    animation-delay: .36s;
+}
+
+.cl-login10__streak span:nth-child(6) {
+    animation-delay: .42s;
+}
+
+.cl-login10__streak span:nth-child(7) {
+    animation-delay: .48s;
 }
 
 .cl-login10__done .cl-login10__title {
     margin-bottom: 6px;
     color: #211b35;
     font-size: 25px;
+
+    animation: auth-rise .65s var(--auth-ease-out) .5s backwards;
 }
 
 .cl-login10__sub {
@@ -1007,6 +1717,36 @@ select:focus-visible {
     color: #77758c;
     font-size: 14px;
     line-height: 1.65;
+    text-wrap: balance;
+}
+
+.cl-login10__done .cl-login10__sub {
+    animation: auth-rise .65s var(--auth-ease-out) .6s backwards;
+}
+
+@keyframes auth-streak-pop {
+    from {
+        opacity: 0;
+        transform: scale(.3) rotate(-20deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes auth-streak-ring {
+    0% {
+        opacity: .8;
+        transform: scale(1);
+    }
+
+    70%,
+    100% {
+        opacity: 0;
+        transform: scale(1.9);
+    }
 }
 
 
@@ -1024,6 +1764,8 @@ select:focus-visible {
     font-size: 11px;
     line-height: 1.6;
     text-align: center;
+
+    animation: auth-fade .9s ease .6s backwards;
 }
 
 
@@ -1051,10 +1793,18 @@ select:focus-visible {
     position: absolute;
     inset: 0;
 
-    background: rgba(27, 19, 47, .58);
+    background: rgba(27, 19, 47, .55);
 
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(8px) saturate(1.1);
+    -webkit-backdrop-filter: blur(8px) saturate(1.1);
+
+    animation: policy-fade .3s ease-out;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .policy-modal__backdrop {
+        background: rgba(27, 19, 47, .72);
+    }
 }
 
 .policy-modal__content {
@@ -1074,17 +1824,17 @@ select:focus-visible {
     border: 1px solid rgba(255, 255, 255, .9);
     border-radius: 23px;
 
-    background: #fff;
+    background: linear-gradient(180deg, #f9f6ff 0, #ffffff 150px);
     color: #27223d;
 
     box-shadow:
         0 12px 30px rgba(18, 15, 38, .10),
-        0 35px 85px rgba(18, 15, 38, .22);
+        0 35px 85px rgba(18, 15, 38, .24);
 
     scrollbar-width: thin;
     scrollbar-color: #c9b5f1 transparent;
 
-    animation: policy-modal-in .2s ease-out;
+    animation: policy-modal-in .45s var(--auth-ease-spring);
 }
 
 .policy-modal__content::-webkit-scrollbar {
@@ -1098,6 +1848,10 @@ select:focus-visible {
 .policy-modal__content::-webkit-scrollbar-thumb {
     border-radius: 20px;
     background: #d4c5f3;
+}
+
+.policy-modal__content::-webkit-scrollbar-thumb:hover {
+    background: #b79ded;
 }
 
 .policy-modal__brand {
@@ -1117,6 +1871,19 @@ select:focus-visible {
     font-weight: 700;
     letter-spacing: .55px;
     text-transform: uppercase;
+}
+
+.policy-modal__brand::before {
+    width: 6px;
+    height: 6px;
+    margin-right: 7px;
+
+    border-radius: 50%;
+    background: var(--auth-primary);
+
+    content: "";
+
+    animation: policy-dot-pulse 2.4s ease-out infinite;
 }
 
 .policy-modal__content h2 {
@@ -1175,14 +1942,18 @@ select:focus-visible {
 
     transition:
         color .2s ease,
-        background .2s ease,
-        transform .2s ease;
+        background-color .2s ease,
+        transform .3s var(--auth-ease-spring);
 }
 
 .policy-modal__close:hover {
     background: #f0eaff;
     color: #6533c4;
     transform: rotate(90deg);
+}
+
+.policy-modal__close:active {
+    transform: rotate(90deg) scale(.9);
 }
 
 .policy-modal__button {
@@ -1195,40 +1966,69 @@ select:focus-visible {
     border: 0;
     border-radius: 12px;
 
-    background: linear-gradient(120deg, #7542db, #5829b3);
+    background: linear-gradient(120deg, #7845de, #5829b3);
     color: #fff;
 
     font: inherit;
     font-size: 14px;
     font-weight: 700;
 
-    box-shadow: 0 5px 14px rgba(92, 46, 177, .16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        0 5px 14px rgba(92, 46, 177, .16);
 
     cursor: pointer;
 
     transition:
-        transform .2s ease,
-        box-shadow .2s ease,
+        transform .25s var(--auth-ease-out),
+        box-shadow .25s ease,
         filter .2s ease;
 }
 
 .policy-modal__button:hover {
     filter: brightness(1.07);
 
-    box-shadow: 0 8px 20px rgba(92, 46, 177, .22);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .24),
+        0 10px 22px rgba(92, 46, 177, .24);
 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+}
+
+.policy-modal__button:active {
+    transform: translateY(0) scale(.99);
 }
 
 @keyframes policy-modal-in {
     from {
         opacity: 0;
-        transform: translateY(8px) scale(.99);
+        transform: translateY(22px) scale(.95);
     }
 
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes policy-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes policy-dot-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(112, 65, 214, .45);
+    }
+
+    70%,
+    100% {
+        box-shadow: 0 0 0 7px rgba(112, 65, 214, 0);
     }
 }
 
@@ -1244,7 +2044,183 @@ body:has(.reset-success),
 
 
 /* =========================================================
-   22. RESPONSIVE DESIGN
+   22. PASSWORD RESET RESEND CODE
+========================================================= */
+
+.cl-login10__resend-wrapper,
+.otp-resend-wrapper {
+    margin-top: 22px;
+    padding-top: 19px;
+
+    border-top: 1px solid #f0edf6;
+
+    text-align: center;
+}
+
+.cl-login10__resend-status,
+.otp-resend-status {
+    margin: 0 0 12px;
+
+    color: #77738b;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.cl-login10__resend,
+.otp-resend-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-width: 150px;
+    min-height: 42px;
+
+    padding: 9px 18px;
+
+    border: 1px solid #e5dafa;
+    border-radius: 11px;
+
+    background: #f5f0ff;
+    color: #6935ca;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        opacity .25s ease,
+        box-shadow .25s ease,
+        transform .25s var(--auth-ease-out);
+}
+
+.cl-login10__resend:hover:not(:disabled),
+.otp-resend-button:hover:not(:disabled) {
+    border-color: #7041d6;
+
+    background: #7041d6;
+    color: #ffffff;
+
+    box-shadow: 0 6px 16px rgba(92, 46, 177, .22);
+
+    transform: translateY(-1px);
+}
+
+.cl-login10__resend:active:not(:disabled),
+.otp-resend-button:active:not(:disabled) {
+    box-shadow: none;
+    transform: translateY(0) scale(.98);
+}
+
+.cl-login10__resend:disabled,
+.otp-resend-button:disabled {
+    border-color: #ebe8f2;
+
+    background: #f5f4f8;
+    color: #aaa6b7;
+
+    cursor: not-allowed;
+    opacity: .85;
+}
+
+/* Completely disabled while sending */
+.cl-login10__resend.is-loading,
+.cl-login10__resend.is-loading:disabled,
+.otp-resend-button.is-loading,
+.otp-resend-button.is-loading:disabled {
+    background: #7041d6 !important;
+    border-color: #7041d6 !important;
+    color: #fff !important;
+
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    user-select: none;
+    opacity: .85;
+}
+
+
+/* =========================================================
+   23. OTP VERIFICATION
+========================================================= */
+
+.otp-description {
+    margin-bottom: 20px;
+
+    color: #52525b;
+    font-size: 14px;
+    text-wrap: pretty;
+}
+
+.otp-input {
+    text-align: center;
+    text-indent: 10px;
+    letter-spacing: 10px;
+    font-size: 24px !important;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.otp-input::placeholder {
+    color: #d3d0de;
+    font-weight: 500;
+    letter-spacing: 10px;
+}
+
+.otp-error {
+    margin: 12px 0;
+    padding: 10px 12px;
+
+    border: 1px solid #fecdca;
+    border-radius: 10px;
+
+    background: #fef3f2;
+    color: #b42318;
+
+    font-size: 13px;
+
+    box-shadow: inset 3px 0 0 #e0495f;
+
+    animation: auth-alert-in .4s var(--auth-ease-out);
+}
+
+.otp-success {
+    margin: 12px 0;
+    padding: 10px 12px;
+
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+
+    background: #f0fdf4;
+    color: #166534;
+
+    font-size: 13px;
+
+    box-shadow: inset 3px 0 0 #2fb872;
+
+    animation: auth-alert-in .4s var(--auth-ease-out);
+}
+
+.otp-back {
+    display: block;
+
+    margin-top: 16px;
+
+    font-size: 14px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   24. RESPONSIVE DESIGN
 ========================================================= */
 
 @media (max-width: 600px) {
@@ -1261,6 +2237,10 @@ body:has(.reset-success),
 
     .cl-login10__head {
         margin-bottom: 26px;
+    }
+
+    .cl-login10__head::before {
+        left: -11px;
     }
 
     .cl-login10__logo {
@@ -1283,6 +2263,23 @@ body:has(.reset-success),
 
     .cl-login10__title {
         margin-bottom: 19px;
+    }
+
+    /* 16px stops iOS Safari from zooming the page on focus */
+    .cl-login10__input {
+        font-size: 16px;
+    }
+
+    .cl-login10__resend-wrapper,
+    .otp-resend-wrapper {
+        margin-top: 19px;
+        padding-top: 17px;
+    }
+
+    .cl-login10__resend,
+    .otp-resend-button {
+        width: 100%;
+        min-height: 46px;
     }
 
     .policy-modal {
@@ -1325,7 +2322,6 @@ body:has(.reset-success),
 
     .cl-login10__input {
         min-height: 48px;
-        font-size: 13px;
     }
 
     .cl-login10__submit {
@@ -1339,7 +2335,7 @@ body:has(.reset-success),
 
 
 /* =========================================================
-   23. ACCESSIBILITY AND REDUCED MOTION
+   25. ACCESSIBILITY AND REDUCED MOTION
 ========================================================= */
 
 .cl-login10__tab:focus-visible,
@@ -1349,10 +2345,20 @@ body:has(.reset-success),
 .cl-login10__link:focus-visible,
 .cl-login10__submit:focus-visible,
 .cl-login10__swap-btn:focus-visible,
+.cl-login10__resend:focus-visible,
+.otp-resend-button:focus-visible,
 .policy-modal__close:focus-visible,
 .policy-modal__button:focus-visible {
     outline: 3px solid rgba(112, 65, 214, .35);
     outline-offset: 3px;
+}
+
+@media (forced-colors: active) {
+
+    .cl-login10__brand {
+        background: none;
+        -webkit-text-fill-color: currentColor;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1361,338 +2367,26 @@ body:has(.reset-success),
         scroll-behavior: auto;
     }
 
+    .cl-login10-demo::before,
+    .cl-login10-demo::after,
+    .cl-login10,
+    .cl-login10::before,
     .cl-login10 *,
     .cl-login10 *::before,
     .cl-login10 *::after,
-    .policy-modal__content,
-    .policy-modal__close,
-    .policy-modal__button {
+    .policy-modal,
+    .policy-modal *,
+    .policy-modal *::before,
+    .policy-modal *::after {
         animation: none !important;
         transition: none !important;
     }
-}
 
-
-/* =========================================================
-   END OF ACADTRACK AUTHENTICATION STYLESHEET
-========================================================= */
-/* =========================================================
-   PASSWORD RESET RESEND CODE
-========================================================= */
-
-.cl-login10__resend-wrapper {
-    margin-top: 22px;
-    padding-top: 19px;
-
-    border-top: 1px solid #f0edf6;
-
-    text-align: center;
-}
-
-.cl-login10__resend-status {
-    margin: 0 0 12px;
-
-    color: #77738b;
-
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.6;
-
-    font-variant-numeric: tabular-nums;
-}
-
-.cl-login10__resend {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 145px;
-    min-height: 40px;
-
-    padding: 9px 18px;
-
-    border: 1px solid #e5dafa;
-    border-radius: 11px;
-
-    background: #f5f0ff;
-    color: #6935ca;
-
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        background .2s ease,
-        color .2s ease,
-        border-color .2s ease,
-        opacity .2s ease,
-        transform .2s ease;
-}
-
-.cl-login10__resend:hover:not(:disabled) {
-    border-color: #7041d6;
-
-    background: #7041d6;
-    color: #ffffff;
-
-    transform: translateY(-1px);
-}
-
-.cl-login10__resend:active:not(:disabled) {
-    transform: translateY(0) scale(.98);
-}
-
-.cl-login10__resend:disabled {
-    border-color: #ebe8f2;
-
-    background: #f5f4f8;
-    color: #aaa6b7;
-
-    cursor: not-allowed;
-    opacity: .85;
-}
-
-.cl-login10__resend:focus-visible {
-    outline: 3px solid rgba(112, 65, 214, .25);
-    outline-offset: 3px;
-}
-
-@media (max-width: 600px) {
-
-    .cl-login10__resend-wrapper {
-        margin-top: 19px;
-        padding-top: 17px;
-    }
-
-    .cl-login10__resend {
-        width: 100%;
-        min-height: 46px;
-    }
-}
-
-/* =========================================================
-   25. OTP VERIFICATION LOADING STATE
-========================================================= */
-
-.cl-login10__submit:disabled {
-    cursor: wait;
-    opacity: .9;
-    transform: none;
-}
-
-.cl-login10__submit.is-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    cursor: wait;
-    pointer-events: none;
-}
-
-.cl-login10__spinner {
-    display: none;
-
-    width: 17px;
-    height: 17px;
-
-    flex: 0 0 17px;
-
-    border: 2px solid rgba(255, 255, 255, .35);
-    border-top-color: #ffffff;
-    border-radius: 50%;
-}
-
-.cl-login10__submit.is-loading .cl-login10__spinner {
-    display: inline-block;
-    animation: otp-loading-spin .7s linear infinite;
-}
-
-@keyframes otp-loading-spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .cl-login10__submit.is-loading .cl-login10__spinner {
-        animation-duration: 1.5s;
-    }
-}
-
-/* Resend Spinner */
-
-.otp-description {
-    color: #52525b;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.otp-input {
-    text-align: center;
-    letter-spacing: 10px;
-    font-size: 24px !important;
-    font-weight: 700;
-}
-
-.otp-error {
-    color: #b42318;
-    background: #fef3f2;
-    border: 1px solid #fecdca;
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin: 12px 0;
-    font-size: 13px;
-}
-
-.otp-success {
-    color: #166534;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin: 12px 0;
-    font-size: 13px;
-}
-
-.otp-back {
-    display: block;
-    text-align: center;
-    margin-top: 16px;
-    font-size: 14px;
-}
-
-/* Resend section */
-
-.otp-resend-wrapper {
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid #f0edf6;
-    text-align: center;
-}
-
-.otp-resend-status {
-    color: #77738b;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.6;
-    margin: 0 0 12px;
-    font-variant-numeric: tabular-nums;
-}
-
-.otp-resend-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-
-    min-width: 150px;
-    min-height: 42px;
-    padding: 9px 18px;
-
-    border: 1px solid #e5dafa;
-    border-radius: 11px;
-
-    background: #f5f0ff;
-    color: #6935ca;
-
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        background .2s ease,
-        color .2s ease,
-        border-color .2s ease,
-        opacity .2s ease;
-}
-
-.otp-resend-button:hover:not(:disabled) {
-    background: #7041d6;
-    border-color: #7041d6;
-    color: #fff;
-}
-
-.otp-resend-button:disabled {
-    background: #f5f4f8;
-    border-color: #ebe8f2;
-    color: #aaa6b7;
-    cursor: not-allowed;
-    opacity: .85;
-}
-
-/* Completely disabled during sending */
-
-.otp-resend-button.is-loading,
-.otp-resend-button.is-loading:disabled {
-    background: #7041d6 !important;
-    border-color: #7041d6 !important;
-    color: #fff !important;
-
-    cursor: not-allowed !important;
-    pointer-events: none !important;
-    user-select: none;
-    opacity: .85;
-}
-
-/* Verify and resend spinners */
-
-.otp-button-spinner,
-.otp-resend-spinner {
-    display: none;
-
-    width: 16px;
-    height: 16px;
-
-    flex: 0 0 16px;
-
-    border: 2px solid rgba(255, 255, 255, .35);
-    border-top-color: #fff;
-    border-radius: 50%;
-}
-
-.cl-login10__submit.is-loading .otp-button-spinner,
-.otp-resend-button.is-loading .otp-resend-spinner {
-    display: inline-block;
-    animation: registration-otp-spin .7s linear infinite;
-}
-
-.cl-login10__submit:disabled {
-    cursor: wait;
-    opacity: .9;
-}
-
-.cl-login10__submit.is-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    pointer-events: none;
-    cursor: wait;
-}
-
-@keyframes registration-otp-spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@media (max-width: 600px) {
-    .otp-resend-button {
-        width: 100%;
-        min-height: 46px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .otp-button-spinner,
-    .otp-resend-spinner {
-        animation-duration: 1.5s !important;
+    /* Spinners keep turning (slowly) so loading is still visible */
+    .cl-login10__submit.is-loading .cl-login10__spinner,
+    .cl-login10__submit.is-loading .otp-button-spinner,
+    .otp-resend-button.is-loading .otp-resend-spinner,
+    .cl-login10__resend.is-loading .otp-resend-spinner {
+        animation: otp-loading-spin 1.5s linear infinite !important;
     }
 }

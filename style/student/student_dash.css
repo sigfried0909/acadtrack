@@ -3494,7 +3494,7 @@ body.student-profile-modal-open {
 
 
 /* =========================================================
-   33. REDUCED MOTION
+   33. ORIGINAL REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -3510,6 +3510,1729 @@ body.student-profile-modal-open {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
+    }
+
+    .permit-period-card:hover {
+        transform: none;
+    }
+
+    .student-profile-dialog {
+        animation: none;
+    }
+}
+
+
+/* =========================================================
+   34. ENHANCED DESIGN TOKENS
+========================================================= */
+
+@property --dashboard-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+:root {
+    --primary: #7041d6;
+    --primary-hover: #5b32bd;
+    --primary-light: #f1ebff;
+    --primary-border: #e5dafa;
+    --primary-accent: #8b5cf6;
+
+    --ink: #211b35;
+    --text: #403b54;
+    --muted: #77738b;
+
+    --ease-out: cubic-bezier(.22, 1, .36, 1);
+    --ease-soft: cubic-bezier(.45, 0, .25, 1);
+    --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+
+    --shadow-sm:
+        0 1px 2px rgba(35, 24, 72, .03),
+        0 4px 10px rgba(63, 43, 115, .04);
+
+    --shadow-md:
+        0 2px 6px rgba(35, 24, 72, .035),
+        0 10px 24px rgba(63, 43, 115, .075);
+
+    --shadow-lg:
+        0 4px 12px rgba(35, 24, 72, .04),
+        0 18px 42px rgba(63, 43, 115, .11),
+        0 35px 70px rgba(63, 43, 115, .07);
+}
+
+
+/* =========================================================
+   35. SHARED ANIMATION KEYFRAMES
+========================================================= */
+
+@keyframes dashboard-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes dashboard-item-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 11px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes dashboard-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dashboard-fade-down {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -8px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes dashboard-card-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 23px, 0) scale(.975);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes dashboard-slide-left {
+    from {
+        opacity: 0;
+        transform: translate3d(-18px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes dashboard-slide-right {
+    from {
+        opacity: 0;
+        transform: translate3d(18px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes dashboard-alert-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -9px, 0) scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes dashboard-modal-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 24px, 0) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes dashboard-orb-a {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(-44px, 52px, 0) scale(1.1);
+    }
+}
+
+@keyframes dashboard-orb-b {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(50px, -42px, 0) scale(1.12);
+    }
+}
+
+@keyframes dashboard-halo {
+
+    0%,
+    100% {
+        opacity: .45;
+        transform: scale(.94);
+    }
+
+    50% {
+        opacity: .95;
+        transform: scale(1.09);
+    }
+}
+
+@keyframes dashboard-border-spin {
+    to {
+        --dashboard-angle: 360deg;
+    }
+}
+
+@keyframes dashboard-toast-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 15px, 0) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes dashboard-active-bar {
+    from {
+        opacity: 0;
+        transform: scaleY(.3);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+@keyframes dashboard-logo-in {
+    from {
+        opacity: 0;
+        transform: scale(.6) rotate(-12deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+
+/* =========================================================
+   36. DASHBOARD BACKGROUND
+========================================================= */
+
+body {
+    background:
+        radial-gradient(circle at 12% 10%,
+            rgba(139, 92, 246, .065),
+            transparent 32%),
+        radial-gradient(circle at 90% 85%,
+            rgba(99, 102, 241, .055),
+            transparent 34%),
+        linear-gradient(135deg,
+            #f8f7ff,
+            #f7f7fc 48%,
+            #faf9ff);
+}
+
+.app {
+    position: relative;
+    isolation: isolate;
+
+    background: transparent;
+}
+
+/* Decorative background rings */
+
+.app::before,
+.app::after {
+    position: fixed;
+    z-index: -1;
+
+    display: block;
+
+    border: 1px solid rgba(124, 58, 237, .08);
+    border-radius: 50%;
+
+    content: "";
+    pointer-events: none;
+    will-change: transform;
+}
+
+.app::before {
+    top: -175px;
+    right: -120px;
+
+    width: 390px;
+    height: 390px;
+
+    background: radial-gradient(circle at 35% 35%,
+            rgba(167, 139, 250, .15),
+            rgba(139, 92, 246, .035) 58%,
+            transparent 73%);
+
+    box-shadow:
+        0 0 0 35px rgba(124, 58, 237, .018),
+        0 0 0 75px rgba(124, 58, 237, .012);
+
+    animation: dashboard-orb-a 22s ease-in-out infinite alternate;
+}
+
+.app::after {
+    bottom: -170px;
+    left: -125px;
+
+    width: 330px;
+    height: 330px;
+
+    border-color: rgba(99, 102, 241, .08);
+
+    background: radial-gradient(circle at 65% 65%,
+            rgba(129, 140, 248, .16),
+            rgba(99, 102, 241, .035) 58%,
+            transparent 73%);
+
+    box-shadow:
+        0 0 0 35px rgba(99, 102, 241, .018),
+        0 0 0 75px rgba(99, 102, 241, .012);
+
+    animation: dashboard-orb-b 25s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   37. APPLICATION LAYOUT ANIMATIONS
+========================================================= */
+
+.sidebar {
+    box-shadow:
+        2px 0 10px rgba(40, 27, 72, .018),
+        8px 0 25px rgba(40, 27, 72, .025);
+
+    transition:
+        width .4s var(--ease-out),
+        transform .4s var(--ease-out),
+        box-shadow .3s ease;
+}
+
+.main-shell {
+    transition: margin-left .4s var(--ease-out);
+}
+
+.page-title-row {
+    animation: dashboard-rise .75s var(--ease-out) .08s backwards;
+}
+
+.page-footer {
+    animation: dashboard-fade .8s ease .5s backwards;
+}
+
+
+/* =========================================================
+   38. SIDEBAR BRAND ENHANCEMENT
+========================================================= */
+
+.brand-area {
+    position: relative;
+
+    background:
+        radial-gradient(ellipse at 0% 0%,
+            rgba(196, 181, 253, .12),
+            transparent 75%),
+        #fff;
+}
+
+.brand-area::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+
+    height: 1px;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(139, 92, 246, .17),
+            transparent);
+
+    content: "";
+    pointer-events: none;
+}
+
+.brand-symbol {
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(145deg,
+            #9874ed,
+            #7041d6 55%,
+            #552bb7);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .3),
+        0 5px 13px rgba(112, 65, 214, .20);
+
+    animation: dashboard-logo-in .75s var(--ease-spring) .1s backwards;
+
+    transition:
+        transform .4s var(--ease-spring),
+        box-shadow .3s ease;
+}
+
+.brand-symbol::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -90%;
+
+    width: 55%;
+
+    background: linear-gradient(100deg,
+            transparent,
+            rgba(255, 255, 255, .35),
+            transparent);
+
+    content: "";
+    pointer-events: none;
+
+    transform: skewX(-18deg);
+}
+
+.brand-symbol:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .35),
+        0 8px 20px rgba(112, 65, 214, .30);
+
+    transform: rotate(-5deg) scale(1.07);
+}
+
+.brand-symbol:hover::after {
+    left: 140%;
+    transition: left .8s var(--ease-out);
+}
+
+.brand-word {
+    transition: color .25s ease;
+}
+
+.brand-word span {
+    background: linear-gradient(100deg, #7041d6, #9b6df0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================================================
+   39. SIDEBAR NAVIGATION ANIMATIONS
+========================================================= */
+
+.section-caption {
+    transition: color .25s ease;
+}
+
+.nav-item {
+    position: relative;
+
+    transition:
+        color .25s ease,
+        background-color .25s ease,
+        box-shadow .25s ease,
+        transform .3s var(--ease-out);
+}
+
+.nav-item:hover {
+    transform: translateX(3px);
+}
+
+.nav-item:active {
+    transform: translateX(1px) scale(.99);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(100deg,
+            rgba(240, 234, 255, .98),
+            rgba(247, 243, 255, .95));
+
+    box-shadow:
+        inset 0 0 0 1px rgba(112, 65, 214, .055),
+        0 3px 10px rgba(112, 65, 214, .045);
+}
+
+.nav-item.active::before {
+    animation: dashboard-active-bar .45s var(--ease-out);
+    box-shadow: 0 0 9px rgba(112, 65, 214, .24);
+}
+
+.nav-item.active>svg:first-child {
+    filter: drop-shadow(0 2px 3px rgba(112, 65, 214, .15));
+}
+
+.nav-parent .chevron {
+    transition: transform .35s var(--ease-spring), color .2s ease;
+}
+
+.submenu a {
+    transition:
+        background .25s ease,
+        color .25s ease,
+        padding-left .3s var(--ease-out);
+}
+
+.submenu a:hover {
+    padding-left: 16px;
+}
+
+.sidebar-help {
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .3s var(--ease-out);
+}
+
+.sidebar-help:hover {
+    box-shadow: 0 5px 15px rgba(112, 65, 214, .07);
+    transform: translateY(-2px);
+}
+
+.help-bubble {
+    transition: transform .35s var(--ease-spring);
+}
+
+.sidebar-help:hover .help-bubble {
+    transform: rotate(-7deg) scale(1.08);
+}
+
+
+/* =========================================================
+   40. TOPBAR ENHANCEMENT
+========================================================= */
+
+.topbar {
+    background: rgba(255, 255, 255, .88);
+
+    box-shadow:
+        0 2px 12px rgba(39, 27, 67, .025),
+        0 8px 25px rgba(39, 27, 67, .015);
+
+    transition:
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.icon-btn {
+    transition:
+        color .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .3s var(--ease-spring);
+}
+
+.icon-btn:hover {
+    border-color: #e4d8f8;
+
+    background: linear-gradient(145deg,
+            #f7f3ff,
+            #eee7ff);
+
+    box-shadow: 0 3px 9px rgba(112, 65, 214, .09);
+
+    transform: scale(1.06);
+}
+
+.icon-btn:active {
+    transform: scale(.92);
+}
+
+.breadcrumb strong {
+    transition: color .25s ease;
+}
+
+.profile-trigger {
+    transition:
+        background .25s ease,
+        transform .25s var(--ease-out);
+}
+
+.profile-trigger:hover .profile-avatar {
+    border-color: #c8b3f5;
+    box-shadow: 0 4px 12px rgba(112, 65, 214, .16);
+
+    transform: scale(1.04);
+}
+
+.profile-avatar {
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .3s var(--ease-spring);
+}
+
+.profile-info strong {
+    transition: color .2s ease;
+}
+
+.profile-trigger:hover .profile-info strong {
+    color: var(--primary);
+}
+
+.profile-chevron {
+    transition:
+        color .2s ease,
+        transform .3s var(--ease-spring);
+}
+
+.profile-trigger:hover .profile-chevron {
+    color: var(--primary);
+    transform: translateY(2px);
+}
+
+.search-trigger {
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .3s var(--ease-out);
+}
+
+.search-trigger:active {
+    transform: scale(.98);
+}
+
+
+/* =========================================================
+   41. DROPDOWN ANIMATIONS
+========================================================= */
+
+.dropdown {
+    border-color: rgba(229, 218, 250, .85);
+
+    background:
+        radial-gradient(ellipse 120% 45% at 50% 0%,
+            rgba(196, 181, 253, .12),
+            transparent 80%),
+        #fff;
+
+    box-shadow:
+        0 2px 6px rgba(35, 24, 66, .035),
+        0 10px 25px rgba(35, 24, 66, .07),
+        0 24px 50px rgba(35, 24, 66, .10);
+
+    animation: dashboard-fade-down .35s var(--ease-out);
+}
+
+.profile-menu {
+    border-radius: 15px;
+}
+
+.profile-menu-user {
+    animation: dashboard-item-in .4s var(--ease-out) .04s backwards;
+}
+
+.profile-menu>a {
+    transition:
+        color .22s ease,
+        background .22s ease,
+        padding-left .3s var(--ease-out);
+}
+
+.profile-menu>a:hover {
+    padding-left: 14px;
+}
+
+.profile-menu>a svg {
+    transition: transform .3s var(--ease-spring), color .2s ease;
+}
+
+.profile-menu>a:hover svg {
+    transform: scale(1.1);
+}
+
+
+/* =========================================================
+   42. PAGE TITLE ENHANCEMENT
+========================================================= */
+
+.overline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.overline::before {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #a78bfa, #7041d6);
+
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, .09);
+
+    content: "";
+}
+
+h1 {
+    background: linear-gradient(100deg,
+            #241d39 35%,
+            #59418a 100%);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-subtitle {
+    text-wrap: pretty;
+}
+
+
+/* =========================================================
+   43. BUTTON ENHANCEMENT
+========================================================= */
+
+.button {
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform .3s var(--ease-out),
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease,
+        filter .25s ease;
+}
+
+.button-outline {
+    box-shadow:
+        0 1px 2px rgba(35, 24, 66, .025),
+        inset 0 1px 0 rgba(255, 255, 255, .85);
+}
+
+.button-outline:hover:not(:disabled) {
+    box-shadow:
+        0 3px 9px rgba(112, 65, 214, .07),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    transform: translateY(-2px);
+}
+
+.button-primary {
+    background:
+        linear-gradient(110deg,
+            transparent 35%,
+            rgba(255, 255, 255, .22) 50%,
+            transparent 65%) 0 0 / 200% 100% no-repeat,
+        linear-gradient(120deg,
+            #8156e0,
+            #7041d6 55%,
+            #5e31bf);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        0 4px 10px rgba(112, 65, 214, .19),
+        0 10px 22px rgba(112, 65, 214, .10);
+
+    transition:
+        background-position .8s var(--ease-out),
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        filter .25s ease;
+}
+
+.button-primary:hover:not(:disabled) {
+    background-position: 100% 0, 0 0;
+
+    filter: brightness(1.06) saturate(1.04);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .28),
+        0 8px 16px rgba(112, 65, 214, .24),
+        0 16px 30px rgba(112, 65, 214, .13);
+
+    transform: translateY(-2px);
+}
+
+.button-primary:active:not(:disabled) {
+    filter: brightness(.97);
+
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, .10),
+        0 2px 6px rgba(112, 65, 214, .15);
+
+    transform: translateY(0) scale(.985);
+}
+
+
+/* =========================================================
+   44. SEARCH OVERLAY
+========================================================= */
+
+.search-overlay {
+    animation: dashboard-fade .3s ease;
+}
+
+.search-scrim {
+    background: rgba(27, 19, 47, .53);
+
+    backdrop-filter: blur(8px) saturate(1.1);
+    -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+
+.search-dialog {
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 19px;
+
+    background:
+        radial-gradient(ellipse 120% 50% at 50% -5%,
+            rgba(196, 181, 253, .18),
+            transparent 75%),
+        rgba(255, 255, 255, .98);
+
+    box-shadow:
+        0 10px 28px rgba(35, 24, 66, .08),
+        0 25px 60px rgba(35, 24, 66, .17);
+
+    animation: dashboard-modal-in .45s var(--ease-spring);
+}
+
+.search-input-row {
+    background: rgba(255, 255, 255, .65);
+}
+
+.search-input-row input {
+    transition: color .2s ease;
+}
+
+.search-results>button {
+    transition:
+        background .25s ease,
+        color .25s ease,
+        padding-left .3s var(--ease-out);
+}
+
+.search-results>button:hover {
+    padding-left: 14px;
+}
+
+.search-results>button svg {
+    transition: transform .3s var(--ease-spring), color .2s ease;
+}
+
+.search-results>button:hover svg {
+    transform: scale(1.1);
+}
+
+
+/* =========================================================
+   45. TOAST NOTIFICATIONS
+========================================================= */
+
+.toast {
+    border-color: rgba(229, 218, 250, .8);
+
+    background:
+        radial-gradient(ellipse 120% 60% at 0% 0%,
+            rgba(196, 181, 253, .13),
+            transparent 75%),
+        #fff;
+
+    box-shadow:
+        0 5px 15px rgba(35, 24, 66, .06),
+        0 15px 35px rgba(35, 24, 66, .10);
+
+    animation: dashboard-toast-in .5s var(--ease-spring);
+}
+
+
+/* =========================================================
+   46. PERMIT SECTION HEADINGS
+========================================================= */
+
+.permit-section-heading {
+    animation: dashboard-rise .65s var(--ease-out) .08s backwards;
+}
+
+.permit-section-heading h2 {
+    color: #29223d;
+    letter-spacing: -.45px;
+}
+
+.permit-section-heading p {
+    text-wrap: pretty;
+}
+
+
+/* =========================================================
+   47. PERMIT PERIOD CARDS
+========================================================= */
+
+.permit-period-card {
+    position: relative;
+    isolation: isolate;
+
+    border-color: rgba(235, 231, 241, .95);
+
+    background:
+        radial-gradient(ellipse 120% 45% at 50% -10%,
+            rgba(196, 181, 253, .12),
+            transparent 75%),
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .98),
+            rgba(255, 255, 255, .94));
+
+    box-shadow:
+        0 1px 2px rgba(35, 24, 66, .025),
+        0 7px 17px rgba(35, 24, 66, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    transition:
+        transform .4s var(--ease-out),
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+/* Animated light-edge border */
+
+.permit-period-card::before {
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+
+    padding: 1.5px;
+
+    border-radius: inherit;
+
+    background: conic-gradient(from var(--dashboard-angle),
+            rgba(139, 92, 246, 0) 0deg,
+            rgba(139, 92, 246, 0) 35deg,
+            rgba(139, 92, 246, .55) 75deg,
+            rgba(99, 102, 241, 0) 125deg,
+            rgba(99, 102, 241, 0) 190deg,
+            rgba(167, 139, 250, .4) 245deg,
+            rgba(167, 139, 250, 0) 295deg,
+            rgba(167, 139, 250, 0) 360deg);
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .4s ease;
+}
+
+.permit-period-card:hover {
+    border-color: #d9c9f3;
+
+    box-shadow:
+        0 5px 14px rgba(63, 42, 104, .055),
+        0 15px 32px rgba(63, 42, 104, .085),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    transform: translateY(-5px);
+}
+
+.permit-period-card:hover::before {
+    opacity: .9;
+    animation: dashboard-border-spin 7s linear infinite;
+}
+
+.permit-card-top {
+    position: relative;
+}
+
+.permit-period-icon {
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .9),
+        0 3px 9px rgba(112, 65, 214, .055);
+
+    transition:
+        transform .4s var(--ease-spring),
+        box-shadow .3s ease,
+        background .3s ease;
+}
+
+.permit-period-card:hover .permit-period-icon {
+    background: linear-gradient(145deg, #eee5ff, #e4d8ff);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .95),
+        0 6px 14px rgba(112, 65, 214, .12);
+
+    transform: rotate(-5deg) scale(1.06);
+}
+
+.permit-period-icon svg {
+    transition: transform .35s var(--ease-spring);
+}
+
+.permit-period-card:hover .permit-period-icon svg {
+    transform: scale(1.08);
+}
+
+
+/* =========================================================
+   48. PERMIT CARD ENTRANCE STAGGER
+========================================================= */
+
+.permit-period-grid>.permit-period-card {
+    animation: dashboard-card-in .75s var(--ease-out) backwards;
+}
+
+.permit-period-grid>.permit-period-card:nth-child(1) {
+    animation-delay: .08s;
+}
+
+.permit-period-grid>.permit-period-card:nth-child(2) {
+    animation-delay: .17s;
+}
+
+.permit-period-grid>.permit-period-card:nth-child(3) {
+    animation-delay: .26s;
+}
+
+
+/* =========================================================
+   49. PERMIT STATUS BADGES
+========================================================= */
+
+.permit-status,
+.submission-status {
+    transition:
+        transform .25s var(--ease-spring),
+        box-shadow .25s ease,
+        filter .25s ease;
+}
+
+.permit-status:hover,
+.submission-status:hover {
+    box-shadow: 0 3px 8px rgba(35, 24, 66, .06);
+    transform: translateY(-1px);
+}
+
+.status-dot,
+.submission-status-dot {
+    position: relative;
+}
+
+.status-approved .status-dot,
+.submission-status-approved .submission-status-dot {
+    box-shadow: 0 0 0 3px rgba(22, 131, 77, .09);
+}
+
+.status-pending .status-dot,
+.submission-status-pending .submission-status-dot {
+    box-shadow: 0 0 0 3px rgba(166, 107, 18, .09);
+}
+
+
+/* =========================================================
+   50. PERMIT UPLOAD FORM
+========================================================= */
+
+.permit-upload-form input[type="file"] {
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.permit-upload-form input[type="file"]:focus {
+    outline: none;
+
+    border-color: #9875e0;
+    background: #fff;
+
+    box-shadow: 0 0 0 4px rgba(112, 65, 214, .09);
+}
+
+.permit-upload-form input[type="file"]::file-selector-button {
+    transition:
+        background .25s ease,
+        color .25s ease,
+        transform .25s var(--ease-out);
+}
+
+.permit-upload-form input[type="file"]::file-selector-button:hover {
+    background: #e2d7ff;
+    transform: translateY(-1px);
+}
+
+.permit-upload-form .button {
+    transition:
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        filter .25s ease;
+}
+
+
+/* =========================================================
+   51. ALERT ENTRANCE EFFECTS
+========================================================= */
+
+.permit-alert,
+.student-picture-error {
+    animation: dashboard-alert-in .45s var(--ease-out);
+}
+
+.permit-alert-success,
+.permit-alert.success {
+    box-shadow:
+        inset 3px 0 0 #2fb872,
+        0 3px 9px rgba(22, 131, 75, .045);
+}
+
+.permit-alert-error,
+.permit-alert.error {
+    box-shadow:
+        inset 3px 0 0 #e0495f,
+        0 3px 9px rgba(180, 35, 60, .045);
+}
+
+.permit-alert-warning {
+    box-shadow:
+        inset 3px 0 0 #dfa638,
+        0 3px 9px rgba(166, 107, 18, .045);
+}
+
+
+/* =========================================================
+   52. FULL PAYMENT CARD
+========================================================= */
+
+.permit-full-payment {
+    isolation: isolate;
+
+    border-color: #e2d5f7;
+
+    background:
+        radial-gradient(circle at 100% 0%,
+            rgba(180, 151, 240, .20),
+            transparent 42%),
+        radial-gradient(circle at 0% 100%,
+            rgba(139, 92, 246, .07),
+            transparent 45%),
+        linear-gradient(135deg,
+            #fbf9ff,
+            #fff 58%,
+            #f8f5ff);
+
+    box-shadow:
+        0 3px 12px rgba(63, 42, 104, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    animation: dashboard-rise .75s var(--ease-out) .3s backwards;
+}
+
+.permit-full-payment::after {
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    z-index: -1;
+
+    width: 220px;
+    height: 220px;
+
+    border: 1px solid rgba(139, 92, 246, .09);
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 20px rgba(139, 92, 246, .025),
+        0 0 0 45px rgba(139, 92, 246, .018);
+
+    content: "";
+    pointer-events: none;
+
+    transition: transform .7s var(--ease-out);
+}
+
+.permit-full-payment:hover::after {
+    transform: translate(-13px, 13px) scale(1.08);
+}
+
+.permit-full-payment-content>.permit-period-icon {
+    box-shadow: 0 5px 13px rgba(112, 65, 214, .09);
+
+    transition: transform .4s var(--ease-spring);
+}
+
+.permit-full-payment:hover .permit-full-payment-content>.permit-period-icon {
+    transform: rotate(-5deg) scale(1.06);
+}
+
+.permit-full-payment-content h2 {
+    color: #302644;
+}
+
+
+/* =========================================================
+   53. SUBMISSION HISTORY
+========================================================= */
+
+.permit-history-section {
+    position: relative;
+    isolation: isolate;
+
+    border-color: rgba(235, 231, 241, .95);
+
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .98),
+            rgba(255, 255, 255, .94));
+
+    box-shadow:
+        0 2px 7px rgba(35, 24, 66, .025),
+        0 9px 22px rgba(35, 24, 66, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    animation: dashboard-rise .8s var(--ease-out) .38s backwards;
+}
+
+.permit-history-section>.permit-section-heading {
+    background:
+        radial-gradient(ellipse 120% 100% at 0% 0%,
+            rgba(196, 181, 253, .10),
+            transparent 75%),
+        #fff;
+}
+
+.permit-history-table th {
+    background: linear-gradient(180deg,
+            #faf9fd,
+            #f8f7fb);
+}
+
+.permit-history-table tbody tr {
+    transition: background .25s ease;
+}
+
+.permit-history-table tbody tr:hover td {
+    background: linear-gradient(90deg,
+            #fcfaff,
+            #f9f6ff);
+}
+
+.permit-history-table td {
+    transition: background .25s ease;
+}
+
+
+/* =========================================================
+   54. SECTION REQUIREMENT NOTICE
+========================================================= */
+
+.permit-section-required {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(ellipse 100% 140% at 100% 0%,
+            rgba(245, 190, 75, .12),
+            transparent 65%),
+        linear-gradient(120deg,
+            #fff9ec,
+            #fffdf8);
+
+    box-shadow:
+        0 3px 10px rgba(166, 107, 18, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .8);
+
+    animation: dashboard-alert-in .5s var(--ease-out);
+}
+
+.permit-section-required-icon {
+    transition:
+        transform .35s var(--ease-spring),
+        box-shadow .3s ease;
+}
+
+.permit-section-required:hover .permit-section-required-icon {
+    box-shadow: 0 4px 10px rgba(166, 107, 18, .10);
+    transform: rotate(-5deg) scale(1.06);
+}
+
+
+/* =========================================================
+   55. PROFILE MODAL BACKDROP
+========================================================= */
+
+.student-profile-backdrop,
+.upload-confirm-backdrop {
+    background: rgba(27, 19, 47, .58);
+
+    backdrop-filter: blur(9px) saturate(1.1);
+    -webkit-backdrop-filter: blur(9px) saturate(1.1);
+
+    animation: dashboard-fade .3s ease-out;
+}
+
+
+/* =========================================================
+   56. PROFILE MODAL
+========================================================= */
+
+.student-profile-dialog {
+    border-color: rgba(255, 255, 255, .9);
+    border-radius: 21px;
+
+    background:
+        radial-gradient(ellipse 120% 40% at 50% -10%,
+            rgba(196, 181, 253, .16),
+            transparent 75%),
+        linear-gradient(180deg,
+            #fff,
+            #fefeff);
+
+    box-shadow:
+        0 10px 30px rgba(29, 20, 50, .09),
+        0 30px 75px rgba(29, 20, 50, .20),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+
+    animation: dashboard-modal-in .5s var(--ease-spring);
+}
+
+.student-profile-header {
+    background: linear-gradient(180deg,
+            rgba(249, 246, 255, .9),
+            rgba(255, 255, 255, .98));
+}
+
+.student-profile-heading-icon {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .95),
+        0 4px 10px rgba(112, 65, 214, .07);
+
+    transition: transform .4s var(--ease-spring);
+}
+
+.student-profile-dialog:hover .student-profile-heading-icon {
+    transform: rotate(-4deg);
+}
+
+.student-profile-close {
+    transition:
+        color .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        transform .35s var(--ease-spring);
+}
+
+.student-profile-close:hover {
+    transform: rotate(90deg) scale(1.06);
+}
+
+.student-profile-close:active {
+    transform: rotate(90deg) scale(.9);
+}
+
+
+/* =========================================================
+   57. PROFILE PICTURE EDITOR
+========================================================= */
+
+.student-picture-preview {
+    box-shadow:
+        0 3px 10px rgba(112, 65, 214, .08),
+        0 0 0 5px rgba(139, 92, 246, .045);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .4s var(--ease-spring);
+}
+
+.student-picture-preview:hover {
+    border-color: #c7b0f3;
+
+    box-shadow:
+        0 5px 15px rgba(112, 65, 214, .13),
+        0 0 0 6px rgba(139, 92, 246, .07);
+
+    transform: scale(1.045);
+}
+
+.student-picture-actions .button {
+    transition:
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        background .25s ease;
+}
+
+.student-picture-actions .button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   58. PROFILE FORM FIELDS
+========================================================= */
+
+.student-profile-field label {
+    transition: color .25s ease;
+}
+
+.student-profile-field:focus-within label {
+    color: var(--primary);
+}
+
+.student-profile-field input,
+.student-profile-field select,
+.student-profile-field textarea {
+    box-shadow: 0 1px 2px rgba(28, 25, 48, .025);
+
+    transition:
+        border-color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .25s var(--ease-out);
+}
+
+.student-profile-field input:focus,
+.student-profile-field select:focus,
+.student-profile-field textarea:focus {
+    box-shadow:
+        0 0 0 4px rgba(112, 65, 214, .10),
+        0 5px 13px rgba(112, 65, 214, .055);
+}
+
+.student-profile-field input[readonly]:focus {
+    box-shadow: none;
+}
+
+.student-profile-actions {
+    animation: dashboard-fade .5s ease;
+}
+
+.student-profile-actions .button {
+    transition:
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        filter .25s ease;
+}
+
+
+/* =========================================================
+   59. CHANGE PASSWORD MODAL
+========================================================= */
+
+.student-password-dialog {
+    animation: dashboard-modal-in .45s var(--ease-spring);
+}
+
+.student-password-input-wrap {
+    transition: box-shadow .25s ease;
+}
+
+.student-password-toggle {
+    transition:
+        color .25s ease,
+        background .25s ease,
+        transform .25s var(--ease-spring);
+}
+
+.student-password-toggle:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+.student-password-toggle:active {
+    transform: translateY(-50%) scale(.92);
+}
+
+
+/* =========================================================
+   60. UPLOAD CONFIRMATION MODAL
+========================================================= */
+
+.upload-confirm-dialog {
+    border-color: rgba(255, 255, 255, .9);
+    border-radius: 21px;
+
+    background:
+        radial-gradient(ellipse 130% 65% at 50% -15%,
+            rgba(196, 181, 253, .19),
+            transparent 75%),
+        #fff;
+
+    box-shadow:
+        0 12px 30px rgba(29, 20, 50, .10),
+        0 35px 85px rgba(29, 20, 50, .22);
+
+    animation: dashboard-modal-in .5s var(--ease-spring);
+}
+
+.upload-confirm-icon {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .95),
+        0 5px 12px rgba(112, 65, 214, .08);
+
+    animation: dashboard-logo-in .65s var(--ease-spring) .12s backwards;
+
+    transition: transform .35s var(--ease-spring);
+}
+
+.upload-confirm-dialog:hover .upload-confirm-icon {
+    transform: rotate(-5deg) scale(1.06);
+}
+
+.upload-confirm-actions button {
+    transition:
+        transform .3s var(--ease-out),
+        box-shadow .3s ease,
+        filter .25s ease;
+}
+
+.upload-confirm-actions button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   61. LIVE DATE AND TIME
+========================================================= */
+
+.datetime-wrap {
+    transition: transform .3s var(--ease-out);
+}
+
+.datetime-wrap:hover {
+    transform: translateY(-1px);
+}
+
+.datetime-clock {
+    transition:
+        color .25s ease,
+        text-shadow .25s ease;
+    font-variant-numeric: tabular-nums;
+}
+
+.datetime-wrap:hover .datetime-clock {
+    color: var(--primary);
+    text-shadow: 0 2px 12px rgba(112, 65, 214, .13);
+}
+
+
+/* =========================================================
+   62. MOBILE SIDEBAR ANIMATIONS
+========================================================= */
+
+.mobile-scrim {
+    animation: dashboard-fade .3s ease;
+}
+
+@media (max-width: 820px) {
+
+    .sidebar,
+    body.sidebar-collapsed .sidebar {
+        transition:
+            transform .4s var(--ease-out),
+            box-shadow .4s ease;
+    }
+
+    body.mobile-sidebar-open .sidebar {
+        box-shadow: 20px 0 55px rgba(27, 19, 47, .17);
+    }
+
+    .mobile-menu,
+    .mobile-close {
+        transition:
+            color .25s ease,
+            background .25s ease,
+            transform .3s var(--ease-spring);
+    }
+
+    .mobile-menu:hover,
+    .mobile-close:hover {
+        transform: scale(1.07);
+    }
+
+    .mobile-menu:active,
+    .mobile-close:active {
+        transform: scale(.92);
+    }
+}
+
+
+/* =========================================================
+   63. RESPONSIVE CARD ADJUSTMENTS
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .permit-period-card:hover {
+        transform: translateY(-3px);
+    }
+}
+
+@media (max-width: 820px) {
+
+    .app::before {
+        top: -130px;
+        right: -155px;
+
+        width: 300px;
+        height: 300px;
+    }
+
+    .app::after {
+        bottom: -140px;
+        left: -145px;
+
+        width: 250px;
+        height: 250px;
+    }
+
+    .student-profile-dialog,
+    .student-password-dialog {
+        border-radius: 17px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .page-title-row {
+        animation-delay: .04s;
+    }
+
+    .permit-period-grid>.permit-period-card:nth-child(1) {
+        animation-delay: .07s;
+    }
+
+    .permit-period-grid>.permit-period-card:nth-child(2) {
+        animation-delay: .15s;
+    }
+
+    .permit-period-grid>.permit-period-card:nth-child(3) {
+        animation-delay: .23s;
+    }
+
+    .permit-period-card:hover {
+        transform: none;
+    }
+
+    .permit-period-card:hover::before {
+        animation-play-state: paused;
+    }
+
+    .permit-full-payment {
+        animation-delay: .28s;
+    }
+
+    .permit-history-section {
+        animation-delay: .34s;
+    }
+
+    .student-profile-dialog {
+        border-radius: 15px;
+    }
+
+    .upload-confirm-dialog {
+        border-radius: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .app::before {
+        opacity: .7;
+    }
+
+    .app::after {
+        opacity: .7;
+    }
+
+    .permit-period-card {
+        border-radius: 14px;
+    }
+}
+
+
+/* =========================================================
+   64. FINAL ACCESSIBILITY — REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .app::before,
+    .app::after,
+    .brand-symbol,
+    .permit-period-card,
+    .permit-period-card::before,
+    .student-profile-dialog,
+    .student-password-dialog,
+    .upload-confirm-dialog,
+    .upload-confirm-icon,
+    .toast {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .permit-period-card:hover,
+    .brand-symbol:hover,
+    .icon-btn:hover,
+    .student-picture-preview:hover {
+        transform: none !important;
     }
 
     .permit-period-card:hover {
