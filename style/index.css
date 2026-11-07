@@ -1376,3 +1376,323 @@ body:has(.reset-success),
 /* =========================================================
    END OF ACADTRACK AUTHENTICATION STYLESHEET
 ========================================================= */
+/* =========================================================
+   PASSWORD RESET RESEND CODE
+========================================================= */
+
+.cl-login10__resend-wrapper {
+    margin-top: 22px;
+    padding-top: 19px;
+
+    border-top: 1px solid #f0edf6;
+
+    text-align: center;
+}
+
+.cl-login10__resend-status {
+    margin: 0 0 12px;
+
+    color: #77738b;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.cl-login10__resend {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 145px;
+    min-height: 40px;
+
+    padding: 9px 18px;
+
+    border: 1px solid #e5dafa;
+    border-radius: 11px;
+
+    background: #f5f0ff;
+    color: #6935ca;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.cl-login10__resend:hover:not(:disabled) {
+    border-color: #7041d6;
+
+    background: #7041d6;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+.cl-login10__resend:active:not(:disabled) {
+    transform: translateY(0) scale(.98);
+}
+
+.cl-login10__resend:disabled {
+    border-color: #ebe8f2;
+
+    background: #f5f4f8;
+    color: #aaa6b7;
+
+    cursor: not-allowed;
+    opacity: .85;
+}
+
+.cl-login10__resend:focus-visible {
+    outline: 3px solid rgba(112, 65, 214, .25);
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+
+    .cl-login10__resend-wrapper {
+        margin-top: 19px;
+        padding-top: 17px;
+    }
+
+    .cl-login10__resend {
+        width: 100%;
+        min-height: 46px;
+    }
+}
+
+/* =========================================================
+   25. OTP VERIFICATION LOADING STATE
+========================================================= */
+
+.cl-login10__submit:disabled {
+    cursor: wait;
+    opacity: .9;
+    transform: none;
+}
+
+.cl-login10__submit.is-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    cursor: wait;
+    pointer-events: none;
+}
+
+.cl-login10__spinner {
+    display: none;
+
+    width: 17px;
+    height: 17px;
+
+    flex: 0 0 17px;
+
+    border: 2px solid rgba(255, 255, 255, .35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+}
+
+.cl-login10__submit.is-loading .cl-login10__spinner {
+    display: inline-block;
+    animation: otp-loading-spin .7s linear infinite;
+}
+
+@keyframes otp-loading-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cl-login10__submit.is-loading .cl-login10__spinner {
+        animation-duration: 1.5s;
+    }
+}
+
+/* Resend Spinner */
+
+.otp-description {
+    color: #52525b;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.otp-input {
+    text-align: center;
+    letter-spacing: 10px;
+    font-size: 24px !important;
+    font-weight: 700;
+}
+
+.otp-error {
+    color: #b42318;
+    background: #fef3f2;
+    border: 1px solid #fecdca;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 12px 0;
+    font-size: 13px;
+}
+
+.otp-success {
+    color: #166534;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 12px 0;
+    font-size: 13px;
+}
+
+.otp-back {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+/* Resend section */
+
+.otp-resend-wrapper {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #f0edf6;
+    text-align: center;
+}
+
+.otp-resend-status {
+    color: #77738b;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0 0 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.otp-resend-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-width: 150px;
+    min-height: 42px;
+    padding: 9px 18px;
+
+    border: 1px solid #e5dafa;
+    border-radius: 11px;
+
+    background: #f5f0ff;
+    color: #6935ca;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        opacity .2s ease;
+}
+
+.otp-resend-button:hover:not(:disabled) {
+    background: #7041d6;
+    border-color: #7041d6;
+    color: #fff;
+}
+
+.otp-resend-button:disabled {
+    background: #f5f4f8;
+    border-color: #ebe8f2;
+    color: #aaa6b7;
+    cursor: not-allowed;
+    opacity: .85;
+}
+
+/* Completely disabled during sending */
+
+.otp-resend-button.is-loading,
+.otp-resend-button.is-loading:disabled {
+    background: #7041d6 !important;
+    border-color: #7041d6 !important;
+    color: #fff !important;
+
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    user-select: none;
+    opacity: .85;
+}
+
+/* Verify and resend spinners */
+
+.otp-button-spinner,
+.otp-resend-spinner {
+    display: none;
+
+    width: 16px;
+    height: 16px;
+
+    flex: 0 0 16px;
+
+    border: 2px solid rgba(255, 255, 255, .35);
+    border-top-color: #fff;
+    border-radius: 50%;
+}
+
+.cl-login10__submit.is-loading .otp-button-spinner,
+.otp-resend-button.is-loading .otp-resend-spinner {
+    display: inline-block;
+    animation: registration-otp-spin .7s linear infinite;
+}
+
+.cl-login10__submit:disabled {
+    cursor: wait;
+    opacity: .9;
+}
+
+.cl-login10__submit.is-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    pointer-events: none;
+    cursor: wait;
+}
+
+@keyframes registration-otp-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .otp-resend-button {
+        width: 100%;
+        min-height: 46px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .otp-button-spinner,
+    .otp-resend-spinner {
+        animation-duration: 1.5s !important;
+    }
+}

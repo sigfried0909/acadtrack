@@ -55,6 +55,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$user) {
                 $error = 'No active account was found. Check your details and try again.';
             } else {
+                // Start transaction and lock the existing OTP record.
+                $pdo->beginTransaction();
+                $transactionStarted = true;
+
+                $stmt = $pdo->prepare(
+                    'SELECT verified_at,
+                COALESCE(
+                    TIMESTAMPDIFF(SECOND, created_at, NOW()), 0
+                ) AS elapsed_seconds
+         FROM password_reset_otps
+         WHERE user_id = :user_id
+         FOR UPDATE'
+                );
+
+                $stmt->execute([
+                    'user_id' => $user['id']
+                ]);
+
+                $existingOtp = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Enforce a 60-second resend cooldown.
+                if (
+                    $existingOtp &&
+                    $existingOtp['verified_at'] === null &&
+                    (int) $existingOtp['elapsed_seconds'] < 60
+                ) {
+                    $pdo->commit();
+                    $transactionStarted = false;
+
+                    // Continue to the verification page with the existing OTP.
+                    $_SESSION['recovery_user_id'] = (int) $user['id'];
+                    $_SESSION['recovery_student_number'] =
+                        $user['student_number'] ?? '';
+
+                    header('Location: verify_reset.php');
+                    exit;
+                }
+
                 // Generate a six-digit OTP.
                 $otp = (string) random_int(100000, 999999);
                 $otpHash = password_hash($otp, PASSWORD_DEFAULT);
@@ -64,22 +102,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 // Save the OTP transactionally.
-                // If SMTP fails, roll back instead of deleting an existing OTP.
-                $pdo->beginTransaction();
-                $transactionStarted = true;
-
                 $stmt = $pdo->prepare(
                     'INSERT INTO password_reset_otps
-                        (user_id, otp_hash, expires_at, attempts, verified_at)
-                     VALUES
-                        (:user_id, :otp_hash,
-                         DATE_ADD(NOW(), INTERVAL 10 MINUTE), 0, NULL)
-                     ON DUPLICATE KEY UPDATE
-                        otp_hash = VALUES(otp_hash),
-                        expires_at = VALUES(expires_at),
-                        attempts = 0,
-                        verified_at = NULL,
-                        created_at = CURRENT_TIMESTAMP'
+            (user_id, otp_hash, expires_at, attempts, verified_at, created_at)
+         VALUES
+            (:user_id, :otp_hash,
+             DATE_ADD(NOW(), INTERVAL 10 MINUTE), 0, NULL, CURRENT_TIMESTAMP)
+         ON DUPLICATE KEY UPDATE
+            otp_hash = VALUES(otp_hash),
+            expires_at = VALUES(expires_at),
+            attempts = 0,
+            verified_at = NULL,
+            created_at = CURRENT_TIMESTAMP'
                 );
 
                 $stmt->execute([
@@ -250,8 +284,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2 class="cl-login10__title">Forgot Password?</h2>
 
             <p>
-                Enter your 12-digit student number. If your active
-                student account is found, a six-digit reset code
+                Enter your 12-digit student number or registered email address.
+                If your active account is found, a six-digit reset code
                 will be sent to your registered email.
             </p>
 
@@ -279,12 +313,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="cl-login10__field">
                         <label class="cl-login10__label" for="student_number">
-                            Student Number
+                            Student Number or Email Address
                         </label>
 
                         <input class="cl-login10__input" id="student_number" name="student_number" type="text"
-                            inputmode="numeric" pattern="[0-9]{12}" minlength="12" maxlength="12" autocomplete="off"
-                            placeholder="Enter your 12-digit student number"
+                            maxlength="254" autocomplete="off" placeholder="Enter student number or email address"
                             value="<?= htmlspecialchars($studentNumber, ENT_QUOTES, 'UTF-8') ?>" required>
                     </div>
 
