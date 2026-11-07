@@ -90,7 +90,6 @@ try {
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $otp = (string) random_int(100000, 999999);
     $otpHash = password_hash($otp, PASSWORD_DEFAULT);
-    $expiresAt = date('Y-m-d H:i:s', time() + 600);
 
     // Save pending registration; the actual user is not created yet.
     $pdo->beginTransaction();
@@ -107,11 +106,11 @@ try {
 
     $stmt = $pdo->prepare(
         'INSERT INTO registration_otps
-            (nickname, student_number, email, password_hash,
-             otp_hash, expires_at, attempts, last_sent_at)
-         VALUES
-            (:nickname, :student_number, :email, :password_hash,
-             :otp_hash, :expires_at, 0, NOW())'
+        (nickname, student_number, email, password_hash,
+        otp_hash, expires_at, attempts, last_sent_at)
+        VALUES
+        (:nickname, :student_number, :email, :password_hash,
+        :otp_hash, DATE_ADD(NOW(), INTERVAL 10 MINUTE), 0, NOW())'
     );
 
     $stmt->execute([
@@ -120,7 +119,6 @@ try {
         'email' => $email,
         'password_hash' => $passwordHash,
         'otp_hash' => $otpHash,
-        'expires_at' => $expiresAt
     ]);
 
     $pdo->commit();
