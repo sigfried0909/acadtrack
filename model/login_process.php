@@ -100,13 +100,6 @@ if (
 
 $ipAddress = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
-/*
- * These hashes avoid storing the raw student number or IP address
- * in the rate-limit table.
- *
- * For deployments with a configured application secret, use
- * HMAC-SHA-256 with that secret instead of plain SHA-256.
- */
 $identifierHash = hash('sha256', $studentNumber);
 $ipHash = hash('sha256', $ipAddress);
 
@@ -211,10 +204,6 @@ try {
 
     error_log('AcadTrack rate-limit error: ' . $e->getMessage());
 
-    /*
-     * Fail closed: do not authenticate when the security check
-     * cannot be completed.
-     */
     http_response_code(503);
     exit('Login is temporarily unavailable. Please try again later.');
 }
@@ -246,10 +235,6 @@ try {
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    /*
-     * Use a dummy hash when the account does not exist so that
-     * nonexistent accounts still undergo a password verification.
-     */
     static $dummyHash = null;
 
     if ($dummyHash === null) {
@@ -370,10 +355,6 @@ try {
         loginFailure();
     }
 
-    /*
-     * Rehash passwords when PHP's current default algorithm
-     * or its cost parameters have changed.
-     */
     if (
         password_needs_rehash(
             $user['password_hash'],
