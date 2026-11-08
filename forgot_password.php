@@ -321,8 +321,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             value="<?= htmlspecialchars($studentNumber, ENT_QUOTES, 'UTF-8') ?>" required>
                     </div>
 
-                    <button class="cl-login10__submit" type="submit">
-                        Send Reset Code
+                    <button class="cl-login10__submit" type="submit" data-reset-submit>
+                        <span data-reset-label>Send Reset Code</span>
+                        <span class="cl-login10__spinner" aria-hidden="true" hidden></span>
                     </button>
                 </form>
             <?php endif; ?>
@@ -334,6 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </p>
         </section>
     </main>
+    <script src="js/snippet.js"></script>
 </body>
 
 </html>

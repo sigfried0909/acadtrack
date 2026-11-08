@@ -552,3 +552,73 @@
 
   window.addEventListener("pageshow", resetRegisterButton);
 })();
+
+(() => {
+  "use strict";
+
+  const resetForm = document.querySelector(
+    'form[action="forgot_password.php"]',
+  );
+
+  if (!resetForm) {
+    return;
+  }
+
+  const resetButton = resetForm.querySelector("[data-reset-submit]");
+
+  const resetLabel = resetButton?.querySelector("[data-reset-label]");
+
+  const spinner = resetButton?.querySelector(".cl-login10__spinner");
+
+  if (!resetButton || !resetLabel || !spinner) {
+    return;
+  }
+
+  const originalLabel = resetLabel.textContent;
+  let isSubmitting = false;
+
+  /*
+        |--------------------------------------------------------------------------
+        | SEND RESET CODE LOADING STATE
+        |--------------------------------------------------------------------------
+        */
+
+  resetForm.addEventListener("submit", function (event) {
+    // Respect existing validation.
+    if (!resetForm.checkValidity()) {
+      return;
+    }
+
+    // Prevent duplicate submissions.
+    if (isSubmitting) {
+      event.preventDefault();
+      return;
+    }
+
+    isSubmitting = true;
+
+    resetButton.disabled = true;
+    resetButton.classList.add("is-loading");
+    resetButton.setAttribute("aria-busy", "true");
+
+    resetLabel.textContent = "Sending reset code...";
+    spinner.hidden = false;
+  });
+
+  /*
+        |--------------------------------------------------------------------------
+        | RESTORE BUTTON WHEN RETURNING THROUGH BROWSER HISTORY
+        |--------------------------------------------------------------------------
+        */
+
+  window.addEventListener("pageshow", function () {
+    isSubmitting = false;
+
+    resetButton.disabled = false;
+    resetButton.classList.remove("is-loading");
+    resetButton.removeAttribute("aria-busy");
+
+    resetLabel.textContent = originalLabel;
+    spinner.hidden = true;
+  });
+})();
