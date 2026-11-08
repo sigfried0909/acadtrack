@@ -1,0 +1,79 @@
+# ==========================================================
+# AcadTrack - Clean URL and Apache rewrite configuration
+# Place this file in the project root (same folder as index.php).
+# Requires Apache mod_rewrite and AllowOverride All.
+# ==========================================================
+
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # ------------------------------------------------------
+    # 1. Redirect old dashboard PHP URLs to their clean URLs
+    #    THE_REQUEST avoids redirect loops after internal rewrites.
+    # ------------------------------------------------------
+    RewriteCond %{THE_REQUEST} \s/+views/admin/dashboard\.php(?:[?\s]) [NC]
+    RewriteRule ^views/admin/dashboard\.php$ /dashboard [R=301,L,NE]
+
+    RewriteCond %{THE_REQUEST} \s/+views/faculty/dashboard\.php(?:[?\s]) [NC]
+    RewriteRule ^views/faculty/dashboard\.php$ /faculty/dashboard [R=301,L,NE]
+
+    RewriteCond %{THE_REQUEST} \s/+views/student/dashboard\.php(?:[?\s]) [NC]
+    RewriteRule ^views/student/dashboard\.php$ /student/dashboard [R=301,L,NE]
+
+    # ------------------------------------------------------
+    # 2. Dashboard routes
+    #    /dashboard is the Admin dashboard, as in your example.
+    # ------------------------------------------------------
+    RewriteRule ^dashboard/?$ views/admin/dashboard.php [END,QSA]
+    RewriteRule ^admin/dashboard/?$ views/admin/dashboard.php [END,QSA]
+    RewriteRule ^faculty/dashboard/?$ views/faculty/dashboard.php [END,QSA]
+    RewriteRule ^student/dashboard/?$ views/student/dashboard.php [END,QSA]
+
+    # ------------------------------------------------------
+    # 3. Admin routes
+    # ------------------------------------------------------
+    RewriteRule ^admin/reset-data/?$ views/admin/reset_data.php [END,QSA]
+    RewriteRule ^admin/update-profile-picture/?$ views/admin/update_profile_picture.php [END,QSA]
+
+    # ------------------------------------------------------
+    # 4. Faculty routes
+    # ------------------------------------------------------
+    RewriteRule ^faculty/update-profile-picture/?$ views/faculty/update_profile_picture.php [END,QSA]
+    RewriteRule ^faculty/view-permit/?$ views/faculty/view_permit.php [END,QSA]
+
+    # ------------------------------------------------------
+    # 5. Student routes
+    # ------------------------------------------------------
+    RewriteRule ^student/update-profile-picture/?$ views/student/update_profile_picture.php [END,QSA]
+    RewriteRule ^student/upload-permit/?$ views/student/upload_permit.php [END,QSA]
+
+    # ------------------------------------------------------
+    # 6. Root-level pages
+    # ------------------------------------------------------
+    RewriteRule ^login/?$ index.php [END,QSA]
+    RewriteRule ^logout/?$ logout.php [END,QSA]
+    RewriteRule ^forgot-password/?$ forgot_password.php [END,QSA]
+    RewriteRule ^verify-registration/?$ verify_registration.php [END,QSA]
+    RewriteRule ^verify-reset/?$ verify_reset.php [END,QSA]
+
+    # ------------------------------------------------------
+    # 7. Block direct web access to private directories
+    #    PHP can still include files from these directories.
+    # ------------------------------------------------------
+    RewriteRule ^(?:\.git|config)(?:/|$) - [F,END,NC]
+</IfModule>
+
+# Prevent access to repository/build metadata in the project root.
+<FilesMatch "^(?:\.gitignore|composer\.(?:json|lock)|README\.md)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
