@@ -2390,3 +2390,44 @@ body:has(.reset-success),
         animation: otp-loading-spin 1.5s linear infinite !important;
     }
 }
+
+/* =========================================
+   LOGIN BUTTON LOADING SPINNER
+========================================= */
+
+.cl-login10__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cl-login10__submit.is-loading {
+    cursor: wait;
+    opacity: 0.85;
+}
+
+.cl-login10__submit:disabled {
+    cursor: wait;
+}
+
+.cl-login10__spinner {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: cl-login10-spin 0.7s linear infinite;
+}
+
+.cl-login10__spinner[hidden] {
+    display: none;
+}
+
+@keyframes cl-login10-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -183,7 +183,10 @@ if (
                             </div>
                             <p class="cl-login10__error" id="cl-login10-l-pw-err" data-error></p>
                         </div>
-                        <button class="cl-login10__submit" type="submit">Log in</button>
+                        <button class="cl-login10__submit" type="submit" data-login-submit>
+                            <span data-login-label>Log in</span>
+                            <span class="cl-login10__spinner" aria-hidden="true" hidden></span>
+                        </button>
                     </form>
                 </div>
 
@@ -312,7 +315,10 @@ if (
                                 <p class="cl-login10__error" id="cl-login10-s-terms-err" data-error></p>
                             </div>
                         </div>
-                        <button class="cl-login10__submit" type="submit">Create account</button>
+                        <button class="cl-login10__submit" type="submit" data-register-submit>
+                            <span data-register-label>Create account</span>
+                            <span class="cl-login10__spinner" aria-hidden="true" hidden></span>
+                        </button>
                     </form>
                 </div>
 
