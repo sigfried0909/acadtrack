@@ -1123,7 +1123,7 @@ function studentProfileTextLength(string $value): int
                     <div class="page-title-row">
 
                         <div>
-                            <div class="overline">ACADEMICS</div>
+                            <div class="overline">ACADEMICSSSS</div>
                             <h1>Permit Applicationnnnn</h1>
 
                             <p class="page-subtitle">
