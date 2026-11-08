@@ -145,7 +145,7 @@ if (
                             </label>
 
                             <input class="cl-login10__input" id="cl-login10-l-student-number" name="student_number"
-                                type="number" inputmode="numeric" autocomplete="username" maxlength="12"
+                                type="text" inputmode="numeric" autocomplete="username" maxlength="12"
                                 pattern="[0-9]{12}" required data-msg="Enter your 12-digit student number."
                                 data-pattern="Student number must contain exactly 12 digits."
                                 aria-describedby="cl-login10-l-student-number-err"
