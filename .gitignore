@@ -9,6 +9,8 @@
 /config/database.local.php
 /config/database.production.php
 
+/config/mail.local.php
+
 # =========================================
 # STUDENT PERMIT DOCUMENTS
 # =========================================

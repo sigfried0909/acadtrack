@@ -1,10 +1,15 @@
-<?php
 
-return [
-    'host' => 'smtp.gmail.com',
-    'port' => 587,
-    'username' => 'noreply.acadtrack@gmail.com',
-    'password' => 'qeuw yufg xvoj epqf',
-    'from_email' => 'noreply.acadtrack@gmail.com',
-    'from_name' => 'AcadTrack',
-];
+<?php
+declare(strict_types=1);
+
+$localMailConfig = __DIR__ . '/mail.local.php';
+
+if (!is_file($localMailConfig)) {
+    error_log('AcadTrack: Local mail configuration is missing.');
+
+    throw new RuntimeException(
+        'Mail configuration is unavailable.'
+    );
+}
+
+require_once $localMailConfig;
