@@ -1292,9 +1292,23 @@ function studentProfileTextLength(string $value): int
                                         <input type="file" id="permit-file-<?= escapeHtml($period) ?>" name="permit_file"
                                             accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
 
-                                        <button type="submit" class="button button-primary">
-                                            <i data-lucide="upload"></i>
-                                            <span>Upload <?= escapeHtml($period) ?> Receipt</span>
+                                        <button type="submit" class="button button-primary" data-upload-submit>
+
+                                            <span data-upload-icon>
+                                                <i data-lucide="upload"></i>
+                                            </span>
+
+                                            <span data-upload-label>
+                                                Upload <?= escapeHtml($period) ?> Receipt
+                                            </span>
+
+                                            <span
+                                                class="permit-upload-spinner"
+                                                data-upload-spinner
+                                                aria-hidden="true"
+                                                hidden>
+                                            </span>
+
                                         </button>
 
                                     </form>
@@ -1370,9 +1384,23 @@ function studentProfileTextLength(string $value): int
                                 <input type="file" id="full-payment-file" name="permit_file"
                                     accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
 
-                                <button type="submit" class="button button-primary">
-                                    <i data-lucide="upload"></i>
-                                    <span>Upload Full-Payment Receipt</span>
+                                <button type="submit" class="button button-primary" data-upload-submit>
+
+                                    <span data-upload-icon>
+                                        <i data-lucide="upload"></i>
+                                    </span>
+
+                                    <span data-upload-label>
+                                        Upload Full-Payment Receipt
+                                    </span>
+
+                                    <span
+                                        class="permit-upload-spinner"
+                                        data-upload-spinner
+                                        aria-hidden="true"
+                                        hidden>
+                                    </span>
+
                                 </button>
 
                             </form>
