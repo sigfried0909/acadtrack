@@ -1,38 +1,39 @@
-# =========================================
-# ENVIRONMENT AND CONFIGURATION SECRETS
-# =========================================
-.env
-.env.*
-!.env.example
 
-/config/database.php
+# =========================================
+# DATABASE AND ENVIRONMENT CONFIGURATION
+# =========================================
+/.env
+/.env.*
+!/.env.example
+
 /config/database.local.php
+/config/database.production.php
 
 # =========================================
-# STUDENT DOCUMENTS AND USER UPLOADS
+# STUDENT PERMIT DOCUMENTS
 # =========================================
-/storage/permits/
-/uploads/profile_pictures/
+/storage/permits/*
+!/storage/permits/.gitkeep
+!/storage/permits/.htaccess
+
+# =========================================
+# PROFILE PICTURES
+# =========================================
+/uploads/profile_pictures/*
+!/uploads/profile_pictures/.gitkeep
 
 # =========================================
 # LOGS AND BACKUPS
 # =========================================
 /storage/logs/
-/logs/
 /backups/
-
 *.log
 *.bak
 *.sql
 *.sql.gz
 
 # =========================================
-# DEPENDENCIES
-# =========================================
-/vendor/
-
-# =========================================
-# EDITOR AND OPERATING SYSTEM FILES
+# LOCAL DEVELOPMENT FILES
 # =========================================
 .DS_Store
 Thumbs.db
