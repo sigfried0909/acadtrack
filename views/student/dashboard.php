@@ -1123,8 +1123,8 @@ function studentProfileTextLength(string $value): int
                     <div class="page-title-row">
 
                         <div>
-                            <div class="overline">ACADEMICSSSS</div>
-                            <h1>Permit Applicationnnnn</h1>
+                            <div class="overline">ACADEMICS</div>
+                            <h1>Permit Application</h1>
 
                             <p class="page-subtitle">
                                 Upload your permit or payment receipt.
@@ -1388,7 +1388,7 @@ function studentProfileTextLength(string $value): int
                         <div class="permit-section-heading">
 
                             <div>
-                                <h2>Recent Submissionssss</h2>
+                                <h2>Recent Submissions</h2>
                                 <p>Your recent uploaded documents.</p>
                             </div>
 
