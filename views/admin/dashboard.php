@@ -2149,11 +2149,11 @@ if (!$isAdminProfilePost) {
 }
 ?>
 
+
 <!doctype html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">
@@ -2169,14 +2169,18 @@ if (!$isAdminProfilePost) {
 
     <link rel="stylesheet" href="../../style/admin/admin_dash.css">
     <link rel="stylesheet" href="../../style/admin/admin_account.css">
+
     <script src="../../js/admin/admin_dash.js" defer></script>
     <script src="../../js/admin/admin_accounts.js" defer></script>
     <script src="../../js/admin/admin_reset_data.js" defer></script>
     <script src="../../js/auth/session_guard.js" defer></script>
-
 </head>
 
 <body>
+
+    <!-- =====================================================
+         MAIN APPLICATION
+    ====================================================== -->
 
     <div class="app" id="app">
 
@@ -2244,21 +2248,7 @@ if (!$isAdminProfilePost) {
 
                 <div class="nav-section">
 
-                    <!-- <div class="section-caption">ACCOUNT</div>
-
-                    <a href="#" class="nav-item" data-open-profile-modal>
-
-                        <i data-lucide="user-round"></i>
-                        <span class="nav-text">My Profile</span>
-
-                    </a>
-
-                    <a href="#" class="nav-item" data-open-password-modal>
-
-                        <i data-lucide="settings-2"></i>
-                        <span class="nav-text">Account Settings</span>
-
-                    </a> -->
+                    <!-- ACCOUNT NAVIGATION RESERVED -->
 
                 </div>
 
@@ -2335,6 +2325,7 @@ if (!$isAdminProfilePost) {
                     <!-- LIVE DATE AND TIME -->
 
                     <div class="datetime-wrap">
+
                         <div class="datetime-date" id="live-date">
                             Loading date...
                         </div>
@@ -2342,6 +2333,7 @@ if (!$isAdminProfilePost) {
                         <time class="datetime-clock" id="live-clock">
                             00:00:00
                         </time>
+
                     </div>
 
                     <div class="topbar-separator"></div>
@@ -2371,7 +2363,6 @@ if (!$isAdminProfilePost) {
                             <span class="profile-info">
 
                                 <strong><?= adminEscape($adminName) ?></strong>
-
                                 <small>Administrator</small>
 
                             </span>
@@ -2402,7 +2393,6 @@ if (!$isAdminProfilePost) {
                                 <div>
 
                                     <strong><?= adminEscape($adminName) ?></strong>
-
                                     <small>Administrator account</small>
 
                                 </div>
@@ -2412,7 +2402,6 @@ if (!$isAdminProfilePost) {
                             <a href="#" data-open-profile-modal>
 
                                 <i data-lucide="user-round-pen"></i>
-
                                 Edit Profile
 
                             </a>
@@ -2420,7 +2409,6 @@ if (!$isAdminProfilePost) {
                             <a href="#" data-open-password-modal>
 
                                 <i data-lucide="settings-2"></i>
-
                                 Account Settings
 
                             </a>
@@ -2428,7 +2416,6 @@ if (!$isAdminProfilePost) {
                             <a href="#" data-open-reset-data-modal>
 
                                 <i data-lucide="database"></i>
-
                                 Reset Data
 
                             </a>
@@ -2438,7 +2425,6 @@ if (!$isAdminProfilePost) {
                             <a href="../../logout.php" class="signout-row">
 
                                 <i data-lucide="log-out"></i>
-
                                 Sign out
 
                             </a>
@@ -2451,7 +2437,9 @@ if (!$isAdminProfilePost) {
 
             </header>
 
-            <!-- PAGE CONTENT -->
+            <!-- =====================================================
+                 PAGE CONTENT
+            ====================================================== -->
 
             <main class="page">
 
@@ -2509,7 +2497,9 @@ if (!$isAdminProfilePost) {
 
                     <?php endif; ?>
 
-                    <!-- DASHBOARD SUMMARY -->
+                    <!-- =====================================================
+                         DASHBOARD SUMMARY
+                    ====================================================== -->
 
                     <?php if ($currentPage === 'dashboard'): ?>
 
@@ -2627,7 +2617,9 @@ if (!$isAdminProfilePost) {
 
                     <?php endif; ?>
 
-                    <!-- SECTION MANAGEMENT -->
+                    <!-- =====================================================
+                         SECTION & STUDENT MANAGEMENT
+                    ====================================================== -->
 
                     <?php if ($currentPage === 'sections'): ?>
 
@@ -2693,7 +2685,6 @@ if (!$isAdminProfilePost) {
                                 <button type="button" class="button button-primary" id="open-create-section-modal">
 
                                     <i data-lucide="plus"></i>
-
                                     <span>Create Section</span>
 
                                 </button>
@@ -2786,6 +2777,8 @@ if (!$isAdminProfilePost) {
 
                                             </div>
 
+                                            <!-- SECTION ACTIONS -->
+
                                             <div class="section-card-actions">
 
                                                 <button type="button" class="button button-primary" data-open-student-modal
@@ -2793,7 +2786,6 @@ if (!$isAdminProfilePost) {
                                                     data-section-name="<?= adminEscape($section['section_name']) ?>">
 
                                                     <i data-lucide="user-plus"></i>
-
                                                     <span>Add Student</span>
 
                                                 </button>
@@ -2803,10 +2795,10 @@ if (!$isAdminProfilePost) {
                                                     data-section-name="<?= adminEscape($section['section_name']) ?>">
 
                                                     <i data-lucide="user-check"></i>
-
                                                     <span>Assign SSP Adviser</span>
 
                                                 </button>
+
                                                 <!-- SECTION EXPORT DROPDOWN -->
 
                                                 <div class="section-export-wrap">
@@ -2815,9 +2807,7 @@ if (!$isAdminProfilePost) {
                                                         data-section-export-toggle aria-haspopup="true" aria-expanded="false">
 
                                                         <i data-lucide="download"></i>
-
                                                         <span>Export</span>
-
                                                         <i data-lucide="chevron-down" class="export-chevron"></i>
 
                                                     </button>
@@ -2829,7 +2819,6 @@ if (!$isAdminProfilePost) {
                                                             data-section-export="pdf" role="menuitem">
 
                                                             <i data-lucide="file-text"></i>
-
                                                             <span>Export as PDF</span>
 
                                                         </button>
@@ -2838,7 +2827,6 @@ if (!$isAdminProfilePost) {
                                                             data-section-export="excel" role="menuitem">
 
                                                             <i data-lucide="file-spreadsheet"></i>
-
                                                             <span>Export as Excel</span>
 
                                                         </button>
@@ -2847,7 +2835,6 @@ if (!$isAdminProfilePost) {
                                                             data-section-export="word" role="menuitem">
 
                                                             <i data-lucide="file-type"></i>
-
                                                             <span>Export as Word</span>
 
                                                         </button>
@@ -3024,6 +3011,8 @@ if (!$isAdminProfilePost) {
 
                                 <?php endforeach; ?>
 
+                                <!-- SECTION SEARCH EMPTY STATE -->
+
                                 <div class="section-search-empty" id="section-search-empty" hidden>
 
                                     <span>
@@ -3037,659 +3026,6 @@ if (!$isAdminProfilePost) {
                                     <p id="section-search-empty-description">
                                         Try another course, section name, or year level.
                                     </p>
-
-                                </div>
-
-                            </div>
-
-                            <!-- ADD STUDENT MODAL -->
-
-                            <div class="admin-modal-overlay" id="add-student-modal" hidden>
-
-                                <div class="admin-modal" role="dialog" aria-modal="true"
-                                    aria-labelledby="add-student-modal-title">
-
-                                    <div class="admin-modal-header">
-
-                                        <div>
-
-                                            <h2 id="add-student-modal-title">
-                                                Add Student
-                                            </h2>
-
-                                            <p>
-                                                Assign an existing student account to
-                                                <strong data-modal-section-name></strong>.
-                                            </p>
-
-                                        </div>
-
-                                        <button type="button" class="icon-btn" data-close-admin-modal
-                                            aria-label="Close modal">
-
-                                            <i data-lucide="x"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                    <form method="POST" action="dashboard.php?page=sections" class="admin-modal-form">
-
-                                        <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
-
-                                        <input type="hidden" name="action" value="assign_student">
-
-                                        <input type="hidden" name="section_id" data-modal-section-id>
-
-                                        <label for="modal-student-search">
-                                            Search Student
-                                        </label>
-
-                                        <div class="student-search-container" id="student-search-container">
-
-                                            <input type="search" id="modal-student-search" class="modal-search-input"
-                                                placeholder="Search by student name or student number..." autocomplete="off"
-                                                aria-label="Search student by name or student number"
-                                                aria-controls="modal-student-results" aria-autocomplete="list">
-
-                                            <div class="student-search-results" id="modal-student-results" role="list"
-                                                aria-label="Matching available students" hidden>
-
-                                                <?php foreach ($students as $student): ?>
-
-                                                    <?php
-
-                                                    $uid = (int) $student['id'];
-
-                                                    if (isset($assignedSectionByStudent[$uid])) {
-                                                        continue;
-                                                    }
-
-                                                    $firstName = (string) ($student['firstname'] ?? '');
-                                                    $middleName = (string) ($student['middlename'] ?? '');
-                                                    $lastName = (string) ($student['lastname'] ?? '');
-
-                                                    $fullName = trim(
-                                                        implode(
-                                                            ' ',
-                                                            array_filter([
-                                                                $firstName,
-                                                                $middleName,
-                                                                $lastName,
-                                                            ])
-                                                        )
-                                                    );
-
-                                                    if ($fullName === '') {
-                                                        $fullName = (string) $student['nickname'];
-                                                    }
-
-                                                    $studentNumber = (string) ($student['student_number'] ?? '');
-                                                    $course = (string) ($student['course'] ?? '');
-
-                                                    $yearLevelValue = $student['year_level'] !== null
-                                                        ? (string) $student['year_level']
-                                                        : '';
-
-                                                    $yearLevelLabel = $studentYearLabels[$yearLevelValue]
-                                                        ?? (
-                                                            $yearLevelValue !== ''
-                                                            ? 'Year ' . $yearLevelValue
-                                                            : ''
-                                                        );
-
-                                                    $searchText = strtolower(
-                                                        $fullName . ' '
-                                                        . $student['nickname'] . ' '
-                                                        . $studentNumber . ' '
-                                                        . $student['email']
-                                                    );
-
-                                                    ?>
-
-                                                    <button type="button" class="student-search-result"
-                                                        data-student-id="<?= $uid ?>"
-                                                        data-search="<?= adminEscape($searchText) ?>"
-                                                        data-student-number="<?= adminEscape($studentNumber) ?>"
-                                                        data-firstname="<?= adminEscape($firstName) ?>"
-                                                        data-middlename="<?= adminEscape($middleName) ?>"
-                                                        data-lastname="<?= adminEscape($lastName) ?>"
-                                                        data-course="<?= adminEscape($course) ?>"
-                                                        data-year-level="<?= adminEscape($yearLevelLabel) ?>"
-                                                        data-full-name="<?= adminEscape($fullName) ?>">
-
-                                                        <span class="student-result-avatar">
-                                                            <i data-lucide="user-round"></i>
-                                                        </span>
-
-                                                        <span class="student-result-text">
-
-                                                            <strong>
-                                                                <?= adminEscape($fullName) ?>
-                                                            </strong>
-
-                                                            <small>
-
-                                                                <?= adminEscape(
-                                                                    $studentNumber ?: 'No student number'
-                                                                ) ?>
-
-                                                                ·
-
-                                                                <?= adminEscape($student['email']) ?>
-
-                                                            </small>
-
-                                                        </span>
-
-                                                        <i data-lucide="chevron-right" class="student-result-arrow"></i>
-
-                                                    </button>
-
-                                                <?php endforeach; ?>
-
-                                            </div>
-
-                                        </div>
-
-                                        <p class="student-search-hint" id="student-search-hint" aria-live="polite">
-                                        </p>
-
-                                        <div class="selected-student-card" id="selected-student-card" hidden>
-
-                                            <div class="selected-student-heading">
-
-                                                <span class="selected-student-icon">
-                                                    <i data-lucide="user-check"></i>
-                                                </span>
-
-                                                <div class="selected-student-title">
-                                                    <p id="selected-student-name" style="font-weight: bold;"></p>
-                                                </div>
-
-                                                <button type="button" class="student-change-button"
-                                                    id="change-selected-student">
-                                                    Change
-                                                </button>
-
-                                            </div>
-
-                                            <div class="student-information-grid">
-
-                                                <div class="student-information-field">
-                                                    <label for="selected-student-number">Student Number</label>
-                                                    <input type="text" id="selected-student-number" data-student-info
-                                                        readonly>
-                                                </div>
-
-                                                <div class="student-information-field">
-                                                    <label for="selected-student-firstname">Firstname</label>
-                                                    <input type="text" id="selected-student-firstname" data-student-info
-                                                        readonly>
-                                                </div>
-
-                                                <div class="student-information-field">
-                                                    <label for="selected-student-middlename">Middlename</label>
-                                                    <input type="text" id="selected-student-middlename" data-student-info
-                                                        readonly>
-                                                </div>
-
-                                                <div class="student-information-field">
-                                                    <label for="selected-student-lastname">Lastname</label>
-                                                    <input type="text" id="selected-student-lastname" data-student-info
-                                                        readonly>
-                                                </div>
-
-                                                <div class="student-information-field">
-                                                    <label for="selected-student-course">Course</label>
-                                                    <input type="text" id="selected-student-course" data-student-info
-                                                        readonly>
-                                                </div>
-
-                                                <div class="student-information-field">
-                                                    <label for="selected-student-year-level">Year Level</label>
-                                                    <input type="text" id="selected-student-year-level" data-student-info
-                                                        readonly>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <input type="hidden" name="student_id" id="modal-student-id" value="">
-
-                                        <div class="admin-modal-actions">
-
-                                            <button type="button" class="button button-secondary" data-close-admin-modal>
-                                                Cancel
-                                            </button>
-
-                                            <button type="submit" class="button button-primary">
-                                                <i data-lucide="user-plus"></i>
-                                                Add Student
-                                            </button>
-
-                                        </div>
-
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                            <!-- ASSIGN SSP ADVISER MODAL -->
-
-                            <div class="admin-modal-overlay" id="assign-adviser-modal" hidden>
-
-                                <div class="admin-modal" role="dialog" aria-modal="true"
-                                    aria-labelledby="assign-adviser-modal-title">
-
-                                    <div class="admin-modal-header">
-
-                                        <div>
-
-                                            <h2 id="assign-adviser-modal-title">
-                                                Assign SSP Adviser
-                                            </h2>
-
-                                            <p>
-                                                Choose a faculty member for
-                                                <strong data-modal-section-name></strong>.
-                                            </p>
-
-                                        </div>
-
-                                        <button type="button" class="icon-btn" data-close-admin-modal
-                                            aria-label="Close modal">
-
-                                            <i data-lucide="x"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                    <form method="POST" action="dashboard.php?page=sections" class="admin-modal-form">
-
-                                        <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
-
-                                        <input type="hidden" name="action" value="assign_adviser">
-
-                                        <input type="hidden" name="section_id" data-modal-section-id>
-
-                                        <label for="modal-adviser-search">
-                                            Search Faculty
-                                        </label>
-
-                                        <div class="student-search-container" id="adviser-search-container">
-
-                                            <input type="search" id="modal-adviser-search" class="modal-search-input"
-                                                placeholder="Search by faculty name or email..." autocomplete="off"
-                                                aria-label="Search faculty by name or email"
-                                                aria-controls="modal-adviser-results" aria-autocomplete="list">
-
-                                            <div class="student-search-results" id="modal-adviser-results" role="list"
-                                                aria-label="Matching faculty members" hidden>
-
-                                                <?php foreach ($facultyMembers as $faculty): ?>
-
-                                                    <?php
-
-                                                    $facultyId = (int) $faculty['id'];
-                                                    $facultyName = (string) ($faculty['nickname'] ?? '');
-                                                    $facultyEmail = (string) ($faculty['email'] ?? '');
-
-                                                    $facultySearch = strtolower(
-                                                        $facultyName . ' ' . $facultyEmail
-                                                    );
-
-                                                    ?>
-
-                                                    <button type="button" class="student-search-result faculty-search-result"
-                                                        data-faculty-id="<?= $facultyId ?>"
-                                                        data-search="<?= adminEscape($facultySearch) ?>"
-                                                        data-faculty-name="<?= adminEscape($facultyName) ?>"
-                                                        data-faculty-email="<?= adminEscape($facultyEmail) ?>"
-                                                        aria-label="Select faculty <?= adminEscape($facultyName) ?>">
-
-                                                        <span class="student-result-avatar">
-                                                            <i data-lucide="user-round"></i>
-                                                        </span>
-
-                                                        <span class="student-result-text">
-
-                                                            <strong>
-                                                                <?= adminEscape($facultyName) ?>
-                                                            </strong>
-
-                                                            <small>
-                                                                <?= adminEscape($facultyEmail) ?>
-                                                            </small>
-
-                                                        </span>
-
-                                                        <i data-lucide="chevron-right" class="student-result-arrow"></i>
-
-                                                    </button>
-
-                                                <?php endforeach; ?>
-
-                                            </div>
-
-                                        </div>
-
-                                        <p class="student-search-hint" id="adviser-search-hint" aria-live="polite">
-                                            Type a faculty member's name or email to search.
-                                        </p>
-
-                                        <input type="hidden" name="adviser_id" id="modal-adviser-id" value="">
-
-                                        <div class="admin-modal-actions">
-
-                                            <button type="button" class="button button-secondary" data-close-admin-modal>
-                                                Cancel
-                                            </button>
-
-                                            <button type="submit" class="button button-primary">
-                                                <i data-lucide="check"></i>
-                                                Save Adviser
-                                            </button>
-
-                                        </div>
-
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                            <!-- EDIT STUDENT MODAL -->
-
-                            <div class="admin-modal-overlay edit-student-modal" id="edit-student-modal" hidden>
-
-                                <div class="admin-modal" role="dialog" aria-modal="true"
-                                    aria-labelledby="edit-student-modal-title">
-
-                                    <div class="admin-modal-header">
-
-                                        <div>
-
-                                            <h2 id="edit-student-modal-title">
-                                                Edit Student
-                                            </h2>
-
-                                            <p>
-                                                Update the student's account and personal information.
-                                                Academic placement is managed separately.
-                                            </p>
-
-                                            <p class="student-modal-section-info">
-
-                                                Current Section:
-
-                                                <strong data-edit-current-section></strong>
-
-                                            </p>
-
-                                        </div>
-
-                                        <button type="button" class="icon-btn" data-close-admin-modal
-                                            aria-label="Close modal">
-
-                                            <i data-lucide="x"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                    <form method="POST" action="dashboard.php?page=sections"
-                                        class="admin-modal-form edit-student-form">
-
-                                        <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
-
-                                        <input type="hidden" name="action" value="edit_student">
-
-                                        <input type="hidden" name="student_id">
-
-                                        <div class="student-form-section-title">
-                                            Account Information
-                                        </div>
-
-                                        <div class="student-edit-grid">
-
-                                            <div class="section-form-field">
-
-                                                <label for="edit-student-nickname">
-                                                    Nickname / Display Name
-                                                </label>
-
-                                                <input type="text" id="edit-student-nickname" name="nickname"
-                                                    maxlength="150" required>
-
-                                            </div>
-
-                                            <div class="section-form-field">
-
-                                                <label for="edit-student-number">
-                                                    Student Number
-                                                </label>
-
-                                                <input type="text" id="edit-student-number" name="student_number"
-                                                    maxlength="12" minlength="12" pattern="[0-9]{12}" inputmode="numeric"
-                                                    placeholder="12-digit student number"
-                                                    title="Enter exactly 12 digits or leave blank">
-
-                                            </div>
-
-                                            <div class="section-form-field student-edit-full-width">
-
-                                                <label for="edit-student-email">
-                                                    Email Address
-                                                </label>
-
-                                                <input type="email" id="edit-student-email" name="email" maxlength="191"
-                                                    required>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="student-form-section-title">
-                                            Personal Information
-                                        </div>
-
-                                        <div class="student-edit-grid">
-
-                                            <div class="section-form-field">
-                                                <label for="edit-student-firstname">Firstname</label>
-                                                <input type="text" id="edit-student-firstname" name="firstname"
-                                                    maxlength="100">
-                                            </div>
-
-                                            <div class="section-form-field">
-                                                <label for="edit-student-middlename">Middlename</label>
-                                                <input type="text" id="edit-student-middlename" name="middlename"
-                                                    maxlength="100">
-                                            </div>
-
-                                            <div class="section-form-field">
-                                                <label for="edit-student-lastname">Lastname</label>
-                                                <input type="text" id="edit-student-lastname" name="lastname"
-                                                    maxlength="100">
-                                            </div>
-
-                                            <div class="section-form-field">
-                                                <label for="edit-student-age">Age</label>
-                                                <input type="number" id="edit-student-age" name="age" min="1" max="120">
-                                            </div>
-
-                                            <div class="section-form-field">
-                                                <label for="edit-student-gender">Gender</label>
-                                                <input type="text" id="edit-student-gender" name="gender" maxlength="20">
-                                            </div>
-
-                                            <div class="section-form-field">
-                                                <label for="edit-student-mobile">Mobile Number</label>
-                                                <input type="text" id="edit-student-mobile" name="mobile_number"
-                                                    maxlength="20">
-                                            </div>
-
-                                            <div class="section-form-field student-edit-full-width">
-
-                                                <label for="edit-student-address">
-                                                    Address
-                                                </label>
-
-                                                <textarea id="edit-student-address" name="address" maxlength="5000" rows="3"
-                                                    placeholder="Student's complete address"></textarea>
-
-                                            </div>
-
-                                        </div>
-
-                                        <p class="student-edit-hint">
-                                            Updating personal information will not modify
-                                            the student's assigned section, course,
-                                            year level, password, or permit history.
-                                        </p>
-
-                                        <div class="admin-modal-actions">
-
-                                            <button type="button" class="button button-secondary" data-close-admin-modal>
-                                                Cancel
-                                            </button>
-
-                                            <button type="submit" class="button button-primary">
-                                                <i data-lucide="save"></i>
-                                                Save Changes
-                                            </button>
-
-                                        </div>
-
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                            <!-- CHANGE SECTION MODAL -->
-
-                            <div class="admin-modal-overlay change-section-modal" id="change-section-modal" hidden>
-
-                                <div class="admin-modal" role="dialog" aria-modal="true"
-                                    aria-labelledby="change-section-modal-title">
-
-                                    <div class="admin-modal-header">
-
-                                        <div>
-
-                                            <h2 id="change-section-modal-title">
-                                                Change Student Section
-                                            </h2>
-
-                                            <p>
-
-                                                Transfer
-
-                                                <strong data-change-student-name></strong>
-
-                                                from
-
-                                                <strong data-change-current-section></strong>
-
-                                                to another section.
-
-                                            </p>
-
-                                        </div>
-
-                                        <button type="button" class="icon-btn" data-close-admin-modal
-                                            aria-label="Close modal">
-
-                                            <i data-lucide="x"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                    <form method="POST" action="dashboard.php?page=sections"
-                                        class="admin-modal-form change-section-form">
-
-                                        <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
-
-                                        <input type="hidden" name="action" value="change_student_section">
-
-                                        <input type="hidden" name="student_id">
-
-                                        <div class="section-form-field">
-
-                                            <label for="change-student-section">
-                                                Destination Section
-                                            </label>
-
-                                            <select id="change-student-section" name="section_id" required>
-
-                                                <option value="" selected disabled>
-                                                    Select destination section
-                                                </option>
-
-                                                <?php foreach ($sections as $availableSection): ?>
-
-                                                    <?php
-
-                                                    $availableYear =
-                                                        (string) $availableSection['year_level'];
-
-                                                    $availableYearLabel =
-                                                        $studentYearLabels[$availableYear]
-                                                        ?? 'Year ' . $availableYear;
-
-                                                    ?>
-
-                                                    <option value="<?= (int) $availableSection['id'] ?>">
-
-                                                        <?= adminEscape(
-                                                            $availableSection['course']
-                                                            . ' · '
-                                                            . $availableYearLabel
-                                                            . ' · '
-                                                            . $availableSection['section_name']
-                                                        ) ?>
-
-                                                    </option>
-
-                                                <?php endforeach; ?>
-
-                                            </select>
-
-                                        </div>
-
-                                        <div class="change-section-notice">
-
-                                            <i data-lucide="info"></i>
-
-                                            <p>
-                                                The student's official enrollment will be
-                                                updated automatically. Course and year level
-                                                will be determined by the destination section.
-                                                Existing permit records will remain unchanged.
-                                            </p>
-
-                                        </div>
-
-                                        <div class="admin-modal-actions">
-
-                                            <button type="button" class="button button-secondary" data-close-admin-modal>
-                                                Cancel
-                                            </button>
-
-                                            <button type="submit" class="button button-primary">
-                                                <i data-lucide="arrow-left-right"></i>
-                                                Change Section
-                                            </button>
-
-                                        </div>
-
-                                    </form>
 
                                 </div>
 
@@ -3710,105 +3046,11 @@ if (!$isAdminProfilePost) {
 
                         </section>
 
-                        <!-- CREATE SECTION MODAL -->
-
-                        <div class="section-modal-overlay" id="create-section-modal" hidden>
-
-                            <div class="section-modal" role="dialog" aria-modal="true"
-                                aria-labelledby="create-section-modal-title">
-
-                                <div class="section-modal-header">
-
-                                    <div>
-
-                                        <h2 id="create-section-modal-title">
-                                            Create Section
-                                        </h2>
-
-                                        <p>
-                                            Enter the course, year level, and section name.
-                                        </p>
-
-                                    </div>
-
-                                    <button type="button" class="icon-btn" id="close-create-section-modal"
-                                        aria-label="Close modal">
-
-                                        <i data-lucide="x"></i>
-
-                                    </button>
-
-                                </div>
-
-                                <form method="POST" action="dashboard.php?page=sections" class="create-section-modal-form">
-
-                                    <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
-
-                                    <input type="hidden" name="action" value="add_section">
-
-                                    <div class="section-form-field">
-
-                                        <label for="new-course">
-                                            Course
-                                        </label>
-
-                                        <input type="text" id="new-course" name="course" maxlength="50"
-                                            placeholder="e.g. BSIT" required>
-
-                                    </div>
-
-                                    <div class="section-form-field">
-
-                                        <label for="new-year-level">
-                                            Year Level
-                                        </label>
-
-                                        <select id="new-year-level" name="year_level" required>
-
-                                            <option value="">Select year level</option>
-                                            <option value="1">1st Year</option>
-                                            <option value="2">2nd Year</option>
-                                            <option value="3">3rd Year</option>
-                                            <option value="4">4th Year</option>
-
-                                        </select>
-
-                                    </div>
-
-                                    <div class="section-form-field">
-
-                                        <label for="new-section-name">
-                                            Section
-                                        </label>
-
-                                        <input type="text" id="new-section-name" name="section_name" maxlength="100"
-                                            placeholder="e.g. 2-1" required>
-
-                                    </div>
-
-                                    <div class="section-modal-actions">
-
-                                        <button type="button" class="button button-secondary" id="cancel-create-section">
-                                            Cancel
-                                        </button>
-
-                                        <button type="submit" class="button button-primary">
-                                            <i data-lucide="plus"></i>
-                                            <span>Create Section</span>
-                                        </button>
-
-                                    </div>
-
-                                </form>
-
-                            </div>
-
-                        </div>
-
                     <?php endif; ?>
 
-
-                    <!-- MANAGE ACCOUNTS -->
+                    <!-- =====================================================
+                         MANAGE ACCOUNTS
+                    ====================================================== -->
 
                     <?php if ($currentPage === 'accounts'): ?>
 
@@ -3818,11 +3060,17 @@ if (!$isAdminProfilePost) {
 
                                 <div>
                                     <h2>Manage Accounts</h2>
-                                    <p>Create, edit, and delete student or faculty accounts.</p>
+                                    <p>
+                                        Create, edit, and delete student or faculty accounts.
+                                    </p>
                                 </div>
 
                                 <span class="admin-count" id="accounts-count">
-                                    <?= count($managedAccounts) ?> account<?= count($managedAccounts) === 1 ? '' : 's' ?>
+
+                                    <?= count($managedAccounts) ?>
+
+                                    account<?= count($managedAccounts) === 1 ? '' : 's' ?>
+
                                 </span>
 
                             </div>
@@ -3832,35 +3080,54 @@ if (!$isAdminProfilePost) {
                                 <div class="account-filter-group">
 
                                     <label class="account-search-box" for="account-search">
+
                                         <i data-lucide="search"></i>
+
                                         <input type="search" id="account-search"
                                             placeholder="Search name, email, or student number..." autocomplete="off">
+
                                     </label>
 
                                     <label class="account-role-filter" for="account-role-filter">
+
                                         <i data-lucide="filter"></i>
+
                                         <select id="account-role-filter" aria-label="Filter accounts by type">
+
                                             <option value="all">All Accounts</option>
                                             <option value="student">Students</option>
                                             <option value="faculty">Faculty</option>
+
                                         </select>
+
                                     </label>
 
                                 </div>
 
                                 <button type="button" class="button button-primary" data-open-create-account>
+
                                     <i data-lucide="plus"></i>
                                     <span>Create Account</span>
+
                                 </button>
 
                             </div>
 
                             <div class="account-list-summary" aria-live="polite">
+
                                 <span id="account-results-count">
-                                    <?= count($managedAccounts) ?> account<?= count($managedAccounts) === 1 ? '' : 's' ?>
+
+                                    <?= count($managedAccounts) ?>
+
+                                    account<?= count($managedAccounts) === 1 ? '' : 's' ?>
                                     available
+
                                 </span>
-                                <span>Student and faculty accounts only</span>
+
+                                <span>
+                                    Student and faculty accounts only
+                                </span>
+
                             </div>
 
                             <div class="accounts-table-wrap" id="accounts-table-wrap">
@@ -3868,16 +3135,29 @@ if (!$isAdminProfilePost) {
                                 <?php if (!$managedAccounts): ?>
 
                                     <div class="account-empty-state" id="account-empty-state">
-                                        <span><i data-lucide="users-round"></i></span>
-                                        <strong>No student or faculty accounts found</strong>
-                                        <p>Create an account to get started.</p>
+
+                                        <span>
+                                            <i data-lucide="users-round"></i>
+                                        </span>
+
+                                        <strong>
+                                            No student or faculty accounts found
+                                        </strong>
+
+                                        <p>
+                                            Create an account to get started.
+                                        </p>
+
                                     </div>
 
                                 <?php else: ?>
 
                                     <div class="accounts-table-scroll">
+
                                         <table class="accounts-table">
+
                                             <thead>
+
                                                 <tr>
                                                     <th>Account</th>
                                                     <th>Account Type</th>
@@ -3886,38 +3166,61 @@ if (!$isAdminProfilePost) {
                                                     <th>Status</th>
                                                     <th class="account-actions-heading">Actions</th>
                                                 </tr>
+
                                             </thead>
+
                                             <tbody>
 
                                                 <?php foreach ($managedAccounts as $account): ?>
 
                                                     <?php
+
                                                     $accountId = (int) $account['id'];
                                                     $accountRole = (string) $account['role'];
-                                                    $accountFullName = trim(implode(' ', array_filter([
-                                                        (string) ($account['firstname'] ?? ''),
-                                                        (string) ($account['middlename'] ?? ''),
-                                                        (string) ($account['lastname'] ?? ''),
-                                                    ], static fn($part) => $part !== '')));
+
+                                                    $accountFullName = trim(
+                                                        implode(
+                                                            ' ',
+                                                            array_filter([
+                                                                (string) ($account['firstname'] ?? ''),
+                                                                (string) ($account['middlename'] ?? ''),
+                                                                (string) ($account['lastname'] ?? ''),
+                                                            ], static fn($part) => $part !== '')
+                                                        )
+                                                    );
+
                                                     $accountDisplayName = $accountFullName !== ''
                                                         ? $accountFullName
                                                         : (string) $account['nickname'];
-                                                    $accountInitial = strtoupper(substr(
-                                                        $accountDisplayName !== '' ? $accountDisplayName : 'U',
-                                                        0,
-                                                        1
-                                                    ));
-                                                    $accountSearchText = strtolower(implode(' ', [
-                                                        $accountDisplayName,
-                                                        (string) $account['nickname'],
-                                                        (string) $account['email'],
-                                                        (string) ($account['student_number'] ?? ''),
-                                                        $accountRole,
-                                                        (string) ($account['assigned_section'] ?? ''),
-                                                    ]));
+
+                                                    $accountInitial = strtoupper(
+                                                        substr(
+                                                            $accountDisplayName !== ''
+                                                            ? $accountDisplayName
+                                                            : 'U',
+                                                            0,
+                                                            1
+                                                        )
+                                                    );
+
+                                                    $accountSearchText = strtolower(
+                                                        implode(' ', [
+                                                            $accountDisplayName,
+                                                            (string) $account['nickname'],
+                                                            (string) $account['email'],
+                                                            (string) ($account['student_number'] ?? ''),
+                                                            $accountRole,
+                                                            (string) ($account['assigned_section'] ?? ''),
+                                                        ])
+                                                    );
+
                                                     $createdAtLabel = !empty($account['created_at'])
-                                                        ? date('M d, Y', strtotime((string) $account['created_at']))
+                                                        ? date(
+                                                            'M d, Y',
+                                                            strtotime((string) $account['created_at'])
+                                                        )
                                                         : '—';
+
                                                     ?>
 
                                                     <tr class="account-row" data-account-row
@@ -3925,30 +3228,54 @@ if (!$isAdminProfilePost) {
                                                         data-account-search="<?= adminEscape($accountSearchText) ?>">
 
                                                         <td>
+
                                                             <div class="account-identity">
+
                                                                 <span
                                                                     class="account-avatar <?= $accountRole === 'faculty' ? 'account-avatar-faculty' : '' ?>">
+
                                                                     <?= adminEscape($accountInitial) ?>
+
                                                                 </span>
+
                                                                 <span class="account-identity-text">
-                                                                    <strong><?= adminEscape($accountDisplayName) ?></strong>
-                                                                    <small><?= adminEscape($account['nickname']) ?> · ID
-                                                                        #<?= $accountId ?></small>
-                                                                    <small>Created <?= adminEscape($createdAtLabel) ?></small>
+
+                                                                    <strong>
+                                                                        <?= adminEscape($accountDisplayName) ?>
+                                                                    </strong>
+
+                                                                    <small>
+                                                                        <?= adminEscape($account['nickname']) ?>
+                                                                        · ID #<?= $accountId ?>
+                                                                    </small>
+
+                                                                    <small>
+                                                                        Created <?= adminEscape($createdAtLabel) ?>
+                                                                    </small>
+
                                                                     <?php if ($accountRole === 'student' && !empty($account['assigned_section'])): ?>
+
                                                                         <small class="account-section-label">
                                                                             <?= adminEscape($account['assigned_section']) ?>
                                                                         </small>
+
                                                                     <?php endif; ?>
+
                                                                 </span>
+
                                                             </div>
+
                                                         </td>
 
                                                         <td>
+
                                                             <span
                                                                 class="account-role-badge <?= $accountRole === 'faculty' ? 'faculty' : 'student' ?>">
+
                                                                 <?= ucfirst(adminEscape($accountRole)) ?>
+
                                                             </span>
+
                                                         </td>
 
                                                         <td class="account-email-cell">
@@ -3956,19 +3283,26 @@ if (!$isAdminProfilePost) {
                                                         </td>
 
                                                         <td class="account-number-cell">
+
                                                             <?= $accountRole === 'student' && !empty($account['student_number'])
                                                                 ? adminEscape($account['student_number'])
                                                                 : '—' ?>
+
                                                         </td>
 
                                                         <td>
+
                                                             <span
                                                                 class="account-status-badge <?= (int) $account['is_active'] === 1 ? 'active' : 'inactive' ?>">
+
                                                                 <?= (int) $account['is_active'] === 1 ? 'Active' : 'Inactive' ?>
+
                                                             </span>
+
                                                         </td>
 
                                                         <td>
+
                                                             <div class="account-row-actions">
 
                                                                 <button type="button"
@@ -3988,7 +3322,9 @@ if (!$isAdminProfilePost) {
                                                                     data-mobile-number="<?= adminEscape($account['mobile_number'] ?? '') ?>"
                                                                     data-address="<?= adminEscape($account['address'] ?? '') ?>"
                                                                     data-display-name="<?= adminEscape($accountDisplayName) ?>">
+
                                                                     <i data-lucide="pencil"></i>
+
                                                                 </button>
 
                                                                 <button type="button"
@@ -3999,10 +3335,13 @@ if (!$isAdminProfilePost) {
                                                                     data-role="<?= adminEscape($accountRole) ?>"
                                                                     data-display-name="<?= adminEscape($accountDisplayName) ?>"
                                                                     data-email="<?= adminEscape($account['email']) ?>">
+
                                                                     <i data-lucide="trash-2"></i>
+
                                                                 </button>
 
                                                             </div>
+
                                                         </td>
 
                                                     </tr>
@@ -4010,13 +3349,21 @@ if (!$isAdminProfilePost) {
                                                 <?php endforeach; ?>
 
                                             </tbody>
+
                                         </table>
+
                                     </div>
 
                                     <div class="account-filter-empty" id="account-filter-empty" hidden>
+
                                         <i data-lucide="search-x"></i>
+
                                         <strong>No matching accounts</strong>
-                                        <p>Try another search term or account type.</p>
+
+                                        <p>
+                                            Try another search term or account type.
+                                        </p>
+
                                     </div>
 
                                 <?php endif; ?>
@@ -4024,7 +3371,9 @@ if (!$isAdminProfilePost) {
                             </div>
 
                             <div class="account-management-note">
+
                                 <i data-lucide="info"></i>
+
                                 <p>
                                     Deleting an account is permanent. Related records are handled by the existing database
                                     relationships.
@@ -4032,6 +3381,7 @@ if (!$isAdminProfilePost) {
                                     Faculty adviser and permit-review references will be cleared when a faculty account is
                                     deleted.
                                 </p>
+
                             </div>
 
                         </section>
@@ -4049,11 +3399,9 @@ if (!$isAdminProfilePost) {
                     </span>
 
                     <div>
-
                         <span>
                             College of Information Technology Education
                         </span>
-
                     </div>
 
                 </footer>
@@ -4065,6 +3413,831 @@ if (!$isAdminProfilePost) {
     </div>
 
     <!-- =====================================================
+         SECTION & STUDENT MANAGEMENT MODALS
+
+         IMPORTANT:
+         These modals are outside #app to prevent clipping
+         and stacking-context problems from .admin-panel.
+    ====================================================== -->
+
+    <?php if ($currentPage === 'sections'): ?>
+
+        <!-- =================================================
+             ADD STUDENT MODAL
+        ================================================== -->
+
+        <div class="admin-modal-overlay" id="add-student-modal" hidden>
+
+            <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="add-student-modal-title">
+
+                <div class="admin-modal-header">
+
+                    <div>
+
+                        <h2 id="add-student-modal-title">
+                            Add Student
+                        </h2>
+
+                        <p>
+                            Assign an existing student account to
+                            <strong data-modal-section-name></strong>.
+                        </p>
+
+                    </div>
+
+                    <button type="button" class="icon-btn" data-close-admin-modal aria-label="Close modal">
+
+                        <i data-lucide="x"></i>
+
+                    </button>
+
+                </div>
+
+                <form method="POST" action="dashboard.php?page=sections" class="admin-modal-form">
+
+                    <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
+
+                    <input type="hidden" name="action" value="assign_student">
+
+                    <input type="hidden" name="section_id" data-modal-section-id>
+
+                    <label for="modal-student-search">
+                        Search Student
+                    </label>
+
+                    <div class="student-search-container" id="student-search-container">
+
+                        <input type="search" id="modal-student-search" class="modal-search-input"
+                            placeholder="Search by student name or student number..." autocomplete="off"
+                            aria-label="Search student by name or student number" aria-controls="modal-student-results"
+                            aria-autocomplete="list">
+
+                        <div class="student-search-results" id="modal-student-results" role="list"
+                            aria-label="Matching available students" hidden>
+
+                            <?php foreach ($students as $student): ?>
+
+                                <?php
+
+                                $uid = (int) $student['id'];
+
+                                if (isset($assignedSectionByStudent[$uid])) {
+                                    continue;
+                                }
+
+                                $firstName = (string) ($student['firstname'] ?? '');
+                                $middleName = (string) ($student['middlename'] ?? '');
+                                $lastName = (string) ($student['lastname'] ?? '');
+
+                                $fullName = trim(
+                                    implode(
+                                        ' ',
+                                        array_filter([
+                                            $firstName,
+                                            $middleName,
+                                            $lastName,
+                                        ])
+                                    )
+                                );
+
+                                if ($fullName === '') {
+                                    $fullName = (string) $student['nickname'];
+                                }
+
+                                $studentNumber = (string) ($student['student_number'] ?? '');
+                                $course = (string) ($student['course'] ?? '');
+
+                                $yearLevelValue = $student['year_level'] !== null
+                                    ? (string) $student['year_level']
+                                    : '';
+
+                                $yearLevelLabel = $studentYearLabels[$yearLevelValue]
+                                    ?? (
+                                        $yearLevelValue !== ''
+                                        ? 'Year ' . $yearLevelValue
+                                        : ''
+                                    );
+
+                                $searchText = strtolower(
+                                    $fullName . ' '
+                                    . $student['nickname'] . ' '
+                                    . $studentNumber . ' '
+                                    . $student['email']
+                                );
+
+                                ?>
+
+                                <button type="button" class="student-search-result" data-student-id="<?= $uid ?>"
+                                    data-search="<?= adminEscape($searchText) ?>"
+                                    data-student-number="<?= adminEscape($studentNumber) ?>"
+                                    data-firstname="<?= adminEscape($firstName) ?>"
+                                    data-middlename="<?= adminEscape($middleName) ?>"
+                                    data-lastname="<?= adminEscape($lastName) ?>" data-course="<?= adminEscape($course) ?>"
+                                    data-year-level="<?= adminEscape($yearLevelLabel) ?>"
+                                    data-full-name="<?= adminEscape($fullName) ?>">
+
+                                    <span class="student-result-avatar">
+                                        <i data-lucide="user-round"></i>
+                                    </span>
+
+                                    <span class="student-result-text">
+
+                                        <strong>
+                                            <?= adminEscape($fullName) ?>
+                                        </strong>
+
+                                        <small>
+
+                                            <?= adminEscape(
+                                                $studentNumber ?: 'No student number'
+                                            ) ?>
+
+                                            ·
+
+                                            <?= adminEscape($student['email']) ?>
+
+                                        </small>
+
+                                    </span>
+
+                                    <i data-lucide="chevron-right" class="student-result-arrow"></i>
+
+                                </button>
+
+                            <?php endforeach; ?>
+
+                        </div>
+
+                    </div>
+
+                    <p class="student-search-hint" id="student-search-hint" aria-live="polite"></p>
+
+                    <!-- SELECTED STUDENT -->
+
+                    <div class="selected-student-card" id="selected-student-card" hidden>
+
+                        <div class="selected-student-heading">
+
+                            <span class="selected-student-icon">
+                                <i data-lucide="user-check"></i>
+                            </span>
+
+                            <div class="selected-student-title">
+                                <p id="selected-student-name" style="font-weight: bold;"></p>
+                            </div>
+
+                            <button type="button" class="student-change-button" id="change-selected-student">
+
+                                Change
+
+                            </button>
+
+                        </div>
+
+                        <div class="student-information-grid">
+
+                            <div class="student-information-field">
+
+                                <label for="selected-student-number">
+                                    Student Number
+                                </label>
+
+                                <input type="text" id="selected-student-number" data-student-info readonly>
+
+                            </div>
+
+                            <div class="student-information-field">
+
+                                <label for="selected-student-firstname">
+                                    Firstname
+                                </label>
+
+                                <input type="text" id="selected-student-firstname" data-student-info readonly>
+
+                            </div>
+
+                            <div class="student-information-field">
+
+                                <label for="selected-student-middlename">
+                                    Middlename
+                                </label>
+
+                                <input type="text" id="selected-student-middlename" data-student-info readonly>
+
+                            </div>
+
+                            <div class="student-information-field">
+
+                                <label for="selected-student-lastname">
+                                    Lastname
+                                </label>
+
+                                <input type="text" id="selected-student-lastname" data-student-info readonly>
+
+                            </div>
+
+                            <div class="student-information-field">
+
+                                <label for="selected-student-course">
+                                    Course
+                                </label>
+
+                                <input type="text" id="selected-student-course" data-student-info readonly>
+
+                            </div>
+
+                            <div class="student-information-field">
+
+                                <label for="selected-student-year-level">
+                                    Year Level
+                                </label>
+
+                                <input type="text" id="selected-student-year-level" data-student-info readonly>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" name="student_id" id="modal-student-id" value="">
+
+                    <div class="admin-modal-actions">
+
+                        <button type="button" class="button button-secondary" data-close-admin-modal>
+
+                            Cancel
+
+                        </button>
+
+                        <button type="submit" class="button button-primary">
+
+                            <i data-lucide="user-plus"></i>
+                            Add Student
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             ASSIGN SSP ADVISER MODAL
+        ================================================== -->
+
+        <div class="admin-modal-overlay" id="assign-adviser-modal" hidden>
+
+            <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="assign-adviser-modal-title">
+
+                <div class="admin-modal-header">
+
+                    <div>
+
+                        <h2 id="assign-adviser-modal-title">
+                            Assign SSP Adviser
+                        </h2>
+
+                        <p>
+                            Choose a faculty member for
+                            <strong data-modal-section-name></strong>.
+                        </p>
+
+                    </div>
+
+                    <button type="button" class="icon-btn" data-close-admin-modal aria-label="Close modal">
+
+                        <i data-lucide="x"></i>
+
+                    </button>
+
+                </div>
+
+                <form method="POST" action="dashboard.php?page=sections" class="admin-modal-form">
+
+                    <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
+
+                    <input type="hidden" name="action" value="assign_adviser">
+
+                    <input type="hidden" name="section_id" data-modal-section-id>
+
+                    <label for="modal-adviser-search">
+                        Search Faculty
+                    </label>
+
+                    <div class="student-search-container" id="adviser-search-container">
+
+                        <input type="search" id="modal-adviser-search" class="modal-search-input"
+                            placeholder="Search by faculty name or email..." autocomplete="off"
+                            aria-label="Search faculty by name or email" aria-controls="modal-adviser-results"
+                            aria-autocomplete="list">
+
+                        <div class="student-search-results" id="modal-adviser-results" role="list"
+                            aria-label="Matching faculty members" hidden>
+
+                            <?php foreach ($facultyMembers as $faculty): ?>
+
+                                <?php
+
+                                $facultyId = (int) $faculty['id'];
+                                $facultyName = (string) ($faculty['nickname'] ?? '');
+                                $facultyEmail = (string) ($faculty['email'] ?? '');
+
+                                $facultySearch = strtolower(
+                                    $facultyName . ' ' . $facultyEmail
+                                );
+
+                                ?>
+
+                                <button type="button" class="student-search-result faculty-search-result"
+                                    data-faculty-id="<?= $facultyId ?>" data-search="<?= adminEscape($facultySearch) ?>"
+                                    data-faculty-name="<?= adminEscape($facultyName) ?>"
+                                    data-faculty-email="<?= adminEscape($facultyEmail) ?>"
+                                    aria-label="Select faculty <?= adminEscape($facultyName) ?>">
+
+                                    <span class="student-result-avatar">
+                                        <i data-lucide="user-round"></i>
+                                    </span>
+
+                                    <span class="student-result-text">
+
+                                        <strong>
+                                            <?= adminEscape($facultyName) ?>
+                                        </strong>
+
+                                        <small>
+                                            <?= adminEscape($facultyEmail) ?>
+                                        </small>
+
+                                    </span>
+
+                                    <i data-lucide="chevron-right" class="student-result-arrow"></i>
+
+                                </button>
+
+                            <?php endforeach; ?>
+
+                        </div>
+
+                    </div>
+
+                    <p class="student-search-hint" id="adviser-search-hint" aria-live="polite">
+
+                        Type a faculty member's name or email to search.
+
+                    </p>
+
+                    <input type="hidden" name="adviser_id" id="modal-adviser-id" value="">
+
+                    <div class="admin-modal-actions">
+
+                        <button type="button" class="button button-secondary" data-close-admin-modal>
+
+                            Cancel
+
+                        </button>
+
+                        <button type="submit" class="button button-primary">
+
+                            <i data-lucide="check"></i>
+                            Save Adviser
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             EDIT STUDENT MODAL
+        ================================================== -->
+
+        <div class="admin-modal-overlay edit-student-modal" id="edit-student-modal" hidden>
+
+            <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="edit-student-modal-title">
+
+                <div class="admin-modal-header">
+
+                    <div>
+
+                        <h2 id="edit-student-modal-title">
+                            Edit Student
+                        </h2>
+
+                        <p>
+                            Update the student's account and personal information.
+                            Academic placement is managed separately.
+                        </p>
+
+                        <p class="student-modal-section-info">
+
+                            Current Section:
+
+                            <strong data-edit-current-section></strong>
+
+                        </p>
+
+                    </div>
+
+                    <button type="button" class="icon-btn" data-close-admin-modal aria-label="Close modal">
+
+                        <i data-lucide="x"></i>
+
+                    </button>
+
+                </div>
+
+                <form method="POST" action="dashboard.php?page=sections" class="admin-modal-form edit-student-form">
+
+                    <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
+
+                    <input type="hidden" name="action" value="edit_student">
+
+                    <input type="hidden" name="student_id">
+
+                    <div class="student-form-section-title">
+                        Account Information
+                    </div>
+
+                    <div class="student-edit-grid">
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-nickname">
+                                Nickname / Display Name
+                            </label>
+
+                            <input type="text" id="edit-student-nickname" name="nickname" maxlength="150" required>
+
+                        </div>
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-number">
+                                Student Number
+                            </label>
+
+                            <input type="text" id="edit-student-number" name="student_number" maxlength="12" minlength="12"
+                                pattern="[0-9]{12}" inputmode="numeric" placeholder="12-digit student number"
+                                title="Enter exactly 12 digits or leave blank">
+
+                        </div>
+
+                        <div class="section-form-field student-edit-full-width">
+
+                            <label for="edit-student-email">
+                                Email Address
+                            </label>
+
+                            <input type="email" id="edit-student-email" name="email" maxlength="191" required>
+
+                        </div>
+
+                    </div>
+
+                    <div class="student-form-section-title">
+                        Personal Information
+                    </div>
+
+                    <div class="student-edit-grid">
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-firstname">
+                                Firstname
+                            </label>
+
+                            <input type="text" id="edit-student-firstname" name="firstname" maxlength="100">
+
+                        </div>
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-middlename">
+                                Middlename
+                            </label>
+
+                            <input type="text" id="edit-student-middlename" name="middlename" maxlength="100">
+
+                        </div>
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-lastname">
+                                Lastname
+                            </label>
+
+                            <input type="text" id="edit-student-lastname" name="lastname" maxlength="100">
+
+                        </div>
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-age">
+                                Age
+                            </label>
+
+                            <input type="number" id="edit-student-age" name="age" min="1" max="120">
+
+                        </div>
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-gender">
+                                Gender
+                            </label>
+
+                            <input type="text" id="edit-student-gender" name="gender" maxlength="20">
+
+                        </div>
+
+                        <div class="section-form-field">
+
+                            <label for="edit-student-mobile">
+                                Mobile Number
+                            </label>
+
+                            <input type="text" id="edit-student-mobile" name="mobile_number" maxlength="20">
+
+                        </div>
+
+                        <div class="section-form-field student-edit-full-width">
+
+                            <label for="edit-student-address">
+                                Address
+                            </label>
+
+                            <textarea id="edit-student-address" name="address" maxlength="5000" rows="3"
+                                placeholder="Student's complete address"></textarea>
+
+                        </div>
+
+                    </div>
+
+                    <p class="student-edit-hint">
+
+                        Updating personal information will not modify
+                        the student's assigned section, course,
+                        year level, password, or permit history.
+
+                    </p>
+
+                    <div class="admin-modal-actions">
+
+                        <button type="button" class="button button-secondary" data-close-admin-modal>
+
+                            Cancel
+
+                        </button>
+
+                        <button type="submit" class="button button-primary">
+
+                            <i data-lucide="save"></i>
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             CHANGE STUDENT SECTION MODAL
+        ================================================== -->
+
+        <div class="admin-modal-overlay change-section-modal" id="change-section-modal" hidden>
+
+            <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="change-section-modal-title">
+
+                <div class="admin-modal-header">
+
+                    <div>
+
+                        <h2 id="change-section-modal-title">
+                            Change Student Section
+                        </h2>
+
+                        <p>
+
+                            Transfer
+
+                            <strong data-change-student-name></strong>
+
+                            from
+
+                            <strong data-change-current-section></strong>
+
+                            to another section.
+
+                        </p>
+
+                    </div>
+
+                    <button type="button" class="icon-btn" data-close-admin-modal aria-label="Close modal">
+
+                        <i data-lucide="x"></i>
+
+                    </button>
+
+                </div>
+
+                <form method="POST" action="dashboard.php?page=sections" class="admin-modal-form change-section-form">
+
+                    <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
+
+                    <input type="hidden" name="action" value="change_student_section">
+
+                    <input type="hidden" name="student_id">
+
+                    <div class="section-form-field">
+
+                        <label for="change-student-section">
+                            Destination Section
+                        </label>
+
+                        <select id="change-student-section" name="section_id" required>
+
+                            <option value="" selected disabled>
+                                Select destination section
+                            </option>
+
+                            <?php foreach ($sections as $availableSection): ?>
+
+                                <?php
+
+                                $availableYear = (string) $availableSection['year_level'];
+
+                                $availableYearLabel = $studentYearLabels[$availableYear]
+                                    ?? 'Year ' . $availableYear;
+
+                                ?>
+
+                                <option value="<?= (int) $availableSection['id'] ?>">
+
+                                    <?= adminEscape(
+                                        $availableSection['course']
+                                        . ' · '
+                                        . $availableYearLabel
+                                        . ' · '
+                                        . $availableSection['section_name']
+                                    ) ?>
+
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
+                    <div class="change-section-notice">
+
+                        <i data-lucide="info"></i>
+
+                        <p>
+                            The student's official enrollment will be
+                            updated automatically. Course and year level
+                            will be determined by the destination section.
+                            Existing permit records will remain unchanged.
+                        </p>
+
+                    </div>
+
+                    <div class="admin-modal-actions">
+
+                        <button type="button" class="button button-secondary" data-close-admin-modal>
+
+                            Cancel
+
+                        </button>
+
+                        <button type="submit" class="button button-primary">
+
+                            <i data-lucide="arrow-left-right"></i>
+                            Change Section
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             CREATE SECTION MODAL
+        ================================================== -->
+
+        <div class="section-modal-overlay" id="create-section-modal" hidden>
+
+            <div class="section-modal" role="dialog" aria-modal="true" aria-labelledby="create-section-modal-title">
+
+                <div class="section-modal-header">
+
+                    <div>
+
+                        <h2 id="create-section-modal-title">
+                            Create Section
+                        </h2>
+
+                        <p>
+                            Enter the course, year level, and section name.
+                        </p>
+
+                    </div>
+
+                    <button type="button" class="icon-btn" id="close-create-section-modal" aria-label="Close modal">
+
+                        <i data-lucide="x"></i>
+
+                    </button>
+
+                </div>
+
+                <form method="POST" action="dashboard.php?page=sections" class="create-section-modal-form">
+
+                    <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
+
+                    <input type="hidden" name="action" value="add_section">
+
+                    <div class="section-form-field">
+
+                        <label for="new-course">
+                            Course
+                        </label>
+
+                        <input type="text" id="new-course" name="course" maxlength="50" placeholder="e.g. BSIT" required>
+
+                    </div>
+
+                    <div class="section-form-field">
+
+                        <label for="new-year-level">
+                            Year Level
+                        </label>
+
+                        <select id="new-year-level" name="year_level" required>
+
+                            <option value="">Select year level</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="section-form-field">
+
+                        <label for="new-section-name">
+                            Section
+                        </label>
+
+                        <input type="text" id="new-section-name" name="section_name" maxlength="100" placeholder="e.g. 2-1"
+                            required>
+
+                    </div>
+
+                    <div class="section-modal-actions">
+
+                        <button type="button" class="button button-secondary" id="cancel-create-section">
+
+                            Cancel
+
+                        </button>
+
+                        <button type="submit" class="button button-primary">
+
+                            <i data-lucide="plus"></i>
+                            <span>Create Section</span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    <?php endif; ?>
+
+    <!-- =====================================================
          MANAGE ACCOUNTS — CREATE / EDIT MODAL
     ====================================================== -->
 
@@ -4074,124 +4247,209 @@ if (!$isAdminProfilePost) {
             aria-describedby="account-form-description">
 
             <header class="account-modal-header">
+
                 <div>
                     <h2 id="account-form-title">Create Account</h2>
-                    <p id="account-form-description">Create a student or faculty account for AcadTrack.</p>
+                    <p id="account-form-description">
+                        Create a student or faculty account for AcadTrack.
+                    </p>
                 </div>
+
                 <button type="button" class="icon-btn" data-close-account-modal aria-label="Close account form">
+
                     <i data-lucide="x"></i>
+
                 </button>
+
             </header>
 
             <form id="account-form" class="account-modal-form" action="dashboard.php?page=accounts" method="POST"
                 autocomplete="off">
 
                 <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
+
                 <input type="hidden" name="action" id="account-form-action" value="create_account">
+
                 <input type="hidden" name="account_id" id="account-form-id" value="">
 
-                <div class="account-form-section-heading">Account Information</div>
+                <div class="account-form-section-heading">
+                    Account Information
+                </div>
 
                 <div class="account-form-grid">
 
                     <div class="account-form-field account-form-full">
-                        <label for="account-role">Account Type <span>*</span></label>
+
+                        <label for="account-role">
+                            Account Type <span>*</span>
+                        </label>
+
                         <select id="account-role" name="role" required>
+
                             <option value="student">Student</option>
                             <option value="faculty">Faculty</option>
+
                         </select>
-                        <small id="account-role-help">Choose whether this account belongs to a student or faculty
-                            member.</small>
+
+                        <small id="account-role-help">
+                            Choose whether this account belongs to a student or faculty member.
+                        </small>
+
                     </div>
 
                     <div class="account-form-field account-form-full">
-                        <label for="account-nickname">Account Name / Nickname <span>*</span></label>
+
+                        <label for="account-nickname">
+                            Account Name / Nickname <span>*</span>
+                        </label>
+
                         <input type="text" id="account-nickname" name="nickname" maxlength="150"
                             placeholder="Enter the account display name" required>
+
                     </div>
 
                     <div class="account-form-field account-form-full">
-                        <label for="account-email">Email Address <span>*</span></label>
+
+                        <label for="account-email">
+                            Email Address <span>*</span>
+                        </label>
+
                         <input type="email" id="account-email" name="email" maxlength="191"
                             placeholder="name@phinmaed.com" autocomplete="off" required>
+
                     </div>
 
                     <div class="account-form-field account-form-full" id="account-student-number-field">
-                        <label for="account-student-number">Student Number <span>*</span></label>
+
+                        <label for="account-student-number">
+                            Student Number <span>*</span>
+                        </label>
+
                         <input type="text" id="account-student-number" name="student_number" inputmode="numeric"
                             maxlength="12" pattern="[0-9]{12}" placeholder="12-digit student number">
-                        <small>Enter exactly 12 digits. This field is only used for student accounts.</small>
+
+                        <small>
+                            Enter exactly 12 digits. This field is only used for student accounts.
+                        </small>
+
                     </div>
 
                     <div class="account-form-field account-form-full">
-                        <label for="account-password" id="account-password-label">Initial Password
-                            <span>*</span></label>
+
+                        <label for="account-password" id="account-password-label">
+
+                            Initial Password <span>*</span>
+
+                        </label>
+
                         <input type="password" id="account-password" name="password" minlength="8" maxlength="72"
                             autocomplete="new-password" placeholder="Enter at least 8 characters">
-                        <small id="account-password-help">The password must contain at least 8 characters.</small>
+
+                        <small id="account-password-help">
+                            The password must contain at least 8 characters.
+                        </small>
+
                     </div>
 
                 </div>
 
-                <div class="account-form-section-heading account-form-personal-heading">Personal Information
+                <div class="account-form-section-heading account-form-personal-heading">
+
+                    Personal Information
+
                     <small>Optional</small>
+
                 </div>
 
                 <div class="account-form-grid">
 
                     <div class="account-form-field">
+
                         <label for="account-firstname">Firstname</label>
+
                         <input type="text" id="account-firstname" name="firstname" maxlength="100"
                             placeholder="Firstname">
+
                     </div>
 
                     <div class="account-form-field">
+
                         <label for="account-middlename">Middlename</label>
+
                         <input type="text" id="account-middlename" name="middlename" maxlength="100"
                             placeholder="Middlename">
+
                     </div>
 
                     <div class="account-form-field">
+
                         <label for="account-lastname">Lastname</label>
+
                         <input type="text" id="account-lastname" name="lastname" maxlength="100" placeholder="Lastname">
+
                     </div>
 
                     <div class="account-form-field">
+
                         <label for="account-age">Age</label>
+
                         <input type="number" id="account-age" name="age" min="1" max="120" placeholder="Age">
+
                     </div>
 
                     <div class="account-form-field">
+
                         <label for="account-gender">Gender</label>
+
                         <select id="account-gender" name="gender">
+
                             <option value="">Select gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Other">Other</option>
                             <option value="Prefer not to say">Prefer not to say</option>
+
                         </select>
+
                     </div>
 
                     <div class="account-form-field">
-                        <label for="account-mobile-number">Mobile Number</label>
+
+                        <label for="account-mobile-number">
+                            Mobile Number
+                        </label>
+
                         <input type="tel" id="account-mobile-number" name="mobile_number" maxlength="20"
                             placeholder="e.g. 09XXXXXXXXX">
+
                     </div>
 
                     <div class="account-form-field account-form-full">
+
                         <label for="account-address">Address</label>
+
                         <textarea id="account-address" name="address" maxlength="5000" rows="3"
                             placeholder="Enter complete address"></textarea>
+
                     </div>
 
                 </div>
 
                 <div class="account-modal-actions">
-                    <button type="button" class="button button-secondary" data-close-account-modal>Cancel</button>
+
+                    <button type="button" class="button button-secondary" data-close-account-modal>
+
+                        Cancel
+
+                    </button>
+
                     <button type="submit" class="button button-primary" id="account-form-submit">
+
                         <i data-lucide="user-plus"></i>
                         <span>Create Account</span>
+
                     </button>
+
                 </div>
 
             </form>
@@ -4210,43 +4468,79 @@ if (!$isAdminProfilePost) {
             aria-labelledby="account-delete-title" aria-describedby="account-delete-description">
 
             <header class="account-modal-header">
+
                 <div class="account-delete-heading">
-                    <span class="account-delete-heading-icon"><i data-lucide="user-round-x"></i></span>
+
+                    <span class="account-delete-heading-icon">
+                        <i data-lucide="user-round-x"></i>
+                    </span>
+
                     <div>
+
                         <h2 id="account-delete-title">Delete Account</h2>
-                        <p id="account-delete-description">Review the account before permanently deleting it.</p>
+
+                        <p id="account-delete-description">
+                            Review the account before permanently deleting it.
+                        </p>
+
                     </div>
+
                 </div>
+
                 <button type="button" class="icon-btn" data-close-account-modal aria-label="Close delete confirmation">
+
                     <i data-lucide="x"></i>
+
                 </button>
+
             </header>
 
             <form id="account-delete-form" class="account-delete-content" action="dashboard.php?page=accounts"
                 method="POST">
+
                 <input type="hidden" name="csrf_token" value="<?= adminEscape($csrfToken) ?>">
+
                 <input type="hidden" name="action" value="delete_account">
+
                 <input type="hidden" name="account_id" id="account-delete-id" value="">
 
                 <div class="account-delete-summary">
-                    <strong id="account-delete-name">Selected Account</strong>
+
+                    <strong id="account-delete-name">
+                        Selected Account
+                    </strong>
+
                     <span id="account-delete-meta"></span>
+
                 </div>
 
                 <div class="account-delete-warning">
+
                     <i data-lucide="alert-triangle"></i>
+
                     <p id="account-delete-warning-text">
                         This action cannot be undone. Related records will be handled by the database foreign-key rules.
                     </p>
+
                 </div>
 
                 <div class="account-modal-actions">
-                    <button type="button" class="button button-secondary" data-close-account-modal>Cancel</button>
+
+                    <button type="button" class="button button-secondary" data-close-account-modal>
+
+                        Cancel
+
+                    </button>
+
                     <button type="submit" class="button button-danger" id="account-delete-submit">
+
                         <i data-lucide="trash-2"></i>
                         <span>Delete Account</span>
+
                     </button>
+
                 </div>
+
             </form>
 
         </section>
@@ -4337,7 +4631,6 @@ if (!$isAdminProfilePost) {
                             <label for="admin-profile-picture-input" class="button button-outline">
 
                                 <i data-lucide="image-plus"></i>
-
                                 Choose Picture
 
                             </label>
@@ -4350,7 +4643,6 @@ if (!$isAdminProfilePost) {
                                 disabled>
 
                                 <i data-lucide="upload"></i>
-
                                 Upload Picture
 
                             </button>
@@ -4407,7 +4699,6 @@ if (!$isAdminProfilePost) {
                 <div class="admin-profile-section-title">
 
                     <i data-lucide="user-round"></i>
-
                     <span>Personal Information</span>
 
                 </div>
@@ -4453,9 +4744,7 @@ if (!$isAdminProfilePost) {
 
                     <div class="admin-profile-field">
 
-                        <label for="admin-profile-age">
-                            Age
-                        </label>
+                        <label for="admin-profile-age">Age</label>
 
                         <input id="admin-profile-age" name="age" type="number" min="1" max="120" step="1"
                             value="<?= adminEscape($profileFormValues['age'] ?? '') ?>" placeholder="Enter your age">
@@ -4464,9 +4753,7 @@ if (!$isAdminProfilePost) {
 
                     <div class="admin-profile-field">
 
-                        <label for="admin-profile-gender">
-                            Gender
-                        </label>
+                        <label for="admin-profile-gender">Gender</label>
 
                         <select id="admin-profile-gender" name="gender">
 
@@ -4525,7 +4812,6 @@ if (!$isAdminProfilePost) {
                 <div class="admin-profile-section-title admin-profile-account-title">
 
                     <i data-lucide="shield-check"></i>
-
                     <span>Account Information</span>
 
                 </div>
@@ -4564,13 +4850,14 @@ if (!$isAdminProfilePost) {
                 <footer class="admin-profile-actions">
 
                     <button type="button" class="button button-outline" data-close-profile-modal>
+
                         Cancel
+
                     </button>
 
                     <button type="submit" class="button button-primary" id="admin-profile-save">
 
                         <i data-lucide="save"></i>
-
                         Save Changes
 
                     </button>
@@ -4651,7 +4938,6 @@ if (!$isAdminProfilePost) {
                 <div class="admin-profile-section-title">
 
                     <i data-lucide="lock-keyhole"></i>
-
                     <span>Password Information</span>
 
                 </div>
@@ -4663,7 +4949,6 @@ if (!$isAdminProfilePost) {
                         <label for="admin-current-password">
 
                             Current Password
-
                             <span class="required-mark">*</span>
 
                         </label>
@@ -4691,7 +4976,6 @@ if (!$isAdminProfilePost) {
                         <label for="admin-new-password">
 
                             New Password
-
                             <span class="required-mark">*</span>
 
                         </label>
@@ -4724,7 +5008,6 @@ if (!$isAdminProfilePost) {
                         <label for="admin-confirm-password">
 
                             Confirm New Password
-
                             <span class="required-mark">*</span>
 
                         </label>
@@ -4756,13 +5039,14 @@ if (!$isAdminProfilePost) {
                 <footer class="admin-profile-actions">
 
                     <button type="button" class="button button-outline" data-close-password-modal>
+
                         Cancel
+
                     </button>
 
                     <button type="submit" class="button button-primary" id="admin-password-save">
 
                         <i data-lucide="save"></i>
-
                         Update Password
 
                     </button>
@@ -4776,8 +5060,8 @@ if (!$isAdminProfilePost) {
     </div>
 
     <!-- =====================================================
-     RESET DATA PASSWORD VERIFICATION MODAL
-====================================================== -->
+         RESET DATA PASSWORD VERIFICATION MODAL
+    ====================================================== -->
 
     <div class="admin-profile-modal admin-reset-modal admin-reset-password-modal" id="admin-reset-password-modal"
         hidden>
@@ -4804,8 +5088,7 @@ if (!$isAdminProfilePost) {
                         </h2>
 
                         <p>
-                            For security purposes, enter your current
-                            administrator password before proceeding.
+                            For security purposes, enter your current administrator password before proceeding.
                         </p>
 
                     </div>
@@ -4844,8 +5127,8 @@ if (!$isAdminProfilePost) {
                     </div>
 
                     <small>
-                        Your password will be verified securely before
-                        any student records or uploaded documents are changed.
+                        Your password will be verified securely before any student records or uploaded documents are
+                        changed.
                     </small>
 
                 </div>
@@ -4853,13 +5136,14 @@ if (!$isAdminProfilePost) {
                 <footer class="admin-profile-actions admin-reset-footer">
 
                     <button type="button" class="button button-outline" data-cancel-reset-password>
+
                         Cancel
+
                     </button>
 
                     <button type="submit" class="button button-primary" id="admin-reset-submit">
 
                         <i data-lucide="shield-check"></i>
-
                         Verify and Continue
 
                     </button>
@@ -4873,8 +5157,8 @@ if (!$isAdminProfilePost) {
     </div>
 
     <!-- =====================================================
-     ADMIN RESET DATA MODAL
-====================================================== -->
+         ADMIN RESET DATA MODAL
+    ====================================================== -->
 
     <div class="admin-profile-modal admin-reset-modal" id="admin-reset-modal" hidden>
 
@@ -4883,8 +5167,6 @@ if (!$isAdminProfilePost) {
 
         <section class="admin-profile-dialog admin-reset-dialog" role="dialog" aria-modal="true"
             aria-labelledby="admin-reset-title" aria-describedby="admin-reset-description">
-
-            <!-- MODAL HEADER -->
 
             <header class="admin-profile-header">
 
@@ -4918,8 +5200,6 @@ if (!$isAdminProfilePost) {
 
             </header>
 
-            <!-- RESET OPTIONS -->
-
             <div class="admin-reset-content">
 
                 <!-- RESET PERMIT -->
@@ -4932,9 +5212,7 @@ if (!$isAdminProfilePost) {
 
                     <div class="admin-reset-option-details">
 
-                        <h3>
-                            Reset Permit
-                        </h3>
+                        <h3>Reset Permit</h3>
 
                         <p>
                             Permanently removes all uploaded permit documents and deletes
@@ -4985,9 +5263,7 @@ if (!$isAdminProfilePost) {
 
                     <div class="admin-reset-option-details">
 
-                        <h3>
-                            Reset Student Academic Status
-                        </h3>
+                        <h3>Reset Student Academic Status</h3>
 
                         <p>
                             Removes each student's official section assignment
@@ -5041,8 +5317,6 @@ if (!$isAdminProfilePost) {
 
                 </div>
 
-                <!-- FOOTER -->
-
                 <footer class="admin-profile-actions admin-reset-footer">
 
                     <button type="button" class="button button-outline" data-close-reset-data-modal>
@@ -5059,7 +5333,9 @@ if (!$isAdminProfilePost) {
 
     </div>
 
-    <!-- PROFILE AND PASSWORD NOTIFICATIONS -->
+    <!-- =====================================================
+         PROFILE AND PASSWORD NOTIFICATIONS
+    ====================================================== -->
 
     <div id="admin-profile-notice" data-message="<?= adminEscape($adminProfileNotice) ?>" hidden>
     </div>
@@ -5067,7 +5343,9 @@ if (!$isAdminProfilePost) {
     <div id="admin-password-notice" data-message="<?= adminEscape($adminPasswordNotice) ?>" hidden>
     </div>
 
-    <!-- GLOBAL SEARCH -->
+    <!-- =====================================================
+         GLOBAL SEARCH
+    ====================================================== -->
 
     <div class="search-overlay" id="search-overlay" hidden>
 
@@ -5134,7 +5412,9 @@ if (!$isAdminProfilePost) {
 
     </div>
 
-    <!-- TOAST -->
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden>
 
