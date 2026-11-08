@@ -1124,7 +1124,7 @@ function studentProfileTextLength(string $value): int
 
                         <div>
                             <div class="overline">ACADEMICS</div>
-                            <h1>Permit Application</h1>
+                            <h1>Permit Applicationnnnn</h1>
 
                             <p class="page-subtitle">
                                 Upload your permit or payment receipt.
