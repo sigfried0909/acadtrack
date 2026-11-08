@@ -1388,7 +1388,7 @@ function studentProfileTextLength(string $value): int
                         <div class="permit-section-heading">
 
                             <div>
-                                <h2>Recent Submissions</h2>
+                                <h2>Recent Submissionssss</h2>
                                 <p>Your recent uploaded documents.</p>
                             </div>
 
