@@ -1,0 +1,46 @@
+### --- PHP & ENVIRONMENT CREDENTIALS ---
+# Never commit your environment variables or local credentials
+.env
+.env.local
+.env.*.local
+config.local.php
+*.log
+
+### --- DEPENDENCY MANAGERS ---
+# Vendor folder contains external packages downloaded via Composer
+# It should be installed fresh on deployment using 'composer install'
+/vendor/
+
+### --- APPLICATION UPLOADS & USER DATA ---
+# Ignore all files inside user upload directories, but keep the directory structure
+uploads/profile_pictures/*
+!uploads/profile_pictures/.gitkeep
+
+storage/permits/*
+!storage/permits/.gitkeep
+
+# General upload/cache directories if they exist now or in the future
+storage/logs/*
+!storage/logs/.gitkeep
+storage/cache/*
+!storage/cache/.gitkeep
+
+### --- OPERATING SYSTEM & EDITOR FILES ---
+# Windows specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Code Editor settings (VS Code, PhpStorm, etc.)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
