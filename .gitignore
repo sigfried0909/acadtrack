@@ -1,46 +1,40 @@
-### --- PHP & ENVIRONMENT CREDENTIALS ---
-# Never commit your environment variables or local credentials
+# =========================================
+# ENVIRONMENT AND CONFIGURATION SECRETS
+# =========================================
 .env
-.env.local
-.env.*.local
-config.local.php
-*.log
+.env.*
+!.env.example
 
-### --- DEPENDENCY MANAGERS ---
-# Vendor folder contains external packages downloaded via Composer
-# It should be installed fresh on deployment using 'composer install'
+/config/database.php
+/config/database.local.php
+
+# =========================================
+# STUDENT DOCUMENTS AND USER UPLOADS
+# =========================================
+/storage/permits/
+/uploads/profile_pictures/
+
+# =========================================
+# LOGS AND BACKUPS
+# =========================================
+/storage/logs/
+/logs/
+/backups/
+
+*.log
+*.bak
+*.sql
+*.sql.gz
+
+# =========================================
+# DEPENDENCIES
+# =========================================
 /vendor/
 
-### --- APPLICATION UPLOADS & USER DATA ---
-# Ignore all files inside user upload directories, but keep the directory structure
-uploads/profile_pictures/*
-!uploads/profile_pictures/.gitkeep
-
-storage/permits/*
-!storage/permits/.gitkeep
-
-# General upload/cache directories if they exist now or in the future
-storage/logs/*
-!storage/logs/.gitkeep
-storage/cache/*
-!storage/cache/.gitkeep
-
-### --- OPERATING SYSTEM & EDITOR FILES ---
-# Windows specific files
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# macOS specific files
+# =========================================
+# EDITOR AND OPERATING SYSTEM FILES
+# =========================================
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Code Editor settings (VS Code, PhpStorm, etc.)
+Thumbs.db
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.swp
