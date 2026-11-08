@@ -1,4 +1,3 @@
-
 <?php
 declare(strict_types=1);
 
@@ -12,4 +11,33 @@ if (!is_file($localMailConfig)) {
     );
 }
 
-require_once $localMailConfig;
+$mailConfig = require $localMailConfig;
+
+if (!is_array($mailConfig)) {
+    error_log('AcadTrack: Mail configuration must return an array.');
+
+    throw new RuntimeException(
+        'Invalid mail configuration.'
+    );
+}
+
+$requiredKeys = [
+    'host',
+    'username',
+    'password',
+    'port',
+    'from_email',
+    'from_name'
+];
+
+foreach ($requiredKeys as $key) {
+    if (!array_key_exists($key, $mailConfig)) {
+        error_log('AcadTrack: Missing mail configuration key: ' . $key);
+
+        throw new RuntimeException(
+            'Invalid mail configuration.'
+        );
+    }
+}
+
+return $mailConfig;
