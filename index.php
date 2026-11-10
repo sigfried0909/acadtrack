@@ -110,7 +110,7 @@ if (
                     <img src="assets/bg_logo.png" style="width: 40px; height: 32px;">
                 </span>
                 <p class="cl-login10__brand">AcadTrack</p>
-                <p class="cl-login10__tagline">College of Information Technology Educationnn</p>
+                <p class="cl-login10__tagline">College of Information Technology Education</p>
             </header>
 
             <div class="cl-login10__tabs" role="tablist" aria-label="Log in or create an account" data-tablist>
