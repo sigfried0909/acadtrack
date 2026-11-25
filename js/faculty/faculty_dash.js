@@ -2968,3 +2968,788 @@
     initializeIcons();
 
 })();
+
+(() => {
+    "use strict";
+
+    const form = document.getElementById("assessment-form");
+    if (!form) return;
+
+    const list = document.getElementById("assessment-questions");
+    const template = document.getElementById("assessment-question-template");
+    const builder = document.getElementById("assessment-builder");
+    const addButton = document.getElementById("assessment-add");
+    const linkField = document.getElementById("assessment-link-field");
+    const mode = form.elements.delivery_mode;
+    const externalUrl = form.elements.external_url;
+
+    let nextQuestionId = 0;
+
+    const prompts = {
+        single: ["Question", "Which SQL clause filters grouped results?"],
+        multiple: ["Question", "Select all columns that belong to the composite primary key."],
+        boolean: ["Statement", "A foreign key can reference a primary key in another table."],
+        short: ["Question", "What does DBMS stand for?"],
+        numeric: ["Problem", "A file contains 8,192 bytes. How many KiB is this?"],
+        matching: ["Directions", "Match each database term to its definition."],
+        enumeration: ["Question", "List the four ACID properties of a transaction."],
+        essay: ["Essay prompt or problem", "Explain how an index affects read and write performance."]
+    };
+
+    function element(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    }
+
+    function field(card, name) {
+        return card.querySelector(`[data-field="${name}"]`);
+    }
+
+    function inputField(parent, labelText, name, options = {}) {
+        const label = element("label", "faculty-profile-field");
+        label.append(element("span", "", labelText));
+
+        const input = element(options.multiline ? "textarea" : "input");
+        if (!options.multiline) input.type = options.type || "text";
+        if (options.multiline) input.rows = 3;
+
+        input.dataset.field = name;
+        input.required = options.required !== false;
+        input.value = options.value ?? "";
+        input.placeholder = options.placeholder || "";
+
+        if (options.maxLength) input.maxLength = options.maxLength;
+        if (options.min !== undefined) input.min = options.min;
+        if (options.max !== undefined) input.max = options.max;
+        if (options.step !== undefined) input.step = options.step;
+
+        label.append(input);
+        parent.append(label);
+        return input;
+    }
+
+    function button(text) {
+        const node = element("button", "button button-outline", text);
+        node.type = "button";
+        return node;
+    }
+
+    function toggle(parent, text, name, type = "checkbox") {
+        const label = element("label", "assessment-toggle");
+        const input = element("input");
+        input.type = type;
+        input.dataset.field = name;
+        label.append(input, document.createTextNode(text));
+        parent.append(label);
+        return input;
+    }
+
+    function menu(parent, title, name, options) {
+        const label = element("label", "faculty-profile-field");
+        const select = element("select");
+        select.dataset.field = name;
+        select.required = true;
+
+        for (const [value, text] of options) {
+            select.add(new Option(text, value));
+        }
+
+        label.append(document.createTextNode(title), select);
+        parent.append(label);
+    }
+
+    function repeatingRows(parent, config) {
+        const rows = element("div", "assessment-entry-list");
+        const add = button(config.addLabel);
+        parent.append(rows, add);
+
+        function updateRows() {
+            [...rows.children].forEach((row, index) => {
+                row.querySelector("legend").textContent = `${config.label} ${index + 1}`;
+                row.querySelector("[data-remove-entry]").disabled =
+                    rows.children.length <= config.min;
+            });
+            add.disabled = rows.children.length >= 50;
+        }
+
+        function appendRow(focus = false) {
+            const row = element("fieldset", "assessment-entry");
+            const legend = element("legend");
+            row.append(legend);
+
+            config.build(row);
+
+            const remove = button(`Remove ${config.label.toLowerCase()}`);
+            remove.dataset.removeEntry = "";
+            remove.addEventListener("click", () => {
+                row.remove();
+                updateRows();
+            });
+
+            row.append(remove);
+            rows.append(row);
+            updateRows();
+
+            if (focus) row.querySelector("input, textarea")?.focus();
+        }
+
+        add.addEventListener("click", () => appendRow(true));
+
+        for (let i = 0; i < config.min; i++) appendRow();
+    }
+
+    function buildType(card, type, parent) {
+        if (type === "single" || type === "multiple") {
+            parent.append(element("p", "assessment-hint",
+                type === "single"
+                    ? "Select one correct choice."
+                    : "Select at least two correct choices and leave at least one incorrect choice."
+            ));
+
+            repeatingRows(parent, {
+                label: "Choice",
+                addLabel: "+ Add choice",
+                min: type === "single" ? 2 : 3,
+                build(row) {
+                    inputField(row, "Choice text", "text", { maxLength: 1000 });
+                    const correct = toggle(row, "Correct answer", "correct",
+                        type === "single" ? "radio" : "checkbox");
+
+                    if (type === "single") correct.name = `correct_${card.dataset.questionId}`;
+                }
+            });
+            return;
+        }
+
+        if (type === "boolean") {
+            menu(parent, "Correct answer", "answer", [
+                ["", "Choose the correct answer"],
+                ["True", "True"],
+                ["False", "False"]
+            ]);
+            return;
+        }
+
+        if (type === "short" || type === "enumeration") {
+            const shortAnswer = type === "short";
+
+            inputField(parent,
+                shortAnswer ? "Accepted answers — one per line" : "Expected items — one per line",
+                "answers",
+                {
+                    multiline: true,
+                    maxLength: 50000,
+                    placeholder: shortAnswer
+                        ? "Database management system\nDatabase management systems"
+                        : "Atomicity\nConsistency\nIsolation\nDurability"
+                }
+            );
+
+            parent.append(element("p", "assessment-hint",
+                shortAnswer
+                    ? "Each line is an alternative that earns full credit."
+                    : "Each line is a separate item the student should give."
+            ));
+
+            if (!shortAnswer) {
+                toggle(parent, "Require the items in the order shown", "ordered");
+            }
+            return;
+        }
+
+        if (type === "numeric") {
+            inputField(parent, "Expected number", "answer", { type: "number", step: "any" });
+            inputField(parent, "Unit shown to the student (optional)", "unit", {
+                required: false, maxLength: 60, placeholder: "e.g. KiB"
+            });
+            inputField(parent, "Absolute tolerance (±)", "tolerance", {
+                type: "number", min: 0, step: "any", value: "0"
+            });
+            parent.append(element("p", "assessment-hint",
+                "For example, 8 with a tolerance of 0.1 accepts 7.9 through 8.1."
+            ));
+            return;
+        }
+
+        if (type === "matching") {
+            parent.append(element("p", "assessment-hint",
+                "Enter each prompt beside its correct match. Each match is used once."
+            ));
+
+            repeatingRows(parent, {
+                label: "Pair",
+                addLabel: "+ Add pair",
+                min: 2,
+                build(row) {
+                    inputField(row, "Left-hand prompt", "left", { maxLength: 1000 });
+                    inputField(row, "Correct right-hand match", "right", { maxLength: 1000 });
+                }
+            });
+            return;
+        }
+
+        if (type === "essay") {
+            parent.append(element("p", "assessment-hint",
+                "Describe how marks are awarded. The criteria must add up to the total points."
+            ));
+
+            repeatingRows(parent, {
+                label: "Criterion",
+                addLabel: "+ Add scoring criterion",
+                min: 1,
+                build(row) {
+                    inputField(row, "Scoring criterion", "criterion", {
+                        maxLength: 1500, placeholder: "e.g. Explains the effect on INSERT performance"
+                    });
+                    inputField(row, "Points for this criterion", "criterionPoints", {
+                        type: "number", min: 1, max: 1000, step: 1, value: "1"
+                    });
+                }
+            });
+        }
+    }
+
+    function showType(card) {
+        const type = field(card, "type").value;
+        const host = card.querySelector("[data-type-fields]");
+
+        // Preserve the teacher's entries if they switch types and switch back.
+        for (const group of host.children) {
+            group.hidden = true;
+            group.disabled = true;
+        }
+
+        let group = host.querySelector(`[data-group="${type}"]`);
+
+        if (!group) {
+            group = element("fieldset", "assessment-format");
+            group.dataset.group = type;
+            group.append(element("legend", "", "Answer format and marking key"));
+            buildType(card, type, group);
+            host.append(group);
+        }
+
+        group.hidden = false;
+        group.disabled = false;
+        card.querySelector("[data-prompt-label]").textContent = prompts[type][0];
+        field(card, "prompt").placeholder = prompts[type][1];
+    }
+
+    function renumber() {
+        [...list.children].forEach((card, index) => {
+            card.querySelector("legend").textContent = `Question ${index + 1}`;
+            card.querySelector("[data-remove]").disabled = list.children.length === 1;
+        });
+        addButton.disabled = list.children.length >= 100;
+    }
+
+    function addQuestion(focus = false) {
+        if (list.children.length >= 100) return;
+
+        const card = template.content.firstElementChild.cloneNode(true);
+        card.dataset.questionId = String(++nextQuestionId);
+
+        field(card, "type").addEventListener("change", () => showType(card));
+        card.querySelector("[data-remove]").addEventListener("click", () => {
+            card.remove();
+            renumber();
+        });
+
+        list.append(card);
+        showType(card);
+        renumber();
+
+        if (focus) field(card, "prompt").focus();
+    }
+
+    function updateMode() {
+        const internal = mode.value === "internal";
+        builder.hidden = !internal;
+        linkField.hidden = internal;
+        externalUrl.disabled = internal;
+        externalUrl.required = !internal;
+
+        if (internal && !list.children.length) addQuestion();
+
+        for (const card of list.children) card.disabled = !internal;
+    }
+
+    function invalid(control, message) {
+        control.setCustomValidity(message);
+        control.reportValidity();
+        control.setCustomValidity("");
+        throw new Error("assessment-validation");
+    }
+
+    function distinct(values) {
+        const keys = values.map(value => value.trim().replace(/\s+/g, " ").toLowerCase());
+        return new Set(keys).size === keys.length;
+    }
+
+    function readQuestion(card) {
+        const type = field(card, "type").value;
+        const group = card.querySelector(`[data-group="${type}"]`);
+        const rows = [...group.querySelectorAll(".assessment-entry")];
+        const prompt = field(card, "prompt");
+        const points = field(card, "points");
+
+        // Catch whitespace-only values before submitting the entire assessment.
+        for (const input of [prompt, ...group.querySelectorAll("input[type=text], textarea")]) {
+            if (input.required && !input.value.trim()) invalid(input, "Please complete this field.");
+        }
+
+        const question = { type, prompt: prompt.value.trim(), points: Number(points.value) };
+
+        if (type === "single" || type === "multiple") {
+            question.choices = rows.map(row => ({
+                text: field(row, "text").value.trim(),
+                correct: field(row, "correct").checked
+            }));
+
+            if (!distinct(question.choices.map(choice => choice.text))) {
+                invalid(field(rows[0], "text"), "Each choice must have different text.");
+            }
+
+            const correct = question.choices.filter(choice => choice.correct).length;
+
+            if (type === "single" && correct !== 1) {
+                invalid(field(rows[0], "correct"), "Select exactly one correct choice.");
+            }
+
+            if (type === "multiple" && (correct < 2 || correct === rows.length)) {
+                invalid(field(rows[0], "correct"),
+                    "Mark at least two correct choices and leave one incorrect choice.");
+            }
+        }
+
+        if (type === "boolean") question.answer = field(group, "answer").value;
+
+        if (type === "short" || type === "enumeration") {
+            const input = field(group, "answers");
+            const answers = input.value.split(/\r?\n/).map(value => value.trim()).filter(Boolean);
+            const minimum = type === "short" ? 1 : 2;
+
+            if (answers.length < minimum || answers.length > 50 ||
+                !distinct(answers) || answers.some(answer => [...answer].length > 1000)) {
+                invalid(input, `Enter ${minimum} to 50 distinct lines, up to 1,000 characters per line.`);
+            }
+
+            question.answers = answers;
+            if (type === "enumeration") question.ordered = field(group, "ordered").checked;
+        }
+
+        if (type === "numeric") {
+            question.answer = field(group, "answer").value;
+            question.unit = field(group, "unit").value.trim();
+            question.tolerance = field(group, "tolerance").value;
+        }
+
+        if (type === "matching") {
+            question.pairs = rows.map(row => ({
+                left: field(row, "left").value.trim(),
+                right: field(row, "right").value.trim()
+            }));
+
+            for (const side of ["left", "right"]) {
+                if (!distinct(question.pairs.map(pair => pair[side]))) {
+                    invalid(field(rows[0], side), "Each entry in this column must be different.");
+                }
+            }
+        }
+
+        if (type === "essay") {
+            question.rubric = rows.map(row => ({
+                criterion: field(row, "criterion").value.trim(),
+                points: Number(field(row, "criterionPoints").value)
+            }));
+
+            const total = question.rubric.reduce((sum, item) => sum + item.points, 0);
+            if (total !== question.points) {
+                invalid(points, `Your rubric adds up to ${total}. Adjust the criteria or total points.`);
+            }
+        }
+
+        return question;
+    }
+
+    form.addEventListener("submit", event => {
+        if (mode.value !== "internal") return;
+
+        try {
+            const questions = [...list.children].map(readQuestion);
+            const payload = JSON.stringify(questions);
+
+            if (new Blob([payload]).size > 500000) {
+                invalid(field(list.lastElementChild, "prompt"),
+                    "The assessment is too large. Shorten the questions or split the assessment.");
+            }
+
+            form.elements.questions_json.value = payload;
+        } catch (error) {
+            event.preventDefault();
+            if (error.message !== "assessment-validation") {
+                console.error(error);
+                window.alert("The assessment could not be prepared. Your entries are still on this page.");
+            }
+        }
+    });
+
+    addButton.addEventListener("click", () => addQuestion(true));
+    mode.addEventListener("change", updateMode);
+    updateMode();
+})();
+
+document.addEventListener("submit", (event) => {
+    const form = event.target;
+
+    if (!(form instanceof HTMLFormElement) || !form.matches("[data-faculty-delete]")) {
+        return;
+    }
+
+    const type = form.dataset.itemType;
+    const title = form.dataset.itemTitle;
+    const consequence = type === "module"
+        ? "Students in this section will lose access to the uploaded file."
+        : "This assessment and any questions and answer keys saved in AcadTrack will be removed.";
+
+    const confirmed = window.confirm(
+        `Delete the ${type} “${title}”?\n\n${consequence}\n\nThis cannot be undone.`
+    );
+
+    if (!confirmed) {
+        event.preventDefault();
+    }
+});
+
+(() => {
+    "use strict";
+
+    const modal = document.getElementById("faculty-submissions-modal");
+    const frame = document.getElementById("faculty-submissions-frame");
+    const assessmentTitle = document.getElementById("faculty-submissions-assessment");
+    const closeButton = document.getElementById("faculty-submissions-close");
+
+    if (!modal || !frame || !assessmentTitle || !closeButton ||
+        typeof modal.showModal !== "function") {
+        return;
+    }
+
+    let opener = null;
+
+    document.querySelectorAll("[data-open-submissions]").forEach(link => {
+        link.addEventListener("click", event => {
+            if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+                return;
+            }
+
+            event.preventDefault();
+            if (modal.open) return;
+
+            opener = link;
+            assessmentTitle.textContent = link.dataset.assessmentTitle || "";
+            frame.title = `Submissions for ${assessmentTitle.textContent}`;
+
+            const url = new URL(link.href);
+            url.searchParams.set("embed", "1");
+
+            frame.src = url.href;
+            modal.showModal();
+            document.body.classList.add("faculty-submissions-open");
+        });
+    });
+
+    function requestClose() {
+        let unsaved = false;
+
+        try {
+            unsaved = frame.contentWindow?.facultyHasUnsavedScores?.() === true;
+        } catch {
+            // A sign-in redirect can make the frame inaccessible.
+        }
+
+        if (unsaved && !window.confirm("Close submissions and discard your unsaved scores?")) {
+            return;
+        }
+
+        modal.close();
+    }
+
+    closeButton.addEventListener("click", requestClose);
+
+    modal.addEventListener("click", (event) => {
+        if (event.target !== modal) return;
+
+        const bounds = modal.getBoundingClientRect();
+        const clickedBackdrop =
+            event.clientX < bounds.left ||
+            event.clientX >= bounds.right ||
+            event.clientY < bounds.top ||
+            event.clientY >= bounds.bottom;
+
+        if (clickedBackdrop) {
+            requestClose();
+        }
+    });
+
+    modal.addEventListener("cancel", event => {
+        event.preventDefault();
+        requestClose();
+    });
+
+    modal.addEventListener("close", () => {
+        frame.src = "about:blank";
+        document.body.classList.remove("faculty-submissions-open");
+        opener?.focus();
+        opener = null;
+    });
+})();
+
+(() => {
+    "use strict";
+
+    const modal = document.getElementById("saved-assessment-modal");
+    const body = document.getElementById("saved-assessment-body");
+    const title = document.getElementById("saved-assessment-title");
+    const meta = document.getElementById("saved-assessment-meta");
+    const closeButton = document.getElementById("saved-assessment-close");
+
+    if (!modal || !body || !title || !meta || !closeButton) return;
+
+    let opener = null;
+    let preview = null;
+    let originalPosition = null;
+
+    document.querySelectorAll("[data-view-saved-assessment]").forEach(button => {
+        button.addEventListener("click", () => {
+            if (modal.open) return;
+
+            const selected = document.getElementById(button.dataset.previewId);
+            if (!selected) return;
+
+            opener = button;
+            preview = selected;
+            originalPosition = document.createComment("Assessment preview");
+
+            preview.replaceWith(originalPosition);
+            body.appendChild(preview);
+            preview.hidden = false;
+
+            title.textContent = button.dataset.title;
+            meta.textContent = button.dataset.meta;
+
+            modal.showModal();
+            body.scrollTop = 0;
+            document.body.classList.add("saved-assessment-open");
+        });
+    });
+
+    closeButton.addEventListener("click", () => modal.close());
+
+    modal.addEventListener("click", event => {
+        if (event.target !== modal) return;
+
+        const bounds = modal.getBoundingClientRect();
+        const outside =
+            event.clientX < bounds.left || event.clientX >= bounds.right ||
+            event.clientY < bounds.top || event.clientY >= bounds.bottom;
+
+        if (outside) modal.close();
+    });
+
+    modal.addEventListener("close", () => {
+        if (preview && originalPosition) {
+            preview.hidden = true;
+            originalPosition.replaceWith(preview);
+        }
+
+        document.body.classList.remove("saved-assessment-open");
+        opener?.focus();
+
+        opener = null;
+        preview = null;
+        originalPosition = null;
+    });
+})();
+
+(() => {
+    "use strict";
+
+    const modal = document.getElementById("faculty-module-upload-modal");
+    const form = document.getElementById("faculty-module-upload-form");
+    const sectionLabel = document.getElementById("faculty-module-upload-section");
+
+    if (!modal || !form || !sectionLabel) return;
+
+    const fileInput = form.elements.namedItem("module_file");
+    const submitButton = form.querySelector('[type="submit"]');
+    let opener = null;
+
+    function newUploadKey() {
+        const bytes = crypto.getRandomValues(new Uint8Array(16));
+        return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+    }
+
+    document.querySelectorAll("[data-module-upload]").forEach(button => {
+        button.addEventListener("click", () => {
+            if (modal.open) return;
+
+            form.reset();
+            fileInput.setCustomValidity("");
+            submitButton.disabled = false;
+
+            form.elements.namedItem("section_id").value = button.dataset.sectionId;
+            form.elements.namedItem("upload_key").value = newUploadKey();
+            sectionLabel.textContent = button.dataset.sectionLabel;
+
+            opener = button;
+            modal.showModal();
+            document.body.classList.add("faculty-module-upload-open");
+            form.elements.namedItem("period").focus();
+        });
+    });
+
+    modal.querySelectorAll("[data-close-module-upload]").forEach(button => {
+        button.addEventListener("click", () => modal.close());
+    });
+
+    modal.addEventListener("click", event => {
+        if (event.target !== modal) return;
+
+        const bounds = modal.getBoundingClientRect();
+        if (
+            event.clientX < bounds.left || event.clientX >= bounds.right ||
+            event.clientY < bounds.top || event.clientY >= bounds.bottom
+        ) {
+            modal.close();
+        }
+    });
+
+    modal.addEventListener("close", () => {
+        document.body.classList.remove("faculty-module-upload-open");
+        opener?.focus();
+        opener = null;
+    });
+
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        fileInput.setCustomValidity(
+            file && file.size > 5 * 1024 * 1024
+                ? "Choose a file of 5 MB or less."
+                : ""
+        );
+    });
+
+    form.addEventListener("submit", () => {
+        submitButton.disabled = true;
+    });
+
+    window.addEventListener("pageshow", () => {
+        submitButton.disabled = false;
+    });
+
+    // Limit each section to the actual height of its first five files,
+    // including any period headings above those files.
+    document.querySelectorAll("[data-module-scroll]").forEach(viewport => {
+        const files = viewport.querySelectorAll(".faculty-module-file");
+        if (files.length <= 5) return;
+
+        function fitFiveFiles() {
+            const top = viewport.getBoundingClientRect().top;
+            const fifthBottom = files[4].getBoundingClientRect().bottom;
+
+            // Include scrollTop so resizing while scrolled keeps the correct height.
+            const height = Math.ceil(fifthBottom - top + viewport.scrollTop);
+            if (height > 0) viewport.style.maxHeight = `${height}px`;
+        }
+
+        fitFiveFiles();
+
+        if ("ResizeObserver" in window) {
+            const observer = new ResizeObserver(fitFiveFiles);
+
+            // Period wrappers contain both the headings and the variable-height rows.
+            viewport.querySelectorAll(".faculty-module-period").forEach(period => {
+                observer.observe(period);
+            });
+        } else {
+            window.addEventListener("resize", fitFiveFiles);
+        }
+    });
+})();
+
+(() => {
+    "use strict";
+
+    const modal = document.getElementById("faculty-create-assessment-modal");
+    const form = document.getElementById("assessment-form");
+    const periodDescription = document.getElementById("faculty-create-assessment-period");
+
+    if (!modal || !form || !periodDescription) return;
+
+    const periodField = form.elements.namedItem("period");
+    const sectionField = form.elements.namedItem("section_id");
+    let opener = null;
+    let edited = false;
+
+    function markEdited() {
+        edited = true;
+    }
+
+    form.addEventListener("input", markEdited);
+    form.addEventListener("change", markEdited);
+
+    // Adding or removing a question, option, pair, or rubric row is also an edit.
+    form.querySelector("#assessment-builder")?.addEventListener("click", event => {
+        if (event.target.closest("button")) markEdited();
+    });
+
+    document.querySelectorAll("[data-create-assessment-period]").forEach(button => {
+        button.addEventListener("click", () => {
+            const nextPeriod = button.dataset.createAssessmentPeriod;
+
+            if (modal.open || !["P1", "P2", "P3"].includes(nextPeriod)) return;
+
+            const previousPeriod = periodField.value;
+
+            if (edited && previousPeriod && previousPeriod !== nextPeriod) {
+                const moveDraft = window.confirm(
+                    `Move your unfinished assessment from ${previousPeriod} to ${nextPeriod}?`
+                );
+
+                if (!moveDraft) return;
+            }
+
+            opener = button;
+            periodField.value = nextPeriod;
+            periodDescription.textContent = `Assessment period: ${nextPeriod}`;
+
+            modal.showModal();
+            document.body.classList.add("assessment-editor-open");
+            form.scrollTop = 0;
+            sectionField.focus();
+        });
+    });
+
+    modal.querySelectorAll("[data-close-assessment-editor]").forEach(button => {
+        button.addEventListener("click", () => modal.close());
+    });
+
+    modal.addEventListener("click", event => {
+        if (event.target !== modal) return;
+
+        const bounds = modal.getBoundingClientRect();
+        const clickedBackdrop =
+            event.clientX < bounds.left || event.clientX >= bounds.right ||
+            event.clientY < bounds.top || event.clientY >= bounds.bottom;
+
+        if (clickedBackdrop) modal.close();
+    });
+
+    modal.addEventListener("close", () => {
+        document.body.classList.remove("assessment-editor-open");
+        opener?.focus();
+        opener = null;
+    });
+})();

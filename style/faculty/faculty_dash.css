@@ -2897,6 +2897,533 @@ body.faculty-profile-modal-open {
     }
 }
 
+/* quiz and exam */
+
+.assessment-form,
+.assessment-list {
+    display: grid;
+    gap: 18px;
+    min-width: 0;
+    padding: 20px 22px;
+}
+
+.assessment-form>.button,
+.assessment-question>.button {
+    justify-self: start;
+}
+
+.assessment-form [hidden] {
+    display: none !important;
+}
+
+#assessment-questions {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.assessment-question,
+.assessment-saved {
+    min-width: 0;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid var(--primary-border);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.assessment-question legend {
+    padding: 0 6px;
+    color: var(--primary-hover);
+    font-weight: 600;
+}
+
+.assessment-question>.button {
+    margin-top: 14px;
+}
+
+.assessment-saved summary {
+    cursor: pointer;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+}
+
+.assessment-saved summary span {
+    display: block;
+    margin: 5px 0 0 16px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.assessment-saved[open] summary {
+    margin-bottom: 14px;
+}
+
+.assessment-saved p,
+.assessment-saved li {
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+}
+
+.assessment-lines {
+    white-space: pre-wrap;
+}
+
+@media (max-width: 520px) {
+
+    .assessment-form,
+    .assessment-list {
+        padding: 14px;
+    }
+
+    .assessment-question,
+    .assessment-saved {
+        padding: 12px;
+    }
+}
+
+.assessment-format,
+.assessment-entry {
+    min-width: 0;
+    margin: 0;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+}
+
+.assessment-format,
+.assessment-entry-list {
+    display: grid;
+    gap: 12px;
+}
+
+.assessment-format>legend,
+.assessment-entry>legend {
+    padding-inline: 5px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.assessment-format>.button,
+.assessment-entry>.button {
+    justify-self: start;
+}
+
+.assessment-entry {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+    gap: 12px;
+    background: var(--surface);
+}
+
+.assessment-entry>.button {
+    grid-column: 1 / -1;
+}
+
+.assessment-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.assessment-toggle input {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--primary);
+}
+
+.assessment-hint {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.assessment-preview>li+li {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+}
+
+@media (max-width: 600px) {
+    .assessment-entry {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* delete */
+
+.faculty-delete-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+.assessment-saved>.faculty-delete-form {
+    margin-top: 14px;
+}
+
+.faculty-delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 1px solid var(--danger-border, #f3cbd2);
+    background: var(--danger-bg, #fff1f3);
+    color: var(--danger, #bd3449);
+}
+
+.faculty-delete-button:hover {
+    border-color: #df8b9a;
+    background: #ffe3e8;
+    color: #982236;
+}
+
+.faculty-delete-button svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+body.faculty-submissions-open {
+    overflow: hidden;
+}
+
+/* The shared profile dialog class supplies the dimensions, colors,
+   border, shadow, animation, and responsive corner radius. */
+#faculty-submissions-modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: 0;
+    box-sizing: border-box;
+
+    /* Matches the 20px outer padding of Edit Profile. */
+    max-width: calc(100% - 40px);
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+}
+
+/* The shared .faculty-profile-dialog class sets display:flex.
+   Native dialogs also need an explicit closed state with that class. */
+#faculty-submissions-modal:not([open]) {
+    display: none;
+}
+
+#faculty-submissions-modal[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+#faculty-submissions-modal::backdrop {
+    background: rgba(27, 19, 47, .58);
+    backdrop-filter: blur(9px) saturate(1.1);
+    -webkit-backdrop-filter: blur(9px) saturate(1.1);
+    animation: faculty-fade .3s ease-out;
+}
+
+/* The header stays visible while the teacher scrolls through answers. */
+#faculty-submissions-frame {
+    display: block;
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    border: 0;
+    background: var(--surface, #fff);
+}
+
+body.faculty-grading-embedded {
+    margin: 0;
+    background: var(--surface, #fff);
+}
+
+@media (max-width: 820px) {
+    #faculty-submissions-modal {
+        max-width: calc(100% - 32px);
+        max-height: calc(100dvh - 32px);
+    }
+}
+
+@media (max-width: 520px) {
+    #faculty-submissions-modal {
+        max-width: calc(100% - 20px);
+        max-height: calc(100dvh - 20px);
+    }
+}
+
+@media (max-width: 900px) and (max-height: 500px) {
+
+    /* Give the embedded grading page usable height in landscape. */
+    #faculty-submissions-modal {
+        height: calc(100dvh - 20px);
+    }
+}
+
+/* Saved assessment cards */
+
+.saved-assessment-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 0;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.saved-assessment-info {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.saved-assessment-info h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.saved-assessment-info p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.saved-assessment-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.saved-assessment-actions .faculty-delete-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+.saved-assessment-actions .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 38px;
+}
+
+.saved-assessment-actions svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* Assessment details modal — uses the Edit Profile dialog design */
+
+body.saved-assessment-open {
+    overflow: hidden;
+}
+
+#saved-assessment-modal {
+    position: fixed;
+    inset: 0;
+    box-sizing: border-box;
+    max-width: calc(100% - 40px);
+    max-height: calc(100dvh - 40px);
+    margin: auto;
+    padding: 0;
+}
+
+#saved-assessment-modal:not([open]) {
+    display: none;
+}
+
+#saved-assessment-modal[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+#saved-assessment-modal::backdrop {
+    background: rgba(27, 19, 47, .58);
+    backdrop-filter: blur(9px);
+}
+
+#saved-assessment-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 18px 25px 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    overflow-wrap: anywhere;
+    line-height: 1.65;
+}
+
+#saved-assessment-body .assessment-preview {
+    padding-left: 24px;
+}
+
+#saved-assessment-body [data-open-submissions] {
+    margin-top: 12px;
+}
+
+@media (max-width: 520px) {
+    .saved-assessment-card {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .saved-assessment-actions {
+        margin-left: auto;
+    }
+
+    #saved-assessment-modal {
+        max-width: calc(100% - 20px);
+        max-height: calc(100dvh - 20px);
+    }
+
+    #saved-assessment-body {
+        padding: 15px 17px 20px;
+    }
+}
+
+.assessment-period-list {
+    display: grid;
+    gap: 18px;
+    padding: 20px 22px;
+}
+
+.assessment-period-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+}
+
+.assessment-period-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 15px 18px;
+    background: linear-gradient(110deg, #f6f2ff, #fcfbff);
+}
+
+.assessment-period-head h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 16px;
+}
+
+.assessment-period-head p,
+.assessment-period-empty,
+.assessment-panel-notice {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.assessment-period-head p {
+    margin: 3px 0 0;
+}
+
+.assessment-period-empty,
+.assessment-panel-notice {
+    margin: 0;
+    padding: 14px 18px;
+}
+
+.assessment-create-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 38px;
+}
+
+.assessment-create-trigger svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Each assessment is one row inside its period card. */
+.assessment-period-items>.saved-assessment-card {
+    margin: 0;
+    padding: 14px 18px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+body.assessment-editor-open {
+    overflow: hidden;
+}
+
+/* Share the Edit Profile dialog styling while keeping long quizzes scrollable. */
+#faculty-create-assessment-modal {
+    position: fixed;
+    inset: 0;
+    box-sizing: border-box;
+    width: min(760px, calc(100% - 32px));
+    height: min(860px, calc(100dvh - 32px));
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: 0;
+}
+
+#faculty-create-assessment-modal:not([open]) {
+    display: none;
+}
+
+#faculty-create-assessment-modal[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+#faculty-create-assessment-modal::backdrop {
+    background: rgba(27, 19, 47, .58);
+    backdrop-filter: blur(8px);
+}
+
+#faculty-create-assessment-modal .assessment-form {
+    flex: 1 1 auto;
+    align-content: start;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+#faculty-create-assessment-modal .assessment-editor-actions {
+    margin-top: 0;
+}
+
+@media (max-width: 520px) {
+    .assessment-period-list {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .assessment-period-head,
+    .assessment-period-items>.saved-assessment-card {
+        padding: 12px;
+    }
+
+    #faculty-create-assessment-modal {
+        width: calc(100% - 20px);
+        height: calc(100dvh - 20px);
+        max-height: calc(100dvh - 20px);
+    }
+}
 
 /* =========================================================
    END OF ACADTRACK FACULTY DASHBOARD STYLESHEET

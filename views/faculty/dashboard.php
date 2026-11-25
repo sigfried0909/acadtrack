@@ -67,7 +67,7 @@ function facultyDashboardRedirect(
     string $payment = 'all'
 ): void {
 
-    if (!in_array($page, ['dashboard', 'sections'], true)) {
+    if (!in_array($page, ['dashboard', 'sections', 'assessments', 'modules'], true)) {
         $page = 'sections';
     }
 
@@ -121,7 +121,7 @@ $currentPage = $_GET['page'] ?? 'dashboard';
 
 if (
     !is_string($currentPage)
-    || !in_array($currentPage, ['dashboard', 'sections'], true)
+    || !in_array($currentPage, ['dashboard', 'sections', 'assessments', 'modules'], true)
 ) {
     $currentPage = 'dashboard';
 }
@@ -645,6 +645,129 @@ if (
     }
 }
 
+require_once __DIR__ . '/assessment_actions.php';
+
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
+    && ($_POST['action'] ?? '') === 'create_assessment'
+) {
+    facultyCreateAssessment($pdo, $facultyId, $csrfToken);
+}
+
+require_once __DIR__ . '/module_actions.php';
+
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
+    && $currentPage === 'modules'
+    && empty($_POST)
+    && empty($_FILES)
+) {
+    facultyDashboardRedirect(
+        'error',
+        'The upload was empty or exceeded the server upload limit. Choose a file up to 5 MB.',
+        'all',
+        0,
+        '',
+        'modules'
+    );
+}
+
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
+    && ($_POST['action'] ?? '') === 'upload_module'
+) {
+    facultyUploadModule($pdo, $facultyId, $csrfToken);
+}
+
+/*
+|--------------------------------------------------------------------------
+| DELETE A FACULTY ASSESSMENT OR MODULE
+|--------------------------------------------------------------------------
+*/
+
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
+    && in_array($_POST['action'] ?? '', ['delete_assessment', 'delete_module'], true)
+) {
+    $isModule = $_POST['action'] === 'delete_module';
+    $returnPage = $isModule ? 'modules' : 'assessments';
+    $itemLabel = $isModule ? 'module' : 'assessment';
+
+    $postedToken = $_POST['csrf_token'] ?? '';
+
+    if (!is_string($postedToken) || !hash_equals($csrfToken, $postedToken)) {
+        facultyDashboardRedirect(
+            'error',
+            'Your session token expired. Refresh the page and try again.',
+            'all',
+            0,
+            '',
+            $returnPage
+        );
+    }
+
+    $itemId = filter_var(
+        $_POST['item_id'] ?? null,
+        FILTER_VALIDATE_INT,
+        ['options' => ['min_range' => 1]]
+    );
+
+    if ($itemId === false) {
+        facultyDashboardRedirect(
+            'error',
+            "Please select a valid {$itemLabel}.",
+            'all',
+            0,
+            '',
+            $returnPage
+        );
+    }
+
+    // The table name comes exclusively from these two fixed values.
+    $table = $isModule ? 'section_modules' : 'faculty_assessments';
+
+    try {
+        $delete = $pdo->prepare(
+            "DELETE item
+             FROM {$table} AS item
+             INNER JOIN sections AS s
+                 ON s.id = item.section_id
+             INNER JOIN users AS adviser
+                 ON adviser.id = s.ssp_adviser_id
+             WHERE item.id = ?
+               AND adviser.id = ?
+               AND adviser.role = 'faculty'
+               AND adviser.is_active = 1"
+        );
+
+        $delete->execute([$itemId, $facultyId]);
+
+        if ($delete->rowCount() === 1) {
+            $noticeType = 'success';
+            $noticeMessage = $isModule
+                ? 'Module and uploaded file deleted.'
+                : 'Assessment deleted.';
+        } else {
+            $noticeType = 'error';
+            $noticeMessage = "This {$itemLabel} is no longer available in your assigned sections.";
+        }
+    } catch (PDOException $error) {
+        error_log('AcadTrack faculty delete error: ' . $error->getMessage());
+
+        $noticeType = 'error';
+        $noticeMessage = "Unable to delete the {$itemLabel}. Please try again.";
+    }
+
+    facultyDashboardRedirect(
+        $noticeType,
+        $noticeMessage,
+        'all',
+        0,
+        '',
+        $returnPage
+    );
+}
+
 /*
 |--------------------------------------------------------------------------
 | VALIDATE UNKNOWN POST ACTIONS
@@ -692,7 +815,7 @@ if (
 
     if (
         !is_string($returnPage)
-        || !in_array($returnPage, ['dashboard', 'sections'], true)
+        || !in_array($returnPage, ['dashboard', 'sections', 'assessments', 'modules'], true)
     ) {
         $returnPage = 'sections';
     }
@@ -1320,6 +1443,20 @@ if (
     $profileFormValues = $profileDefaults;
 }
 
+$pageLabels = [
+    'dashboard' => 'Dashboard',
+    'sections' => 'Sections and Permit',
+    'assessments' => 'Exam and Quiz',
+    'modules' => 'Modules',
+];
+
+$pageDescriptions = [
+    'dashboard' => 'Welcome, ' . $facultyName . '. Here is your permit review summary.',
+    'sections' => 'View your assigned sections and review student permit submissions.',
+    'assessments' => 'Create exams and quizzes for your assigned sections.',
+    'modules' => 'Share lesson files and review materials with your assigned sections.',
+];
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -1330,11 +1467,7 @@ if (
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">
 
-    <title>
-        <?= $currentPage === 'dashboard'
-            ? 'AcadTrack | Faculty Dashboard'
-            : 'AcadTrack | Sections and Permit' ?>
-    </title>
+    <title>AcadTrack | Faculty <?= facultyEscape($pageLabels[$currentPage]) ?></title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1344,6 +1477,7 @@ if (
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <link rel="stylesheet" href="../../style/faculty/faculty_dash.css">
+    <link rel="stylesheet" href="../../style/modules.css">
 
     <script src="../../js/faculty/faculty_dash.js" defer></script>
     <script src="../../js/auth/session_guard.js" defer></script>
@@ -1402,6 +1536,20 @@ if (
                         <i data-lucide="users-round"></i>
                         <span class="nav-text">Sections and Permit</span>
 
+                    </a>
+
+                    <a href="dashboard.php?page=assessments"
+                        class="nav-item <?= $currentPage === 'assessments' ? 'active' : '' ?>" data-nav-link
+                        <?= $currentPage === 'assessments' ? 'aria-current="page"' : '' ?>>
+                        <i data-lucide="clipboard-list"></i>
+                        <span class="nav-text">Exam and Quiz</span>
+                    </a>
+
+                    <a href="dashboard.php?page=modules"
+                        class="nav-item <?= $currentPage === 'modules' ? 'active' : '' ?>" data-nav-link
+                        <?= $currentPage === 'modules' ? 'aria-current="page"' : '' ?>>
+                        <i data-lucide="book-open"></i>
+                        <span class="nav-text">Modules</span>
                     </a>
 
                 </div>
@@ -1488,13 +1636,7 @@ if (
 
                         <i data-lucide="chevron-right"></i>
 
-                        <strong id="breadcrumb-current">
-
-                            <?= $currentPage === 'dashboard'
-                                ? 'Dashboard'
-                                : 'Sections and Permit' ?>
-
-                        </strong>
+                        <strong id="breadcrumb-current"><?= facultyEscape($pageLabels[$currentPage]) ?></strong>
 
                     </div>
 
@@ -1629,21 +1771,10 @@ if (
                                 FACULTY WORKSPACE
                             </div>
 
-                            <h1>
-
-                                <?= $currentPage === 'dashboard'
-                                    ? 'Dashboard Overview'
-                                    : 'Sections and Permit' ?>
-
+                            <h1><?= $currentPage === 'dashboard' ? 'Dashboard Overview' : facultyEscape($pageLabels[$currentPage]) ?>
                             </h1>
 
-                            <p class="page-subtitle">
-
-                                <?= $currentPage === 'dashboard'
-                                    ? 'Welcome, ' . facultyEscape($facultyName) . '. Here is your permit review summary.'
-                                    : 'View your assigned sections and review student permit submissions.' ?>
-
-                            </p>
+                            <p class="page-subtitle"><?= facultyEscape($pageDescriptions[$currentPage]) ?></p>
 
                         </div>
 
@@ -1766,6 +1897,14 @@ if (
                             </article>
 
                         </div>
+
+                    <?php elseif ($currentPage === 'assessments'): ?>
+
+                        <?php require __DIR__ . '/assessment_panel.php'; ?>
+
+                    <?php elseif ($currentPage === 'modules'): ?>
+
+                        <?php require __DIR__ . '/module_panel.php'; ?>
 
                     <?php else: ?>
 

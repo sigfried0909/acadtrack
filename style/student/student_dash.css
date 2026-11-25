@@ -301,7 +301,7 @@ textarea:focus-visible {
   overscroll-behavior: contain;
 }
 
-.nav-section + .nav-section {
+.nav-section+.nav-section {
   margin-top: 29px;
 }
 
@@ -348,7 +348,7 @@ textarea:focus-visible {
     color 0.2s ease;
 }
 
-.nav-item > svg:first-child {
+.nav-item>svg:first-child {
   flex: 0 0 20px;
   width: 20px;
   height: 20px;
@@ -364,7 +364,7 @@ textarea:focus-visible {
   color: var(--primary-hover);
 }
 
-.nav-item:hover > svg:first-child {
+.nav-item:hover>svg:first-child {
   color: var(--primary);
 }
 
@@ -391,7 +391,7 @@ textarea:focus-visible {
   content: "";
 }
 
-.nav-item.active > svg:first-child {
+.nav-item.active>svg:first-child {
   color: var(--primary);
 }
 
@@ -609,7 +609,7 @@ body.sidebar-collapsed .nav-item {
   font-size: 0;
 }
 
-body.sidebar-collapsed .nav-item > svg:first-child {
+body.sidebar-collapsed .nav-item>svg:first-child {
   flex-basis: 20px;
 }
 
@@ -1005,7 +1005,7 @@ body.sidebar-collapsed .nav-item:hover::after {
   height: 42px;
 }
 
-.profile-menu-user > div {
+.profile-menu-user>div {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -1024,7 +1024,7 @@ body.sidebar-collapsed .nav-item:hover::after {
   font-size: 11px;
 }
 
-.profile-menu > a {
+.profile-menu>a {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1048,19 +1048,19 @@ body.sidebar-collapsed .nav-item:hover::after {
     background 0.2s ease;
 }
 
-.profile-menu > a:hover {
+.profile-menu>a:hover {
   background: #f5f0ff;
   color: var(--primary);
 }
 
-.profile-menu > a svg {
+.profile-menu>a svg {
   flex: 0 0 16px;
   width: 16px;
   height: 16px;
   color: #938ba6;
 }
 
-.profile-menu > a:hover svg {
+.profile-menu>a:hover svg {
   color: var(--primary);
 }
 
@@ -1084,7 +1084,7 @@ body.sidebar-collapsed .nav-item:hover::after {
   margin-bottom: 30px;
 }
 
-.page-title-row > * {
+.page-title-row>* {
   min-width: 0;
 }
 
@@ -1132,7 +1132,7 @@ h1 {
   font-size: 11px;
 }
 
-.page-footer > div {
+.page-footer>div {
   display: flex;
   flex-wrap: wrap;
   gap: 19px;
@@ -1285,7 +1285,7 @@ h1 {
   border-bottom: 1px solid #f0edf5;
 }
 
-.search-input-row > svg {
+.search-input-row>svg {
   flex: 0 0 19px;
   width: 19px;
   height: 19px;
@@ -1328,7 +1328,7 @@ h1 {
   overflow-y: auto;
 }
 
-.search-results > button {
+.search-results>button {
   display: flex;
   align-items: center;
   gap: 11px;
@@ -1352,29 +1352,29 @@ h1 {
     color 0.18s ease;
 }
 
-.search-results > button:hover,
-.search-results > button.selected {
+.search-results>button:hover,
+.search-results>button.selected {
   background: #f3edff;
   color: var(--primary);
 }
 
-.search-results > button svg {
+.search-results>button svg {
   flex: 0 0 17px;
   width: 17px;
   height: 17px;
   color: var(--subtle);
 }
 
-.search-results > button:hover svg {
+.search-results>button:hover svg {
   color: var(--primary);
 }
 
-.search-results > button span {
+.search-results>button span {
   flex: 1;
   min-width: 0;
 }
 
-.search-results > button kbd {
+.search-results>button kbd {
   margin-left: auto;
 }
 
@@ -1454,7 +1454,7 @@ h1 {
   margin: 0 0 19px;
 }
 
-.permit-section-heading > div {
+.permit-section-heading>div {
   min-width: 0;
 }
 
@@ -1730,14 +1730,14 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-.permit-alert > svg {
+.permit-alert>svg {
   flex: 0 0 18px;
   width: 18px;
   height: 18px;
   margin-top: 1px;
 }
 
-.permit-alert > span {
+.permit-alert>span {
   min-width: 0;
 }
 
@@ -1778,11 +1778,9 @@ h1 {
   border-radius: 17px;
 
   background:
-    radial-gradient(
-      circle at 100% 0%,
+    radial-gradient(circle at 100% 0%,
       rgba(180, 151, 240, 0.14),
-      transparent 38%
-    ),
+      transparent 38%),
     linear-gradient(135deg, #fbf9ff, #fff 60%, #f8f5ff);
 
   box-shadow: 0 3px 12px rgba(63, 42, 104, 0.035);
@@ -1798,7 +1796,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-.permit-full-payment-content > .permit-period-icon {
+.permit-full-payment-content>.permit-period-icon {
   flex: 0 0 48px;
   width: 48px;
 
@@ -1807,7 +1805,7 @@ h1 {
   color: var(--primary);
 }
 
-.permit-full-payment-content > div {
+.permit-full-payment-content>div {
   flex: 1;
   min-width: 0;
 }
@@ -1834,7 +1832,7 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-.permit-full-payment > .permit-alert {
+.permit-full-payment>.permit-alert {
   margin-bottom: 0;
   border-radius: 10px;
 }
@@ -1857,14 +1855,14 @@ h1 {
   box-shadow: 0 3px 12px rgba(35, 24, 66, 0.025);
 }
 
-.permit-history-section > .permit-section-heading {
+.permit-history-section>.permit-section-heading {
   padding: 22px 23px;
   margin: 0;
 
   border-bottom: 1px solid #f0edf5;
 }
 
-.permit-history-section > .permit-section-heading h2 {
+.permit-history-section>.permit-section-heading h2 {
   font-size: 16px;
 }
 
@@ -2057,7 +2055,7 @@ h1 {
   line-height: 1.75;
 }
 
-.permit-section-required > .button {
+.permit-section-required>.button {
   flex: 0 0 auto;
 }
 
@@ -2271,7 +2269,7 @@ body.student-profile-modal-open {
   min-width: 0;
 }
 
-.student-picture-details > strong {
+.student-picture-details>strong {
   display: block;
   margin-bottom: 5px;
 
@@ -2280,7 +2278,7 @@ body.student-profile-modal-open {
   font-weight: 700;
 }
 
-.student-picture-details > p {
+.student-picture-details>p {
   margin: 0 0 11px;
 
   color: #8b859a;
@@ -2334,7 +2332,7 @@ body.student-profile-modal-open {
   border: 0;
 }
 
-.student-picture-details > small {
+.student-picture-details>small {
   display: block;
   margin-top: 9px;
 
@@ -2368,7 +2366,7 @@ body.student-profile-modal-open {
   overscroll-behavior: contain;
 }
 
-#student-profile-form > .permit-alert {
+#student-profile-form>.permit-alert {
   margin-bottom: 20px;
 }
 
@@ -2385,7 +2383,7 @@ body.student-profile-modal-open {
   letter-spacing: 0.15px;
 }
 
-.student-profile-section-title > svg {
+.student-profile-section-title>svg {
   flex: 0 0 17px;
   width: 17px;
   height: 17px;
@@ -3141,7 +3139,7 @@ body.student-profile-modal-open {
     border-radius: 14px;
   }
 
-  .permit-history-section > .permit-section-heading {
+  .permit-history-section>.permit-section-heading {
     padding: 17px;
   }
 
@@ -3168,7 +3166,7 @@ body.student-profile-modal-open {
     padding-top: 23px;
   }
 
-  .page-footer > div {
+  .page-footer>div {
     gap: 14px;
   }
 
@@ -3374,7 +3372,7 @@ body.student-profile-modal-open {
     flex: 1 1 calc(100% - 55px);
   }
 
-  .permit-section-required > .button {
+  .permit-section-required>.button {
     width: 100%;
   }
 }
@@ -3671,6 +3669,7 @@ body.student-profile-modal-open {
 }
 
 @keyframes dashboard-halo {
+
   0%,
   100% {
     opacity: 0.45;
@@ -3731,16 +3730,12 @@ body.student-profile-modal-open {
 
 body {
   background:
-    radial-gradient(
-      circle at 12% 10%,
+    radial-gradient(circle at 12% 10%,
       rgba(139, 92, 246, 0.065),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 90% 85%,
+      transparent 32%),
+    radial-gradient(circle at 90% 85%,
       rgba(99, 102, 241, 0.055),
-      transparent 34%
-    ),
+      transparent 34%),
     linear-gradient(135deg, #f8f7ff, #f7f7fc 48%, #faf9ff);
 }
 
@@ -3775,12 +3770,10 @@ body {
   width: 390px;
   height: 390px;
 
-  background: radial-gradient(
-    circle at 35% 35%,
-    rgba(167, 139, 250, 0.15),
-    rgba(139, 92, 246, 0.035) 58%,
-    transparent 73%
-  );
+  background: radial-gradient(circle at 35% 35%,
+      rgba(167, 139, 250, 0.15),
+      rgba(139, 92, 246, 0.035) 58%,
+      transparent 73%);
 
   box-shadow:
     0 0 0 35px rgba(124, 58, 237, 0.018),
@@ -3798,12 +3791,10 @@ body {
 
   border-color: rgba(99, 102, 241, 0.08);
 
-  background: radial-gradient(
-    circle at 65% 65%,
-    rgba(129, 140, 248, 0.16),
-    rgba(99, 102, 241, 0.035) 58%,
-    transparent 73%
-  );
+  background: radial-gradient(circle at 65% 65%,
+      rgba(129, 140, 248, 0.16),
+      rgba(99, 102, 241, 0.035) 58%,
+      transparent 73%);
 
   box-shadow:
     0 0 0 35px rgba(99, 102, 241, 0.018),
@@ -3847,11 +3838,9 @@ body {
   position: relative;
 
   background:
-    radial-gradient(
-      ellipse at 0% 0%,
+    radial-gradient(ellipse at 0% 0%,
       rgba(196, 181, 253, 0.12),
-      transparent 75%
-    ),
+      transparent 75%),
     #fff;
 }
 
@@ -3863,12 +3852,10 @@ body {
 
   height: 1px;
 
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(139, 92, 246, 0.17),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(139, 92, 246, 0.17),
+      transparent);
 
   content: "";
   pointer-events: none;
@@ -3899,12 +3886,10 @@ body {
 
   width: 55%;
 
-  background: linear-gradient(
-    100deg,
-    transparent,
-    rgba(255, 255, 255, 0.35),
-    transparent
-  );
+  background: linear-gradient(100deg,
+      transparent,
+      rgba(255, 255, 255, 0.35),
+      transparent);
 
   content: "";
   pointer-events: none;
@@ -3963,11 +3948,9 @@ body {
 }
 
 .nav-item.active {
-  background: linear-gradient(
-    100deg,
-    rgba(240, 234, 255, 0.98),
-    rgba(247, 243, 255, 0.95)
-  );
+  background: linear-gradient(100deg,
+      rgba(240, 234, 255, 0.98),
+      rgba(247, 243, 255, 0.95));
 
   box-shadow:
     inset 0 0 0 1px rgba(112, 65, 214, 0.055),
@@ -3979,7 +3962,7 @@ body {
   box-shadow: 0 0 9px rgba(112, 65, 214, 0.24);
 }
 
-.nav-item.active > svg:first-child {
+.nav-item.active>svg:first-child {
   filter: drop-shadow(0 2px 3px rgba(112, 65, 214, 0.15));
 }
 
@@ -4123,11 +4106,9 @@ body {
   border-color: rgba(229, 218, 250, 0.85);
 
   background:
-    radial-gradient(
-      ellipse 120% 45% at 50% 0%,
+    radial-gradient(ellipse 120% 45% at 50% 0%,
       rgba(196, 181, 253, 0.12),
-      transparent 80%
-    ),
+      transparent 80%),
     #fff;
 
   box-shadow:
@@ -4146,24 +4127,24 @@ body {
   animation: dashboard-item-in 0.4s var(--ease-out) 0.04s backwards;
 }
 
-.profile-menu > a {
+.profile-menu>a {
   transition:
     color 0.22s ease,
     background 0.22s ease,
     padding-left 0.3s var(--ease-out);
 }
 
-.profile-menu > a:hover {
+.profile-menu>a:hover {
   padding-left: 14px;
 }
 
-.profile-menu > a svg {
+.profile-menu>a svg {
   transition:
     transform 0.3s var(--ease-spring),
     color 0.2s ease;
 }
 
-.profile-menu > a:hover svg {
+.profile-menu>a:hover svg {
   transform: scale(1.1);
 }
 
@@ -4235,13 +4216,10 @@ h1 {
 
 .button-primary {
   background:
-    linear-gradient(
-        110deg,
-        transparent 35%,
-        rgba(255, 255, 255, 0.22) 50%,
-        transparent 65%
-      )
-      0 0 / 200% 100% no-repeat,
+    linear-gradient(110deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 65%) 0 0 / 200% 100% no-repeat,
     linear-gradient(120deg, #8156e0, #7041d6 55%, #5e31bf);
 
   box-shadow:
@@ -4301,11 +4279,9 @@ h1 {
   border-radius: 19px;
 
   background:
-    radial-gradient(
-      ellipse 120% 50% at 50% -5%,
+    radial-gradient(ellipse 120% 50% at 50% -5%,
       rgba(196, 181, 253, 0.18),
-      transparent 75%
-    ),
+      transparent 75%),
     rgba(255, 255, 255, 0.98);
 
   box-shadow:
@@ -4323,24 +4299,24 @@ h1 {
   transition: color 0.2s ease;
 }
 
-.search-results > button {
+.search-results>button {
   transition:
     background 0.25s ease,
     color 0.25s ease,
     padding-left 0.3s var(--ease-out);
 }
 
-.search-results > button:hover {
+.search-results>button:hover {
   padding-left: 14px;
 }
 
-.search-results > button svg {
+.search-results>button svg {
   transition:
     transform 0.3s var(--ease-spring),
     color 0.2s ease;
 }
 
-.search-results > button:hover svg {
+.search-results>button:hover svg {
   transform: scale(1.1);
 }
 
@@ -4352,11 +4328,9 @@ h1 {
   border-color: rgba(229, 218, 250, 0.8);
 
   background:
-    radial-gradient(
-      ellipse 120% 60% at 0% 0%,
+    radial-gradient(ellipse 120% 60% at 0% 0%,
       rgba(196, 181, 253, 0.13),
-      transparent 75%
-    ),
+      transparent 75%),
     #fff;
 
   box-shadow:
@@ -4394,16 +4368,12 @@ h1 {
   border-color: rgba(235, 231, 241, 0.95);
 
   background:
-    radial-gradient(
-      ellipse 120% 45% at 50% -10%,
+    radial-gradient(ellipse 120% 45% at 50% -10%,
       rgba(196, 181, 253, 0.12),
-      transparent 75%
-    ),
-    linear-gradient(
-      180deg,
+      transparent 75%),
+    linear-gradient(180deg,
       rgba(255, 255, 255, 0.98),
-      rgba(255, 255, 255, 0.94)
-    );
+      rgba(255, 255, 255, 0.94));
 
   box-shadow:
     0 1px 2px rgba(35, 24, 66, 0.025),
@@ -4427,17 +4397,15 @@ h1 {
 
   border-radius: inherit;
 
-  background: conic-gradient(
-    from var(--dashboard-angle),
-    rgba(139, 92, 246, 0) 0deg,
-    rgba(139, 92, 246, 0) 35deg,
-    rgba(139, 92, 246, 0.55) 75deg,
-    rgba(99, 102, 241, 0) 125deg,
-    rgba(99, 102, 241, 0) 190deg,
-    rgba(167, 139, 250, 0.4) 245deg,
-    rgba(167, 139, 250, 0) 295deg,
-    rgba(167, 139, 250, 0) 360deg
-  );
+  background: conic-gradient(from var(--dashboard-angle),
+      rgba(139, 92, 246, 0) 0deg,
+      rgba(139, 92, 246, 0) 35deg,
+      rgba(139, 92, 246, 0.55) 75deg,
+      rgba(99, 102, 241, 0) 125deg,
+      rgba(99, 102, 241, 0) 190deg,
+      rgba(167, 139, 250, 0.4) 245deg,
+      rgba(167, 139, 250, 0) 295deg,
+      rgba(167, 139, 250, 0) 360deg);
 
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -4512,19 +4480,19 @@ h1 {
    48. PERMIT CARD ENTRANCE STAGGER
 ========================================================= */
 
-.permit-period-grid > .permit-period-card {
+.permit-period-grid>.permit-period-card {
   animation: dashboard-card-in 0.75s var(--ease-out) backwards;
 }
 
-.permit-period-grid > .permit-period-card:nth-child(1) {
+.permit-period-grid>.permit-period-card:nth-child(1) {
   animation-delay: 0.08s;
 }
 
-.permit-period-grid > .permit-period-card:nth-child(2) {
+.permit-period-grid>.permit-period-card:nth-child(2) {
   animation-delay: 0.17s;
 }
 
-.permit-period-grid > .permit-period-card:nth-child(3) {
+.permit-period-grid>.permit-period-card:nth-child(3) {
   animation-delay: 0.26s;
 }
 
@@ -4639,16 +4607,12 @@ h1 {
   border-color: #e2d5f7;
 
   background:
-    radial-gradient(
-      circle at 100% 0%,
+    radial-gradient(circle at 100% 0%,
       rgba(180, 151, 240, 0.2),
-      transparent 42%
-    ),
-    radial-gradient(
-      circle at 0% 100%,
+      transparent 42%),
+    radial-gradient(circle at 0% 100%,
       rgba(139, 92, 246, 0.07),
-      transparent 45%
-    ),
+      transparent 45%),
     linear-gradient(135deg, #fbf9ff, #fff 58%, #f8f5ff);
 
   box-shadow:
@@ -4684,13 +4648,13 @@ h1 {
   transform: translate(-13px, 13px) scale(1.08);
 }
 
-.permit-full-payment-content > .permit-period-icon {
+.permit-full-payment-content>.permit-period-icon {
   box-shadow: 0 5px 13px rgba(112, 65, 214, 0.09);
 
   transition: transform 0.4s var(--ease-spring);
 }
 
-.permit-full-payment:hover .permit-full-payment-content > .permit-period-icon {
+.permit-full-payment:hover .permit-full-payment-content>.permit-period-icon {
   transform: rotate(-5deg) scale(1.06);
 }
 
@@ -4708,11 +4672,9 @@ h1 {
 
   border-color: rgba(235, 231, 241, 0.95);
 
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.98),
-    rgba(255, 255, 255, 0.94)
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 255, 255, 0.94));
 
   box-shadow:
     0 2px 7px rgba(35, 24, 66, 0.025),
@@ -4722,13 +4684,11 @@ h1 {
   animation: dashboard-rise 0.8s var(--ease-out) 0.38s backwards;
 }
 
-.permit-history-section > .permit-section-heading {
+.permit-history-section>.permit-section-heading {
   background:
-    radial-gradient(
-      ellipse 120% 100% at 0% 0%,
+    radial-gradient(ellipse 120% 100% at 0% 0%,
       rgba(196, 181, 253, 0.1),
-      transparent 75%
-    ),
+      transparent 75%),
     #fff;
 }
 
@@ -4758,11 +4718,9 @@ h1 {
   overflow: hidden;
 
   background:
-    radial-gradient(
-      ellipse 100% 140% at 100% 0%,
+    radial-gradient(ellipse 100% 140% at 100% 0%,
       rgba(245, 190, 75, 0.12),
-      transparent 65%
-    ),
+      transparent 65%),
     linear-gradient(120deg, #fff9ec, #fffdf8);
 
   box-shadow:
@@ -4806,11 +4764,9 @@ h1 {
   border-radius: 21px;
 
   background:
-    radial-gradient(
-      ellipse 120% 40% at 50% -10%,
+    radial-gradient(ellipse 120% 40% at 50% -10%,
       rgba(196, 181, 253, 0.16),
-      transparent 75%
-    ),
+      transparent 75%),
     linear-gradient(180deg, #fff, #fefeff);
 
   box-shadow:
@@ -4822,11 +4778,9 @@ h1 {
 }
 
 .student-profile-header {
-  background: linear-gradient(
-    180deg,
-    rgba(249, 246, 255, 0.9),
-    rgba(255, 255, 255, 0.98)
-  );
+  background: linear-gradient(180deg,
+      rgba(249, 246, 255, 0.9),
+      rgba(255, 255, 255, 0.98));
 }
 
 .student-profile-heading-icon {
@@ -4976,11 +4930,9 @@ h1 {
   border-radius: 21px;
 
   background:
-    radial-gradient(
-      ellipse 130% 65% at 50% -15%,
+    radial-gradient(ellipse 130% 65% at 50% -15%,
       rgba(196, 181, 253, 0.19),
-      transparent 75%
-    ),
+      transparent 75%),
     #fff;
 
   box-shadow:
@@ -5048,6 +5000,7 @@ h1 {
 }
 
 @media (max-width: 820px) {
+
   .sidebar,
   body.sidebar-collapsed .sidebar {
     transition:
@@ -5116,15 +5069,15 @@ h1 {
     animation-delay: 0.04s;
   }
 
-  .permit-period-grid > .permit-period-card:nth-child(1) {
+  .permit-period-grid>.permit-period-card:nth-child(1) {
     animation-delay: 0.07s;
   }
 
-  .permit-period-grid > .permit-period-card:nth-child(2) {
+  .permit-period-grid>.permit-period-card:nth-child(2) {
     animation-delay: 0.15s;
   }
 
-  .permit-period-grid > .permit-period-card:nth-child(3) {
+  .permit-period-grid>.permit-period-card:nth-child(3) {
     animation-delay: 0.23s;
   }
 
@@ -5246,6 +5199,139 @@ h1 {
 @keyframes permit-upload-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* EXAM AND QUIZ */
+
+.student-assessment-page {
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+.student-assessment-page>header {
+  margin: 24px 0;
+}
+
+.student-assessment-form {
+  display: grid;
+  gap: 20px;
+}
+
+.student-assessment-form legend {
+  padding-inline: 6px;
+  color: var(--primary-hover);
+  font-weight: 600;
+}
+
+.student-assessment-form .permit-period-card {
+  gap: 10px;
+}
+
+.student-assessment-page .assessment-lines {
+  margin: 6px 0 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.assessment-choice {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.assessment-choice input {
+  accent-color: var(--primary);
+}
+
+.student-assessment-form>.button {
+  justify-self: start;
+}
+
+body.assessment-modal-open {
+  overflow: hidden;
+}
+
+.student-assessment-modal {
+  width: min(860px, calc(100% - 32px));
+  height: min(850px, calc(100dvh - 40px));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+}
+
+.student-assessment-modal::backdrop {
+  background: rgba(27, 19, 47, 0.6);
+}
+
+.student-assessment-modal-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.student-assessment-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.student-assessment-modal-header h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+#student-assessment-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--surface);
+}
+
+.assessment-embedded {
+  min-width: 0;
+  background: var(--surface);
+}
+
+.assessment-embedded .student-assessment-page {
+  padding: 16px 20px 24px;
+}
+
+.assessment-embedded .student-assessment-page>header {
+  margin: 0 0 18px;
+}
+
+/* The modal header already displays the assessment title. */
+.assessment-embedded .student-assessment-page>header h1 {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .student-assessment-modal {
+    width: 100%;
+    height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .student-assessment-modal-header,
+  .assessment-embedded .student-assessment-page {
+    padding-inline: 14px;
   }
 }
 

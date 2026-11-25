@@ -378,10 +378,10 @@
     const focusableElements = [
       ...modal.querySelectorAll(
         "button:not([disabled]):not(.student-profile-backdrop), " +
-          "input:not([disabled]), " +
-          "select:not([disabled]), " +
-          "textarea:not([disabled]), " +
-          "a[href]",
+        "input:not([disabled]), " +
+        "select:not([disabled]), " +
+        "textarea:not([disabled]), " +
+        "a[href]",
       ),
     ].filter((element) => {
       return (
@@ -422,9 +422,9 @@
   studentProfileForm?.addEventListener("submit", (event) => {
     const confirmed = window.confirm(
       "Are you sure you want to save your profile changes?\n\n" +
-        "Once saved, your course, year level, and official section assignment " +
-        "will be locked and cannot be changed through your profile. " +
-        "Contact the CITE Department if you need to request changes.",
+      "Once saved, your course, year level, and official section assignment " +
+      "will be locked and cannot be changed through your profile. " +
+      "Contact the CITE Department if you need to request changes.",
     );
 
     if (!confirmed) {
@@ -818,7 +818,7 @@
 
     const confirmed = window.confirm(
       "Are you sure you want to change your password?\n\n" +
-        "You will need to use your new password the next time you sign in.",
+      "You will need to use your new password the next time you sign in.",
     );
 
     if (!confirmed) {
@@ -840,75 +840,57 @@
   // PAGE NAVIGATION
   // --------------------------------------------------
 
-  const dashboardPages = {
-    "dashboard-home": document.getElementById("dashboard-home-page"),
-    "permit-application": document.getElementById("permit-application-page"),
-  };
+  const dashboardPages = new Map([
+    ["dashboard-home", document.getElementById("dashboard-home-page")],
+    ["permit-application", document.getElementById("permit-application-page")],
+    ["modules", document.getElementById("modules-page")],
+    ["assessments", document.getElementById("assessments-page")]
+  ]);
 
   function showDashboardPage(pageName) {
-    const targetPage = dashboardPages[pageName];
+    const target = dashboardPages.get(pageName);
+    if (!target) return false;
 
-    if (!targetPage) {
-      return false;
+    for (const page of dashboardPages.values()) {
+      if (page) page.hidden = page !== target;
     }
 
-    Object.values(dashboardPages).forEach((page) => {
-      if (page) {
-        page.hidden = true;
-      }
-    });
-
-    targetPage.hidden = false;
-
-    const label =
-      pageName === "permit-application" ? "Permit Application" : "Dashboard";
-
-    const pageTitle = targetPage.querySelector(".page-title-row h1");
+    const label = target.querySelector(".page-title-row h1").textContent.trim();
     const breadcrumb = document.getElementById("breadcrumb-current");
 
-    if (pageTitle) {
-      pageTitle.textContent = label;
-    }
-
-    if (breadcrumb) {
-      breadcrumb.textContent = label;
-    }
+    if (breadcrumb) breadcrumb.textContent = label;
 
     document.querySelectorAll("[data-nav-link]").forEach((link) => {
-      const isDashboard =
-        pageName === "dashboard-home" &&
-        !link.dataset.page &&
-        link.dataset.label === "Dashboard";
+      const isHomeLink =
+        pageName === "dashboard-home" && link.dataset.label === "Dashboard";
 
-      const isSelectedPage = link.dataset.page === pageName;
+      const selected = isHomeLink || link.dataset.page === pageName;
+      link.classList.toggle("active", selected);
 
-      link.classList.toggle("active", isDashboard || isSelectedPage);
+      if (selected) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
     });
 
-    const submenu = document.getElementById("academics-submenu");
+    if (["permit-application", "modules", "assessments"].includes(pageName)) {
+      const submenu = document.getElementById("academics-submenu");
+      const toggle = document.querySelector(
+        '[data-submenu-toggle="academics-submenu"]'
+      );
 
-    const submenuToggle = document.querySelector(
-      '[data-submenu-toggle="academics-submenu"]',
-    );
-
-    if (pageName === "permit-application") {
-      if (submenu) {
-        submenu.hidden = false;
-      }
-
-      submenuToggle?.setAttribute("aria-expanded", "true");
+      if (submenu) submenu.hidden = false;
+      toggle?.setAttribute("aria-expanded", "true");
     }
 
     return true;
   }
 
   const initialPage = new URLSearchParams(window.location.search).get("page");
-
-  showDashboardPage(
-    initialPage === "permit-application"
-      ? "permit-application"
-      : "dashboard-home",
-  );
+  if (!showDashboardPage(initialPage)) {
+    showDashboardPage("dashboard-home");
+  }
 
   document.querySelectorAll("[data-nav-link]").forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -917,6 +899,10 @@
 
       if (pageName && showDashboardPage(pageName)) {
         event.preventDefault();
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("page", pageName);
+        window.history.replaceState(null, "", url);
 
         closeSidebar();
         closeDropdowns();
@@ -1046,10 +1032,17 @@
     const pageMap = {
       Dashboard: "dashboard-home",
       "Permit Application": "permit-application",
+      Modules: "modules",
+      "Exam and Quiz": "assessments"
     };
 
     if (pageMap[label]) {
-      showDashboardPage(pageMap[label]);
+      const pageName = pageMap[label];
+      showDashboardPage(pageName);
+
+      const url = new URL(window.location.href);
+      url.searchParams.set("page", pageName);
+      window.history.replaceState(null, "", url);
     } else {
       const navLink = [...document.querySelectorAll("[data-nav-link]")].find(
         (link) => {
@@ -1404,4 +1397,91 @@
   // --------------------------------------------------
 
   refreshIcons();
+})();
+
+(() => {
+  "use strict";
+
+  const modal = document.getElementById("student-assessment-modal");
+  const frame = document.getElementById("student-assessment-frame");
+  const title = document.getElementById("student-assessment-modal-title");
+  const closeButton = document.getElementById("close-student-assessment");
+
+  if (!modal || !frame || !title || !closeButton ||
+    typeof modal.showModal !== "function") {
+    return;
+  }
+
+  let activeLink = null;
+  let submitted = false;
+  let returnFocus = null;
+
+  document.querySelectorAll("[data-open-assessment]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      // Preserve normal browser behavior for opening a separate tab.
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      event.preventDefault();
+      if (modal.open) return;
+
+      activeLink = link;
+      returnFocus = link;
+      submitted = false;
+
+      const url = new URL(link.href);
+      url.searchParams.set("embed", "1");
+
+      title.textContent = link.dataset.assessmentTitle || "Assessment";
+      frame.title = title.textContent;
+      frame.src = url.href;
+
+      modal.showModal();
+      document.body.classList.add("assessment-modal-open");
+    });
+  });
+
+  function closeAssessment() {
+    // Ask before discarding an answer the student has already entered.
+    const form = frame.contentDocument?.querySelector(".student-assessment-form");
+
+    if (!submitted && form) {
+      const hasAnswers = [...new FormData(form).keys()].some((key) => {
+        if (!key.startsWith("answers[")) return false;
+        return new FormData(form).getAll(key).some(
+          (value) => String(value).trim() !== ""
+        );
+      });
+
+      if (hasAnswers && !window.confirm("Close this assessment and discard your unsent answers?")) {
+        return;
+      }
+    }
+
+    modal.close();
+  }
+
+  closeButton.addEventListener("click", closeAssessment);
+
+  modal.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeAssessment();
+  });
+
+  submitted = true;
+
+  activeLink.textContent = "View score";
+  activeLink.classList.remove("button-primary");
+  activeLink.classList.add("button-outline");
+  returnFocus = activeLink;
+
+  modal.addEventListener("close", () => {
+    document.body.classList.remove("assessment-modal-open");
+    frame.src = "about:blank";
+    returnFocus?.focus();
+    activeLink = null;
+    returnFocus = null;
+    submitted = false;
+  });
 })();

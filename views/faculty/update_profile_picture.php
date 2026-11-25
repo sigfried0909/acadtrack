@@ -28,7 +28,7 @@ function facultyProfilePictureRedirect(string $message, bool $success = false): 
 
     if (
         !is_string($page)
-        || !in_array($page, ['dashboard', 'sections'], true)
+        || !in_array($page, ['dashboard', 'sections', 'modules'], true)
     ) {
         $page = 'dashboard';
     }

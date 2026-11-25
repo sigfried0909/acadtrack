@@ -860,6 +860,7 @@ function studentProfileTextLength(string $value): int
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <link rel="stylesheet" href="../../style/student/student_dash.css">
+    <link rel="stylesheet" href="../../style/modules.css">
     <script src="../../js/student/student_dash.js" defer></script>
     <script src="../../js/auth/session_guard.js" defer></script>
 </head>
@@ -916,6 +917,20 @@ function studentProfileTextLength(string $value): int
 
                         <a href="#" data-nav-link data-label="Permit Application" data-page="permit-application">
                             Permit Application
+                        </a>
+
+                        <a href="dashboard.php?page=modules"
+                        data-nav-link
+                        data-label="Modules"
+                        data-page="modules">
+                            Modules
+                        </a>
+
+                        <a href="dashboard.php?page=assessments"
+                        data-nav-link
+                        data-label="Exam and Quiz"
+                        data-page="assessments">
+                            Exam and Quiz
                         </a>
 
                         <!-- <a href="#" data-nav-link data-label="Examinations">
@@ -1568,6 +1583,226 @@ function studentProfileTextLength(string $value): int
 
                     </section>
 
+                </section>
+
+                <!-- MODULES -->
+
+                <section class="dashboard-page" id="modules-page" aria-labelledby="modules-title" hidden>
+                    <div class="page-title-row">
+                        <div>
+                            <div class="overline">ACADEMICS</div>
+                            <h1 id="modules-title">Modules</h1>
+                            <p class="page-subtitle">
+                                Review materials are available for each period marked With Permit.
+                            </p>
+                        </div>
+                    </div>
+
+                    <?php
+                    $moduleRows = [];
+                    $moduleListError = false;
+                    $moduleEnrollment = null;
+
+                    try {
+                        $moduleQuery = $pdo->prepare(
+                            "SELECT
+                                s.section_name,
+                                s.course,
+                                s.year_level,
+                                m.id,
+                                m.period,
+                                m.title,
+                                m.description,
+                                m.original_filename,
+                                m.file_extension,
+                                m.file_size
+
+                            FROM section_students AS ss
+
+                            INNER JOIN sections AS s
+                                ON s.id = ss.section_id
+
+                            LEFT JOIN section_modules AS m
+                                ON m.section_id = ss.section_id
+                            AND EXISTS (
+                                    SELECT 1
+                                    FROM student_permit_status AS permit
+                                    WHERE permit.student_id = ss.student_id
+                                    AND permit.period = (m.period COLLATE utf8mb4_unicode_ci)
+                                    AND permit.status = 'with permit'
+                            )
+
+                            WHERE ss.student_id = ?
+
+                            ORDER BY m.period ASC, m.id DESC"
+                        );
+
+                        $moduleQuery->execute([$studentId]);
+
+                        while ($module = $moduleQuery->fetch(PDO::FETCH_ASSOC)) {
+                            if ($moduleEnrollment === null) {
+                                $moduleEnrollment = $module['section_name'];
+                            }
+
+                            if ($module['id'] !== null) {
+                                $moduleRows[] = $module;
+                            }
+                        }
+                    } catch (PDOException $error) {
+                        error_log('AcadTrack student module list: ' . $error->getMessage());
+                        $moduleListError = true;
+                    }
+                    ?>
+
+                    <?php if ($moduleListError): ?>
+                        <div class="permit-alert permit-alert-error" role="alert">
+                            <i data-lucide="alert-circle"></i>
+                            <span>Unable to load your modules. Refresh the page to try again.</span>
+                        </div>
+
+                    <?php elseif ($moduleEnrollment === null): ?>
+                        <div class="permit-section-required">
+                            <span class="permit-section-required-icon">
+                                <i data-lucide="users-round"></i>
+                            </span>
+
+                            <div class="permit-section-required-copy">
+                                <strong>Section enrollment required</strong>
+                                <p>
+                                    Check your assigned section in Edit Profile. If your section
+                                    is already saved, contact the CITE Department to verify your enrollment.
+                                </p>
+                            </div>
+
+                            <button type="button" class="button button-outline" data-open-profile-modal>
+                                Edit Profile
+                            </button>
+                        </div>
+
+                    <?php else: ?>
+                        <section class="permit-history-section" aria-labelledby="module-section-name">
+                            <div class="permit-section-heading">
+                                <div>
+                                    <h2 id="module-section-name"><?= escapeHtml($moduleEnrollment) ?></h2>
+                                </div>
+                            </div>
+
+                            <?php
+                            $approvedModulePeriods = [];
+
+                            foreach ($periods as $period) {
+                                if (($permitStatuses[$period]['status'] ?? '') === 'with permit') {
+                                    $approvedModulePeriods[] = $period;
+                                }
+                            }
+                            ?>
+
+                            <?php if (!$approvedModulePeriods): ?>
+
+                                <p class="module-empty">
+                                    No modules are available to you yet. It will appear here when your adviser adds one for your section and your permit is approved for that period.
+                                </p>
+
+                            <?php else: ?>
+
+                                <p class="module-meta" style="margin: 16px 22px;">
+                                    <strong>Periods with permit:</strong>
+                                    <?= escapeHtml(implode(', ', $approvedModulePeriods)) ?>
+                                </p>
+
+                                <?php if (!$moduleRows): ?>
+                                    <p class="module-empty">
+                                        No modules have been posted for your approved periods yet.
+                                    </p>
+                                <?php else: ?>
+                                    <?php require __DIR__ . '/../shared/module_list.php'; ?>
+                                <?php endif; ?>
+
+                            <?php endif; ?>
+                        </section>
+                    <?php endif; ?>
+                </section>
+
+                <section class="dashboard-page" id="assessments-page"
+                        aria-labelledby="student-assessments-title" hidden>
+
+                    <div class="page-title-row">
+                        <div>
+                            <div class="overline">ACADEMICS</div>
+                            <h1 id="student-assessments-title">Exam and Quiz</h1>
+                            <p class="page-subtitle">
+                                Open exams and quizzes for the periods marked With Permit.
+                            </p>
+                        </div>
+                    </div>
+
+                    <?php
+                    require_once __DIR__ . '/assessment_access.php';
+
+                    $studentAssessments = [];
+                    $assessmentListError = false;
+
+                    try {
+                        // The list needs titles and status only.
+                        $assessmentList = $pdo->prepare(
+                            "SELECT a.id, a.title, a.assessment_type, a.period,
+                                    a.delivery_mode, attempt.id AS attempt_id "
+                            . studentAssessmentAccessSql()
+                            . " ORDER BY a.period ASC, a.id DESC"
+                        );
+                        $assessmentList->execute([$studentId]);
+                        $studentAssessments = $assessmentList->fetchAll(PDO::FETCH_ASSOC);
+                    } catch (PDOException $error) {
+                        error_log('AcadTrack student assessment list: ' . $error->getMessage());
+                        $assessmentListError = true;
+                    }
+                    ?>
+
+                    <?php if ($assessmentListError): ?>
+                        <div class="permit-alert permit-alert-error" role="alert">
+                            Unable to load your exams and quizzes. Please try again.
+                        </div>
+
+                    <?php elseif (!$studentAssessments): ?>
+                        <div class="permit-history-section">
+                            <p class="module-empty">
+                                No exams or quizzes are available to you yet. Assessments appear
+                                here when your adviser adds one for your section and your permit
+                                is approved for that period.
+                            </p>
+                        </div>
+
+                    <?php else: ?>
+                        <div class="module-list">
+                            <?php foreach ($studentAssessments as $assessment): ?>
+                                <article class="module-card">
+                                    <div>
+                                        <h3><?= escapeHtml($assessment['title']) ?></h3>
+                                        <p class="module-meta">
+                                            <?= escapeHtml($assessment['period']) ?>
+                                            · <?= escapeHtml($assessment['assessment_type']) ?>
+                                            · <?= $assessment['delivery_mode'] === 'link'
+                                                ? 'External link' : 'Inside AcadTrack' ?>
+                                        </p>
+                                    </div>
+
+                                    <?php $hasAttempt = $assessment['attempt_id'] !== null; ?>
+
+                                    <a class="button <?= $hasAttempt ? 'button-outline' : 'button-primary' ?>"
+                                    href="assessment.php?id=<?= (int) $assessment['id'] ?>"
+                                    data-open-assessment
+                                    data-assessment-id="<?= (int) $assessment['id'] ?>"
+                                    data-assessment-title="<?= escapeHtml($assessment['title']) ?>"
+                                    aria-haspopup="dialog"
+                                    aria-controls="student-assessment-modal">
+                                        <?= $hasAttempt
+                                            ? 'View score'
+                                            : 'Open ' . escapeHtml(strtolower($assessment['assessment_type'])) ?>
+                                    </a>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </section>
 
                 <!-- FOOTER -->
@@ -2256,78 +2491,6 @@ function studentProfileTextLength(string $value): int
     <div id="student-password-notice" data-message="<?= escapeHtml($accountNotice) ?>" hidden>
     </div>
 
-    <!-- SEARCH OVERLAY -->
-
-    <div class="search-overlay" id="search-overlay" hidden>
-
-        <button class="search-scrim" type="button" aria-label="Close search" data-close-search>
-        </button>
-
-        <section class="search-dialog" role="dialog" aria-modal="true" aria-labelledby="search-title">
-
-            <div class="search-input-row">
-
-                <i data-lucide="search"></i>
-
-                <input id="search-input" type="search" placeholder="Search menu..." autocomplete="off">
-
-                <kbd>ESC</kbd>
-
-                <button class="icon-btn" type="button" aria-label="Close search" data-close-search>
-
-                    <i data-lucide="x"></i>
-
-                </button>
-
-            </div>
-
-            <div class="search-results-label" id="search-title">
-                QUICK NAVIGATION
-            </div>
-
-            <div class="search-results" id="search-results">
-
-                <button type="button" data-search-target="Dashboard">
-                    <i data-lucide="layout-dashboard"></i>
-                    <span>Dashboard</span>
-                    <kbd>Enter</kbd>
-                </button>
-
-                <button type="button" data-search-target="Permit Application">
-                    <i data-lucide="file-check-2"></i>
-                    <span>Permit Application</span>
-                </button>
-
-                <button type="button" data-search-target="Examinations">
-                    <i data-lucide="clipboard-check"></i>
-                    <span>Examinations</span>
-                </button>
-
-                <button type="button" data-search-target="Study Materials">
-                    <i data-lucide="book-open"></i>
-                    <span>Study Materials</span>
-                </button>
-
-                <button type="button" data-search-target="GChat">
-                    <i data-lucide="messages-square"></i>
-                    <span>GChat</span>
-                </button>
-
-                <div class="search-no-results" hidden>
-                    No matching navigation items.
-                </div>
-
-            </div>
-
-            <div class="search-dialog-footer">
-                <span>Use ↑ ↓ to browse</span>
-                <span><kbd>ESC</kbd> to close</span>
-            </div>
-
-        </section>
-
-    </div>
-
     <!-- TOAST -->
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden>
@@ -2377,6 +2540,29 @@ function studentProfileTextLength(string $value): int
         </div>
 
     </div>
+
+    <dialog id="student-assessment-modal"
+        class="student-assessment-modal"
+        aria-labelledby="student-assessment-modal-title">
+
+        <div class="student-assessment-modal-shell">
+            <header class="student-assessment-modal-header">
+                <h2 id="student-assessment-modal-title">Assessment</h2>
+
+                <button type="button"
+                        class="icon-btn"
+                        id="close-student-assessment"
+                        aria-label="Close assessment"
+                        autofocus>
+                    <i data-lucide="x"></i>
+                </button>
+            </header>
+
+            <iframe id="student-assessment-frame"
+                    title="Assessment content"
+                    src="about:blank"></iframe>
+        </div>
+    </dialog>
 
 </body>
 
