@@ -1406,7 +1406,7 @@ function studentProfileTextLength(string $value): int
                                     </span>
 
                                     <span data-upload-label>
-                                        Upload Full-Payment Receiptt
+                                        Upload Full-Payment Receipt
                                     </span>
 
                                     <span
